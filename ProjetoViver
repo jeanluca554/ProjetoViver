@@ -1,0 +1,111 @@
+CREATE DATABASE IF NOT EXISTS `ProjetoViver` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE ProjetoViver;
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `senha` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `usuarios` (`id`, `email`, `senha`) VALUES
+(1, 'sjeanluca@gmail.com', 'e10adc3949ba59abbe56e057f20f883e');
+
+CREATE TABLE funcionario
+(
+	id_funcionario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome_funcionario VARCHAR(255) NOT NULL,
+    email_funcionario VARCHAR(255) NOT NULL,
+    senha_funcionario VARCHAR(255),
+    cpf_funcionario VARCHAR(14), 
+    rg_funcionario VARCHAR(13),
+    telefone_funcionario VARCHAR(15),
+    numeroAgencia_funcionario VARCHAR(10),
+    numeroContaBancaria_funcionario VARCHAR(15),
+    salario_funcionario DECIMAL(7),
+    cargo_funcionario VARCHAR(50)
+)DEFAULT CHARSET = utf8;
+
+drop table funcionario;
+
+SELECT * FROM funcionario;
+
+desc funcionario;
+
+
+CREATE TABLE endereco_residencial
+(
+	id_endereco_residencia INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cep VARCHAR(9),
+    logradouro VARCHAR(255),
+    numero_casa VARCHAR(8),
+    complemento VARCHAR(255),
+    bairro VARCHAR(255),
+    cidade VARCHAR(120)
+)	DEFAULT CHARSET = utf8;
+
+
+
+CREATE TABLE responsavel
+(
+	id_responsavel INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome_responsavel VARCHAR(255),
+    cpf_responsavel VARCHAR(14),
+    telefone_responsavel VARCHAR(15),
+    id_endereco_residencia INT,
+    FOREIGN KEY (id_endereco_residencia) REFERENCES endereco_residencial (id_endereco_residencia)
+)	DEFAULT CHARSET = utf8;
+
+select * from responsavel;
+select * from endereco_residencial;
+select * from funcionario;
+
+delete from responsavel where id_responsavel = 39;
+
+truncate table responsavel;
+truncate table endereco_residencial;
+
+SET foreign_key_checks = 0;
+#Delete o que tiver que deletar
+SET foreign_key_checks = 1;
+#Ative a checagem novamente
+
+ALTER TABLE responsavel
+ADD CONSTRAINT unic_cpf UNIQUE (cpf_responsavel);
+
+alter table endereco_residencial add column cidade varchar(120);
+
+UPDATE responsavel SET id_endereco_residencia = 17 WHERE id = 1;
+
+
+
+SELECT DISTINCT nome_responsavel, cpf_responsavel
+FROM responsavel WHERE nome_responsavel like '%jean%'
+UNION all
+SELECT DISTINCT nome_funcionario, cpf_funcionario
+FROM funcionario 
+WHERE nome_funcionario like '%jean%';
+
+
+CREATE TABLE responsavel_pelo_aluno
+(
+	id_responsavel INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    
+    responsavel_cpf VARCHAR(14),
+    funcionario_cpf VARCHAR(14),
+    
+);
+
+CREATE TABLE aluno
+(
+	id_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome_aluno VARCHAR(255),
+    nascimento_aluno DATE,
+    sexo ENUM('Masculino','Feminino'),
+    nacionalidade ENUM('Brasileiro','Estrangeiro'),
+    estado_nascimento VARCHAR(75),
+    cidade_nascimento VARCHAR(120),
+    pais_nascimento VARCHAR(60),
+    id_endereco_residencia INT,
+    FOREIGN KEY (id_endereco_residencia) REFERENCES endereco_residencial(id_endereco_residencia)
+)	DEFAULT CHARSET = utf8;
