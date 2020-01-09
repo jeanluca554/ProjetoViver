@@ -11,14 +11,14 @@ $("#nacionalidade").on("change", function()
 
     switch (nacionalidade) 
     {
-        case "1":
+        case "Brasileiro":
             $("#divEstadoNascimento").show();
             $("#divCidadeNascimento").show();
             $("#divPaisOrigem").hide();
             $("#spinner").toggle();                  
             break;
 
-        case "2":
+        case "Estrangeiro":
             $("#divPaisOrigem").show();
             $("#divEstadoNascimento").hide();
             $("#divCidadeNascimento").hide();
