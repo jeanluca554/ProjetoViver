@@ -38,7 +38,7 @@
             </div>
 
             <div class="form-row">
-                <!--<div class="form-group col-md-6">
+                <div class="form-group col-md-6">
                     <label for="DataNascimento">Data de Nascimento</label>
                     <div class="input-group date">
                         <span class="input-group-btn">
@@ -46,7 +46,7 @@
                         </span>
                         <input type="text" class="form-control" id="dataNascimento" name="dataNascimento">
                     </div>
-                </div> -->
+                </div> 
 
                 <div class="form-group col-md-6">
                     <label for="sexo">Sexo</label>
@@ -65,10 +65,9 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="nacionalidade">Nacionalidade</label>
-                    <select name="nacionalidade" class="form-control" id="nacionalidade">           
-                        <option value="0">Selecione...</option>
-                        <option value="1">Brasileiro</option>                            
-                        <option value="2">Estrangeiro</option>                                
+                    <select name="nacionalidade" class="form-control" id="nacionalidade">    <option value="0">Selecione...</option>
+                        <option value="Brasileiro">Brasileiro</option>
+                        <option value="Estrangeiro">Estrangeiro</option>                
                     </select>        
                 </div>
 
@@ -95,7 +94,7 @@
             
             <div class="form-row mt-4">
                 <div class="form-row col-md-12">       
-                    <button type="submit" class="btn btn-success btn-lg" id="botao-salvar-dados-pessoais-aluno">Salvar</button>
+                    <button type="submit" class="btn btn-success btn-lg" id="botao-salvar-aluno">Salvar</button>
                     <div class="ml-auto">
                         <button type="button" class="btn btn-danger btn-lg">Cancelar</button>
                     </div> 
@@ -187,6 +186,7 @@
 <script src="js/popper.min.js"></script>
 <script src="js/pegaResponsaveis.js"></script>
 <script src="js/formataCamposAluno.js"></script>
+<script src="js/salvarAluno.js"></script>
 
 <?php 
     include("Modal/ModalCadastrarResponsaveis.php");
