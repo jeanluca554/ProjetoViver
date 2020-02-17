@@ -59,8 +59,9 @@ CREATE TABLE responsavel
 select * from responsavel;
 select * from endereco_residencial;
 select * from funcionario;
+select * from aluno;
 
-delete from responsavel where id_responsavel = 39;
+delete from responsavel where id_responsavel = 2;
 
 truncate table responsavel;
 truncate table endereco_residencial;
@@ -96,7 +97,7 @@ CREATE TABLE responsavel_pelo_aluno
     
 );
 
-CREATE TABLE aluno
+/*CREATE TABLE aluno
 (
 	id_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nome_aluno VARCHAR(255),
@@ -108,4 +109,44 @@ CREATE TABLE aluno
     pais_nascimento VARCHAR(60),
     id_endereco_residencia INT,
     FOREIGN KEY (id_endereco_residencia) REFERENCES endereco_residencial(id_endereco_residencia)
+)	DEFAULT CHARSET = utf8;*/
+
+CREATE TABLE aluno
+(
+	id_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome_aluno VARCHAR(255) UNIQUE,
+    nascimento_aluno DATE,
+    sexo VARCHAR(9),
+    nacionalidade VARCHAR(11),
+    estado_nascimento VARCHAR(75),
+    cidade_nascimento VARCHAR(120),
+    pais_nascimento VARCHAR(60),
+    id_endereco_residencia INT,
+    FOREIGN KEY (id_endereco_residencia) REFERENCES endereco_residencial(id_endereco_residencia)
 )	DEFAULT CHARSET = utf8;
+
+INSERT INTO aluno (sexo) values ('Masculino');
+INSERT INTO aluno (nacionalidade) values ('Brasileiro');
+
+
+
+CREATE TABLE camisas (
+	idCamisa TINYINT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(25),
+    tamanho ENUM('pequena', 'Média', 'grande', 'extra-grande')
+);
+
+INSERT INTO camisas (nome, tamanho, sexo)
+VALUES ('polo', 'grande', 'Masculino');
+
+delete FROM responsavel where id_responsavel = 3;
+SELECT * FROM responsavel;
+SELECT * FROM aluno; 
+
+alter table camisas add column sexo ENUM('Masculino','Feminino');
+
+INSERT INTO aluno (sexo)
+VALUES ('Masculino');
+
+DROP TABLE aluno;
+describe aluno;

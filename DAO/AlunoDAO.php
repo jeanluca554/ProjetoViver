@@ -9,33 +9,11 @@
 			if ($id_aluno)
 			{
 				$this->id = $id_aluno;				
-				$this->carregar();
+				//$this->carregar();
 			}
 		}
 
-		public function carregar()
-		{
-			$query = "SELECT nome_funcionario, salario_funcionario FROM funcionario WHERE id_funcionario = :id_funcionario";
-			$conexao = Conexao::pegarConexao();
-			$stmt = $conexao->prepare($query);
-			$stmt->bindValue(':id_funcionario', $this->id);
-			$stmt->execute();
-			$linha = $stmt->fetch();
-			$this->nome = $linha['nome_funcionario'];
-			$this->salario_funcionario = $linha['salario_funcionario'];
-		}
-
-		public static function listar()
-	    {
-	        $query = "SELECT r.nome, preco, descricao, categoria_id, c.nome as categoria_nome
-	                  FROM produtos p
-	                  INNER JOIN categorias c ON p.categoria_id = c.id
-	                  ORDER BY p.nome ";
-	        $conexao = Conexao::pegarConexao();
-	        $resultado = $conexao->query($query);
-	        $lista = $resultado->fetchAll();
-	        return $lista;
-	    }
+		
 
 		public function create()
 		{
@@ -74,21 +52,9 @@
 
 			$stmt->execute();
 			$ultimo = $conexao->lastInsertId();
-
-			console.log($ultimo);
 			return $ultimo;
 
 
 		}
 
-		public function atualizarEndereco()
-	    {
-	        $query = "UPDATE responsavel SET id_endereco_residencia = :endereco WHERE id_responsavel = :id";
-	        $conexao = Conexao::pegarConexao();
-	        $stmt = $conexao->prepare($query);
-	        $stmt->bindValue(':endereco', $this->endereco);
-	        $stmt->bindValue(':id', $this->id);
-	        
-	        $stmt->execute();
-	    }
 	}

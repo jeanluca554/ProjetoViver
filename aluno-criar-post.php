@@ -1,15 +1,14 @@
-	<?php
+<?php
 	require_once 'global.php';
 	require_once 'DAO/AlunoDAO.php';
 
-	$response = array();
+	$response = array();	
 
 	try
 	{
 		$nome = $_POST['nome'];
-		$nascimento = $_POST['dataNascimento'];
-		//echo $nascimento;
-		//echo "Qualquer coisa<br>";
+		$postNascimento = $_POST['dataNascimento'];
+		$nascimento = trataData($postNascimento);
 		$sexo = $_POST['sexo'];
 		$nacionalidade = $_POST['nacionalidade'];
 		$estado = $_POST['estado'];
@@ -31,15 +30,23 @@
 		$response['mensagem'] = 'ok';
 		$response['ultimoID'] = $ultimoID;
 		echo json_encode($response);
+
+		
 	}
-	
+
 	catch (Exception $e)
 	{
-		Erro::trataErro($e);
-		//echo "Este CPF já foi cadastrado. Por favor, cadastre um número de CPF diferente.";
+		//Erro::trataErro($e);
 		$response['mensagem'] = 'erro';
-		//$response['title'] = "Ops...";
-		$response['title'] = $e;
-		$response['text'] = "Houve um erro ao cadastrar o aluno". $nascimento;
+		$response['title'] = "Ops...";
+		$response['text'] = (string) $e;
 		echo json_encode($response);
+	}
+
+	function trataData($data)
+	{
+		$dataArray = explode('/', $data); //remove o caractere '/'
+		$dataInvertida = array_reverse($dataArray); // invete as posições da data de trás pra frente
+		$dataCorrigida = implode('-', $dataInvertida); //transforma o array da data em uma string separada por '-'
+		return (string) $dataCorrigida;
 	}

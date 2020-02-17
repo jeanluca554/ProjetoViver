@@ -1,33 +1,31 @@
 $(function() {
-    //$("#botao-salvar-dados-pessoais-alunolkjçlkjçlkj").click(coisonaMaluca);
+    $("#botao-salvar-aluno").click(salvaDadosAluno);
 });
 
-function salvaDadosPessoaisAluno() 
+function salvaDadosAluno() 
 {
     var nome = $("#nomeAluno").val();
-    var nascimentinho = 12112010;
-    //var dataNascimento = $("#dataNascimento").val();
-    //var nascimento = dataNascimento.replace("/","-");
-    //console.log(nascimento);
-    var sexo = $("#sexo").text();
+    var dataNascimento = $("#dataNascimento").val();
+    var sexo = $("#sexo").val();
     var nacionalidade = $("#nacionalidade").val();
     var estado = $("#selectEstadoNascimento").val();
     var cidade = $("#selectCidadeNascimento").val();
     var pais = $("#paisOrigem").val();
-    ultimoIdLimpo = 0;
+    //var ultimoIdLimpo = 0;
         
     if (nome != '')
-    {
+    { 
         $.ajax({
             url: 'aluno-criar-post.php',
             method: 'post',
             dataType: 'json',
-            data:{nome:nome, dataNascimento:nascimentinho, sexo:sexo, nacionalidade:nacionalidade, estado:estado, cidade:cidade, pais:pais},
+            data:{nome:nome, dataNascimento:dataNascimento, sexo:sexo, nacionalidade:nacionalidade, estado:estado, cidade:cidade, pais:pais},
 
             success: function(ultimoId)
             {
                 if(ultimoId['mensagem'] == 'ok')
                 {
+                    ultimoIdLimpo = ultimoId['ultimoID'];
                     Swal.fire({
                         type: 'success',
                         title: 'Concluído',
@@ -52,67 +50,17 @@ function salvaDadosPessoaisAluno()
                 }
             },
 
-            error: function()
+            error: function(ultimoId)
             {
-                alert("Erro ao criar Responsável");
-            }
-        });
-    }    
-}
-
-function salvaTesteTeste() 
-{
-    var nome = $("#nomeAluno").val();
-    var nascimentinho = 12112010;
-    //var dataNascimento = $("#dataNascimento").val();
-    //var nascimento = dataNascimento.replace("/","-");
-    //console.log(nascimento);
-    var sexo = $("#sexo").text();
-    var nacionalidade = $("#nacionalidade").val();
-    var estado = $("#selectEstadoNascimento").val();
-    var cidade = $("#selectCidadeNascimento").val();
-    var pais = $("#paisOrigem").val();
-    ultimoIdLimpo = 0;
-        
-    if (nome != '')
-    {
-        $.ajax({
-            url: 'aluno-criar-post.php',
-            method: 'post',
-            dataType: 'json',
-            data:{nome:nome, dataNascimento:nascimentinho, sexo:sexo, nacionalidade:nacionalidade, estado:estado, cidade:cidade, pais:pais},
-
-            success: function(ultimoId)
-            {
-                if(ultimoId['mensagem'] == 'ok')
-                {
-                    Swal.fire({
-                        type: 'success',
-                        title: 'Concluído',
-                        text: 'Dados pessoais cadastrados com sucesso!',
-                        animation: true,
-                        customClass: {
-                            popup: 'animated bounce'
-                        }                      
-                    })
-                }
-                else
-                {
-                    Swal.fire({
-                        type: 'warning',
-                        title: ultimoId['title'],
-                        text: ultimoId['text'],
-                        animation: false,
-                        customClass: {
-                            popup: 'animated tada'
-                        }
-                    })
-                }
-            },
-
-            error: function()
-            {
-                alert("Erro ao criar Responsável");
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Erro ao Salvar o Aluno',
+                    text: ultimoId['text'],
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
             }
         });
     }    
