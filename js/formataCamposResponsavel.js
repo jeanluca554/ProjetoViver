@@ -10,10 +10,18 @@ function formatarCamposResponsavel()
     $('#cep').mask('00000-000');
 }
 
+function verificarCampoTelefone()
+{
+    $('#telefone').mask('(00)00000-0000');
+    $('#cpf').mask('000.000.000-00');
+    $('#cep').mask('00000-000');
+}
+
 function verificarCpf()
 {
     $('#cpf').blur(function()
     {
+        var cpfComDigitos = $('#cpf').val();
         var cpf = $('#cpf').val().replace(/[^0-9]/g, '').toString();
 
         if( cpf.length == 11 )
@@ -37,7 +45,16 @@ function verificarCpf()
             //Retorna Verdadeiro se os dígitos de verificação são os esperados
             if ( (v[0] != cpf[9]) || (v[1] != cpf[10]) )
             {
-                alert('CPF inválido: ' + cpf);
+                //alert('CPF inválido: ' + cpf);
+                Swal.fire({
+                    type: 'error',
+                    title: 'Ops..',
+                    text: 'CPF inválido: ' + cpfComDigitos,
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
 
                 $('#cpf').val('');
                 $('#cpf').focus();
@@ -47,7 +64,16 @@ function verificarCpf()
         {
             if( cpf.length != 0 )
             {
-                alert('CPF inválido:' + cpf);
+                //alert('CPF inválido:' + cpf);
+                Swal.fire({
+                    type: 'error',
+                    title: 'Ops..',
+                    text: 'CPF inválido: ' + cpfComDigitos,
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
 
                 $('#cpf').val('');
                 $('#cpf').focus();
