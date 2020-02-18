@@ -35,21 +35,38 @@
 
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="abaDadosPessoaisResponsavel" role="tabpanel" aria-labelledby="dadosPessoaisResponsavel-tab">
-                        <div class="form-group mt-4">
-                            <label for="nome">Nome Completo</label>
-                            <input type="text" name="nome" class="form-control" id="nomeResponsavel" placeholder="Nome Completo" required>
-                        </div>
 
                         <div class="form-row">
                             
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-9">
+                                <label for="nome">Nome Completo</label>
+                                <input type="text" name="nome" class="form-control" id="nomeResponsavel" placeholder="Nome Completo" required>
+                            </div>
+
+                            <div class="form-group col-md-3">
                                 <label for="cpf">CPF</label>
                                 <input type="text" name="cpf" class="form-control" id="cpf" placeholder="000.000.000-00" required>
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label for="telefone">Telefone</label>
-                                <input type="text" name="telefone" class="form-control" id="telefone" placeholder="(00)00000-0000">
+                            
+                            
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label for="cpf">RG</label>
+                                <input type="text" name="rg" class="form-control" id="rgResponsavel" placeholder="RG">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="telefone">Telefone Pessoal</label>
+                                <input type="text" name="telefone" class="form-control telefone" id="telefone1" placeholder="(00)00000-0000">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="telefone">Telefone Adicional</label>
+                                <input type="text" name="telefone" class="form-control telefone" id="telefone2" placeholder="(00)00000-0000">
                             </div>
 
                             <button type="submit" class="btn btn-success mr-auto mt-3" id="botao-salvar-dados-pessoais">Salvar</button>

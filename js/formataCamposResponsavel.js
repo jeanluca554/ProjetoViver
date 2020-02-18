@@ -1,20 +1,40 @@
 $(function() {    
+    verificarCampoTelefone();
 	formatarCamposResponsavel();
     verificarCpf();    
 });
 
 function formatarCamposResponsavel()
 {
-    $('#telefone').mask('(00)00000-0000');
+    
     $('#cpf').mask('000.000.000-00');
     $('#cep').mask('00000-000');
 }
 
 function verificarCampoTelefone()
 {
-    $('#telefone').mask('(00)00000-0000');
-    $('#cpf').mask('000.000.000-00');
-    $('#cep').mask('00000-000');
+    
+    $("#telefone1").keyup(function(){
+        var telefoneDigitado = $(this).val();
+        if(telefoneDigitado.length < 13){
+            $('#telefone1').mask('(00)0000-0000');
+        }
+        else
+        {
+            $('#telefone1').mask('(00)00000-0000');
+        }
+    });
+
+    $("#telefone2").keyup(function(){
+        var telefoneDigitado = $(this).val();
+        if(telefoneDigitado.length < 13){
+            $('#telefone2').mask('(00)0000-0000');
+        }
+        else
+        {
+            $('#telefone2').mask('(00)00000-0000');
+        }
+    });
 }
 
 function verificarCpf()
