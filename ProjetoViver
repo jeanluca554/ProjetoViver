@@ -50,8 +50,10 @@ CREATE TABLE responsavel
 (
 	id_responsavel INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nome_responsavel VARCHAR(255),
-    cpf_responsavel VARCHAR(14),
-    telefone_responsavel VARCHAR(15),
+    cpf_responsavel VARCHAR(14) UNIQUE,
+    rg_responsavel VARCHAR(13),
+    telefone_pessoal_responsavel VARCHAR(15),
+    telefone_adicional_responsavel VARCHAR(15),
     id_endereco_residencia INT,
     FOREIGN KEY (id_endereco_residencia) REFERENCES endereco_residencial (id_endereco_residencia)
 )	DEFAULT CHARSET = utf8;
@@ -61,7 +63,7 @@ select * from endereco_residencial;
 select * from funcionario;
 select * from aluno;
 
-delete from responsavel where id_responsavel = 2;
+delete from responsavel where id_responsavel = 1;
 
 truncate table responsavel;
 truncate table endereco_residencial;
@@ -114,7 +116,7 @@ CREATE TABLE responsavel_pelo_aluno
 CREATE TABLE aluno
 (
 	id_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nome_aluno VARCHAR(255) UNIQUE,
+    nome_aluno VARCHAR(255),
     nascimento_aluno DATE,
     sexo VARCHAR(9),
     nacionalidade VARCHAR(11),
@@ -148,5 +150,5 @@ alter table camisas add column sexo ENUM('Masculino','Feminino');
 INSERT INTO aluno (sexo)
 VALUES ('Masculino');
 
-DROP TABLE aluno;
+DROP TABLE responsavel;
 describe aluno;

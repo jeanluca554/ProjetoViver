@@ -48,15 +48,13 @@
                                 <input type="text" name="cpf" class="form-control" id="cpf" placeholder="000.000.000-00" required>
                             </div>
 
-                            
-                            
                         </div>
 
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
                                 <label for="cpf">RG</label>
-                                <input type="text" name="rg" class="form-control" id="rgResponsavel" placeholder="RG">
+                                <input type="text" name="rg" class="form-control" id="rgResponsavel" placeholder="RG" maxlength="13">
                             </div>
 
                             <div class="form-group col-md-4">

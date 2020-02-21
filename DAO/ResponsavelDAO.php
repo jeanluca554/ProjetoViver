@@ -41,8 +41,22 @@
 
 		public function create()
 		{
-			$query = "INSERT INTO responsavel (nome_responsavel, cpf_responsavel, telefone_responsavel) 
-					  VALUES (:nome_responsavel, :cpf_responsavel, :telefone_responsavel)";
+			$query =   "INSERT INTO responsavel 
+						(
+							nome_responsavel,
+							cpf_responsavel,
+							rg_responsavel,
+							telefone_pessoal_responsavel, 
+							telefone_adicional_responsavel
+						) 
+					  	VALUES 
+					  	(
+					  		:nome_responsavel, 
+					  		:cpf_responsavel, 
+					  		:rg_responsavel,
+					  		:telefone_responsavel,
+					  		:telefone_adicional_responsavel
+					  	)";
 
 			$conexao = Conexao::pegarConexao();
 
@@ -50,7 +64,9 @@
 
 			$stmt->bindValue(':nome_responsavel', $this->nome);
 			$stmt->bindValue(':cpf_responsavel', $this->cpf);
+			$stmt->bindValue(':rg_responsavel', $this->rg);
 			$stmt->bindValue(':telefone_responsavel', $this->telefone);
+			$stmt->bindValue(':telefone_adicional_responsavel', $this->telefoneAdicional);
 
 			$stmt->execute();
 			$ultimo = $conexao->lastInsertId();

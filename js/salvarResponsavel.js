@@ -7,7 +7,9 @@ function salvaDadosPessoais()
 {
     var nome = $("#nomeResponsavel").val();
     var cpf = $("#cpf").val();
-    var telefone = $("#telefone").val();
+    var telefone = $("#telefone1").val();
+    var telefoneAdicional = $("#telefone2").val();
+    var rgResponsavel = $("#rgResponsavel").val();
     ultimoIdLimpo = 0;
         
     if (nome != '')
@@ -16,7 +18,7 @@ function salvaDadosPessoais()
             url: 'responsavel-criar-post.php',
             method: 'post',
             dataType: 'json',
-            data: {nome:nome, cpf:cpf, telefone:telefone},
+            data: {nome:nome, cpf:cpf, telefone:telefone, telefoneAdicional:telefoneAdicional, rgResponsavel:rgResponsavel},
 
             success: function(ultimoId)
             {
