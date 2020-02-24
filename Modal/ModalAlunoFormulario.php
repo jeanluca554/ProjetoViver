@@ -11,7 +11,7 @@
 
 <link href="datepicker/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
-<div class="modal fade" id="ModalAlunoFormulario" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalAlunoFormulario" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog modal-lg">
 
         <div class="modal-content">
@@ -49,7 +49,7 @@
                                 <label for="DataNascimento">Data de Nascimento</label>
                                 <div class="input-group date">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-info" type="button" disabled><img src="img/calendarioPequeno.png"></button>
+                                        <button class="btn btn-info" type="button" disabled><img src="img/laranja-hoje-25.png"></button>
                                     </span>
                                     <input type="text" class="form-control" id="dataNascimento" name="dataNascimento">
                                 </div>

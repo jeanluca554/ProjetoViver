@@ -8,7 +8,7 @@
 
 
 <div class=" mt-5 ml-auto">
-    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ModalAlunoFormulario"><img src="img/adicionar-25.png"> Cadastrar Aluno</button>
+    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ModalAlunoFormulario"><img src="img/laranja-adicionar-25.png"> Cadastrar Aluno</button>
 </div>
             
 

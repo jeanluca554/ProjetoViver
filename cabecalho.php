@@ -24,12 +24,12 @@
         <link rel="stylesheet" href="node_modules/bootstrap/compiler/animate.css">
         <script type="text/javascript" src="node_modules/bootstrap/js/jquery-3.3.1.min.js"/></script>
         <script src="js/sweetalert.js"></script>
-        
+        <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/compiler/personalizado.css">
 
         <title>Home</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary">
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000F26">
             <div class="container">
                 <a class="navbar-brand h1 mb-0" href="#">Viver e Aprender</a>
 
