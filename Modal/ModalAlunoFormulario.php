@@ -10,6 +10,7 @@
 ?>
 
 <link href="datepicker/css/bootstrap-datepicker.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="node_modules/DataTables/datatables.min.css"/>
 
 <div class="modal fade" id="ModalAlunoFormulario" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog modal-lg">
@@ -126,17 +127,36 @@
                             </div>
                         </div>
 
-                        <div class="table-responsive-xl mt-3">
-                            <table class="table table-hover table-responsive-sm tabelaParentesco" id="tabelaDeFuncionarios">
+                        <div class="table-responsive-xl mt-3 table-striped table-bordered">
+                            <table class="table table-hover table-responsive-sm tabelaParentesco" id="tabelaParentesco">
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th>Responsável</th>
-                                        <th width="300">Parentesco</th>
-                                        <th width="150">Editar</th>
-                                        <th width="150">Remover</th>              
+                                        <th width="150">CPF</th>
+                                        <th width="170">Parentesco</th>
+                                        
+                                        <th width="50">Editar</th>
+                                        <th width="50">Remover</th>              
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody><!--
+                                    <tr>
+                                        <td>Mirela</td>
+                                        <td>
+                                            <select name='parentesco' class='form-control' id='parentesco'>
+                                                <option value='0'>Selecione...</option>
+                                                <option value='Mãe'>Mãe</option>
+                                                <option value='Pai'>Pai</option>
+                                                <option value='Responsavel'>Responsável</option>
+                                            </select>
+                                        </td>
+                                        <td align="center">
+                                            <a href="#"class="btn btn-outline-info"><img src="img/editar.png"></a>
+                                        </td>
+                                        <td align="center">
+                                            <a href="#" class="btn btn-outline-danger"><img src="img/menos-25.png"></a>
+                                        </td>
+                                    </tr>-->
                                     
                                 </tbody>
                             </table>
@@ -153,20 +173,26 @@
                             </div>
 
                             <div class="ml-auto">
-                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ResponsaveisModal" id="btnPesquisaResponsaveis"><img src="img/adicionar-25.png"> Cadastrar Responsável</button>
+                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ResponsaveisModal" id="btnPesquisaResponsaveis"><img src="img/laranja-adicionar-25.png"> Cadastrar Responsável</button>
                             </div>
                         </div>
 
-                        <div class="form-row align-items-end">
-                            
-                            <div class="col-md-4">
-                                
+                        <div class="form-row align-items-end">                           
+                            <div class="col-md-4">                                
                                 <div class="list-group table table-borderless" id="show-list">             
                                     <!--Aqui entra a janela com todos os responsáveis -->
-                                </div>
-                               
+                                </div>                               
+                            </div>                        
+                        </div>
+
+                        <div class="form-row mt-5">
+                            <div class="form-row col-md-12">       
+                                <button type="submit" class="btn btn-success btn-lg" id="botao-salvar-aluno">Salvar</button>
+                                
+                                <div class="ml-auto">
+                                    <button type="reset" class="btn btn-danger btn-lg fecharModalCadastroAlunos" data-dismiss="modal">Cancelar</button>
+                                </div> 
                             </div>
-                        
                         </div>
 
                     </div>
@@ -199,6 +225,9 @@
 <script src="js/pegaResponsaveis.js"></script>
 <script src="js/formataCamposAluno.js"></script>
 <script src="js/salvarAluno.js"></script>
+<script type="text/javascript" src="node_modules/DataTables/datatables.min.js"></script>
+<script src="js/dataTable.js"></script>
+
 
 <?php 
     include("Modal/ModalCadastrarResponsaveis.php");

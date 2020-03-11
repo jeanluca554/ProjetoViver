@@ -24,7 +24,6 @@
         <link rel="stylesheet" href="node_modules/bootstrap/compiler/animate.css">
         <script type="text/javascript" src="node_modules/bootstrap/js/jquery-3.3.1.min.js"/></script>
         <script src="js/sweetalert.js"></script>
-        <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/compiler/personalizado.css">
 
         <title>Home</title>
     </head>

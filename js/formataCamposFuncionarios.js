@@ -1,8 +1,8 @@
 $(function() {    
 	formatarCamposFuncionario();
     verificarCpf();
-    mostraSalario(valor);
-    desabilitar(selecionado);
+    mostraSalario();
+    desabilitar();
 });
 
 function formatarCamposFuncionario()

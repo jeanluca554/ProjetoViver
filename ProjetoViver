@@ -62,8 +62,9 @@ select * from responsavel;
 select * from endereco_residencial;
 select * from funcionario;
 select * from aluno;
+select * from responsavel_pelo_aluno;
 
-delete from responsavel where id_responsavel = 1;
+delete from responsavel where id_responsavel = 4;
 
 truncate table responsavel;
 truncate table endereco_residencial;
@@ -83,6 +84,9 @@ UPDATE responsavel SET id_endereco_residencia = 17 WHERE id = 1;
 
 
 SELECT DISTINCT nome_responsavel, cpf_responsavel
+FROM responsavel WHERE nome_responsavel like '%pedro%';
+
+SELECT nome_responsavel, cpf_responsavel
 FROM responsavel WHERE nome_responsavel like '%jean%'
 UNION all
 SELECT DISTINCT nome_funcionario, cpf_funcionario
@@ -92,12 +96,14 @@ WHERE nome_funcionario like '%jean%';
 
 CREATE TABLE responsavel_pelo_aluno
 (
-	id_responsavel INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    
-    responsavel_cpf VARCHAR(14),
-    funcionario_cpf VARCHAR(14),
-    
+	id_responsavel_pelo_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,    
+    responsavel_cpf VARCHAR(14) UNIQUE,
+    aluno_id INT,
+    FOREIGN KEY (aluno_id) REFERENCES aluno (id_aluno),
+    FOREIGN KEY (responsavel_cpf) REFERENCES responsavel (cpf_responsavel)
 );
+
+DESCRIBE responsavel_pelo_aluno;
 
 /*CREATE TABLE aluno
 (
@@ -141,14 +147,21 @@ CREATE TABLE camisas (
 INSERT INTO camisas (nome, tamanho, sexo)
 VALUES ('polo', 'grande', 'Masculino');
 
-delete FROM responsavel where id_responsavel = 3;
+delete FROM aluno where id_aluno = 8;
 SELECT * FROM responsavel;
-SELECT * FROM aluno; 
+SELECT * FROM aluno;
+SELECT * FROM responsavel_pelo_aluno;
 
 alter table camisas add column sexo ENUM('Masculino','Feminino');
 
 INSERT INTO aluno (sexo)
 VALUES ('Masculino');
 
-DROP TABLE responsavel;
+DROP TABLE responsavel_pelo_aluno;
 describe aluno;
+
+
+SELECT A.nome_responsavel
+FROM responsavel A
+INNER JOIN responsavel_pelo_aluno B
+ON A.cpf_responsavel = B.responsavel_cpf;

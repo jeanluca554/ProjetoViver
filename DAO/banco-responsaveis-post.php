@@ -1,56 +1,67 @@
 <?php
 	require_once("Conexao.php");
 	require_once("config.php");
+	session_start();
 
 	
 	$funcao = $_POST['funcao'];
-	
-	if($funcao == 1)
+
+
+	switch ($funcao) 
 	{
-		pegaResponsaveis();
+		case 1:
+			pegaResponsaveis();
+			break;
+
+		case 2:
+			insereResponsavelPeloAluno();
+			break;
+		
+		default:
+			# code...
+			break;
 	}
-	else
+
+
+	function insereResponsavelPeloAluno()		
 	{
-		if ($funcao == 3)
+		try
 		{
-			insereResponsavelPeloRG();
+			$idAluno = $_SESSION['alunoID'];
+
+			$cpf = $_POST['cpf'];
+
+	        $query = "	INSERT INTO responsavel_pelo_aluno
+	        			( 
+	        				responsavel_cpf,
+	        				aluno_id
+	        			)
+	        			VALUES
+	        			(
+	        				:cpf,
+	        				:idAluno
+	        			)";
+	                  
+	        $conexao = Conexao::pegarConexao();
+			$stmt = $conexao->prepare($query);
+	        
+	        $stmt->bindValue(':cpf', $cpf);
+	        $stmt->bindValue(':idAluno', $idAluno);
+
+	        $stmt->execute();
+
+	        return "Cadastrado";
+
 		}
-	}
-
-
-	function insereResponsavelPeloRG()		
-	{
-		$cpf = $_POST['cpf'];
-
-
-
-        $query = "INSERT INTO responsavel_pelo_aluno
-                  FROM responsavel
-                  WHERE cpf_responsavel = ";
-        $conexao = Conexao::pegarConexao();
-        $resultado = $conexao->query($query);
-        $lista = $resultado->fetchAll();
-        return $lista;
-
-
-
-
-
-
-		$query = "SELECT * FROM cidade WHERE uf='".$id."'";
-		//$query = "SELECT * FROM cidades WHERE uf=4";
-		$conexao = Conexao::pegarConexao();
-		$stmt = $conexao->prepare($query);
-		$stmt->execute();
-		$fetchAll = $stmt->fetchAll();
-	
-		foreach ($fetchAll as $cidades) 
+		catch (Exception $e)
 		{
-			echo '<option>'.$cidades['nome'].'</option>';			
+			return "erro";
 		}
+
+		
 	}
 
-	function pegaResponsaveis()
+	function pegaResponsaveisEFuncionarios()
 	{
 		$responsavelDigitado = $_POST['responsavel'];
 		//$query = "SELECT * FROM funcionario WHERE nome_funcionario like '%".$responsavelDigitado."%'";
@@ -77,4 +88,40 @@
 				  </tr>";*/
 
 		}
+	}
+
+	function pegaResponsaveis()
+	{
+		$responsavelDigitado = $_POST['responsavel'];
+		$query = "	SELECT nome_responsavel, cpf_responsavel
+					FROM responsavel 
+					WHERE nome_responsavel 
+					like '%".$responsavelDigitado."%'";
+
+		$conexao = Conexao::pegarConexao();
+		$stmt = $conexao->prepare($query);
+		$stmt->execute();
+		$fetchAll = $stmt->fetchAll();
+		$espaco = "&nbsp--&nbsp";
+	
+		foreach ($fetchAll as $responsaveis) 
+		{
+			echo "<a href='#' class='list-group-item list-group-item-action border-1'>".$responsaveis['nome_responsavel'].$espaco.$responsaveis['cpf_responsavel']."</a>";
+		}
+	}
+
+	function colocaResponsaveisNaTabela()
+	{
+		$idAluno = $_SESSION['alunoID'];
+		$responsavelCPF = $_SESSION['cpfResponsavel'];
+
+		$query = "	SELECT nome_responsavel, cpf_responsavel
+					FROM responsavel 
+					WHERE nome_responsavel 
+					like '%".$responsavelDigitado."%'";
+
+		$conexao = Conexao::pegarConexao();
+		$stmt = $conexao->prepare($query);
+		$stmt->execute();
+		$fetchAll = $stmt->fetchAll();
 	}

@@ -123,41 +123,10 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filhosModal" id="btnPesquisarAlunos" disabled>Pesquisar alunos</button>
             </div>
         </div>
-        <div class="col-6 ml-2">
-            <table class="table" id="tabela" >
-                  <thead class="thead-dark">
-                      <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">First</th>
-                          <th scope="col">Last</th>
-                          <th scope="col">Handle</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                          <td align='right'>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                      </tr>
-                      <tr>
-                          <th scope="row">2</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                      </tr>
-                      <tr>
-                          <th scope="row">3</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                      </tr>
-                  </tbody>
-              </table>
-        </div>
+        
     </div>
 
-    <div class="form-row">       
+    <div class="form-row mt-5">       
         <button type="submit" class="btn btn-success btn-lg">Salvar</button>  
     </div>  
     

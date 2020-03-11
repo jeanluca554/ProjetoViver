@@ -1,6 +1,7 @@
 <?php
 	require_once 'global.php';
 	require_once 'DAO/AlunoDAO.php';
+	session_start();
 
 	$response = array();	
 
@@ -27,6 +28,7 @@
 
 		$ultimoID = $alunoDAO->create();
 
+		$_SESSION["alunoID"] = $ultimoID;
 		$response['mensagem'] = 'ok';
 		$response['ultimoID'] = $ultimoID;
 		echo json_encode($response);

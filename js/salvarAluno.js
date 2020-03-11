@@ -25,7 +25,6 @@ function salvaDadosAluno()
             {
                 if(ultimoId['mensagem'] == 'ok')
                 {
-                    ultimoIdLimpo = ultimoId['ultimoID'];
                     Swal.fire({
                         type: 'success',
                         title: 'Concluído',
