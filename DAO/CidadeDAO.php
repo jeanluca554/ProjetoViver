@@ -7,13 +7,6 @@
 	 */
 	class CidadeDAO extends Cidade
 	{
-		
-		function __construct(argument)
-		{
-			# code...
-		}
-	
-
 		function carregaCidade()
 		{
 			$query = "SELECT * FROM cidade ORDER BY nome ASC";
