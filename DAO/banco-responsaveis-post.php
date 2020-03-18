@@ -16,6 +16,10 @@
 		case 2:
 			insereResponsavelPeloAluno();
 			break;
+
+		case 3:
+			colocaResponsaveisNaTabela();
+			break;
 		
 		default:
 			# code...
@@ -112,16 +116,32 @@
 
 	function colocaResponsaveisNaTabela()
 	{
-		$idAluno = $_SESSION['alunoID'];
-		$responsavelCPF = $_SESSION['cpfResponsavel'];
+		// $idAluno = $_SESSION['alunoID'];
+		$idAluno = 17;
+		$responsaveis = array();
 
-		$query = "	SELECT nome_responsavel, cpf_responsavel
-					FROM responsavel 
-					WHERE nome_responsavel 
-					like '%".$responsavelDigitado."%'";
+
+		$query = "	SELECT r.nome_responsavel, r.cpf_responsavel FROM responsavel_pelo_aluno b
+					JOIN responsavel r
+					ON r.cpf_responsavel = b.responsavel_cpf
+					WHERE b.aluno_id = ".$idAluno;
 
 		$conexao = Conexao::pegarConexao();
 		$stmt = $conexao->prepare($query);
 		$stmt->execute();
 		$fetchAll = $stmt->fetchAll();
+		//$responsaveis = json_encode($fetchAll);
+		//echo $responsaveis;
+		// echo print_r($fetchAll);
+		$i = 0;
+
+		foreach ($fetchAll as $linha)
+		{
+			$responsaveis[$i] = array('nome' => $linha['nome_responsavel'], 'cpf' =>$linha['cpf_responsavel']);
+			// $responsaveis['nome'] = $linha['nome_responsavel'];
+			// $responsaveis['cpf'] = $linha['cpf_responsavel'];
+			$i++;
+		}
+			echo json_encode($responsaveis);
+		
 	}

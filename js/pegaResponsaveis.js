@@ -1,7 +1,8 @@
 $(function() {
     buscaResponsaveis();
-    //$("#btnAdicionaResponsavel").click(insereResponsaveisNaTabela);
-    $("#btnAdicionaResponsavel").click(adicionaResponsaveis); 
+    // $("#btnAdicionaResponsavel").click(insereResponsaveisNaTabela);
+    // $("#btnAdicionaResponsavel").click(adicionaResponsaveis); 
+    $("#btnAdicionaResponsavel").click(buscaResponsaveisVinculadosAoAluno); 
 });
 
 
@@ -41,25 +42,23 @@ function buscaResponsaveis()
 function adicionaResponsaveis()
 {
     var cpf_responsavel = sessionStorage.getItem('cpfResponsavel');
-    var cpf_responsavel = sessionStorage.getItem('cpfResponsavel');
-
     $.ajax({
         url: 'DAO/banco-responsaveis-post.php',
         method: 'post',
-        data: {cpfResponsavel:cpf_responsavel, funcao: 3},
+        data: {cpf: cpf_responsavel, funcao: 2},
 
         success: function(response)
         {
-            Swal.fire({
-                type: 'success',
-                title: 'Deu certo',
-                text: 'O aluno foi vinculado ao responsável',
-                animation: true,
-                customClass: {
-                    popup: 'animated bounce'
-                }                      
-            })
-            insereResponsaveisNaTabela2();            
+            // Swal.fire({
+            //     type: 'success',
+            //     title: 'Deu certo',
+            //     text: response,
+            //     animation: true,
+            //     customClass: {
+            //         popup: 'animated bounce'
+            //     }                      
+            // })
+            buscaResponsaveisVinculadosAoAluno();            
         },
         error: function(response)
         {
@@ -76,26 +75,27 @@ function adicionaResponsaveis()
     });
 }
 
-function insereResponsaveisNaTabela()
+function buscaResponsaveisVinculadosAoAluno()
 {
-    var cpf_responsavel = sessionStorage.getItem('cpfResponsavel');
     $.ajax({
         url: 'DAO/banco-responsaveis-post.php',
+        dataType: 'json',
         method: 'post',
-        data: {cpf:cpf_responsavel, funcao: 2},
+        data: {funcao: 3},
 
         success: function(response)
         {
-            /*Swal.fire({
-                type: 'success',
-                title: 'Deu certo',
-                text: 'O aluno foi vinculado ao responsável',
-                animation: true,
-                customClass: {
-                    popup: 'animated bounce'
-                }                      
-            })*/
-            insereResponsaveisNaTabela2();            
+            // Swal.fire({
+            //     type: 'success',
+            //     title: 'Deu certo',
+            //     text: 'Fomos buscar os responsáveis vinculados',
+            //     animation: true,
+            //     customClass: {
+            //         popup: 'animated bounce'
+            //     }                      
+            // })
+
+            insereResponsaveisNaTabela2(response);            
         },
         error: function(response)
         {
@@ -112,19 +112,22 @@ function insereResponsaveisNaTabela()
     });
 }
 
-function insereResponsaveisNaTabela2()
+function insereResponsaveisNaTabela2(response)
 {
+    // console.log(response);
+    $.each(response, function(key, value) {
+        console.log(response);                     
+        var corpoTabela = $(".tabelaParentesco").find("tbody");
+        var responsavel = value['nome'];
+        var cpfResponsavel = value["cpf"];
 
-    var corpoTabela = $(".tabelaParentesco").find("tbody");
 
-    var responsavel = sessionStorage.getItem('nomeResponsavel');
-    var cpfResponsavel = sessionStorage.getItem('cpfResponsavel');
+        var linha = novaLinha(responsavel, cpfResponsavel);
 
-    var linha = novaLinha(responsavel, cpfResponsavel);
+        corpoTabela.append(linha);
 
-    corpoTabela.append(linha);
-
-    $("#selecionaResponsavel").val('');
+        $("#selecionaResponsavel").val('');
+     })
 }
 
 function novaLinha(responsavel, cpfResponsavel) 
@@ -192,4 +195,11 @@ function novaLinha(responsavel, cpfResponsavel)
 
     return linha;
 
+}
+
+function insereResponsaveisNaTabela3(data)
+{
+    
+    $("#selectCidadeResidencia").html(data);
+    
 }

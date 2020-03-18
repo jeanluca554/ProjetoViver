@@ -139,9 +139,10 @@
                                         <th width="50">Remover</th>              
                                     </tr>
                                 </thead>
-                                <tbody><!--
+                                <tbody>
                                     <tr>
                                         <td>Mirela</td>
+                                        <td>438.024.498-94</td>
                                         <td>
                                             <select name='parentesco' class='form-control' id='parentesco'>
                                                 <option value='0'>Selecione...</option>
@@ -150,13 +151,13 @@
                                                 <option value='Responsavel'>Responsável</option>
                                             </select>
                                         </td>
-                                        <td align="center">
-                                            <a href="#"class="btn btn-outline-info"><img src="img/editar.png"></a>
+                                        <td align='center'>
+                                            <a href='#'class='btn btn-outline-info'><img src='img/editar.png'></a>
                                         </td>
-                                        <td align="center">
-                                            <a href="#" class="btn btn-outline-danger"><img src="img/menos-25.png"></a>
+                                        <td align='center'>
+                                            <a href='#' class='btn btn-outline-danger'><img src='img/menos-25.png'></a>
                                         </td>
-                                    </tr>-->
+                                    </tr>
                                     
                                 </tbody>
                             </table>

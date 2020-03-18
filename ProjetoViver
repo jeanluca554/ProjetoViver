@@ -144,8 +144,8 @@ CREATE TABLE camisas (
     tamanho ENUM('pequena', 'Média', 'grande', 'extra-grande')
 );
 
-INSERT INTO camisas (nome, tamanho, sexo)
-VALUES ('polo', 'grande', 'Masculino');
+INSERT INTO responsavel_pelo_aluno (responsavel_cpf, aluno_id)
+VALUES ('459.321.248-06', 17);
 
 delete FROM aluno where id_aluno = 8;
 SELECT * FROM responsavel;
@@ -158,10 +158,16 @@ INSERT INTO aluno (sexo)
 VALUES ('Masculino');
 
 DROP TABLE responsavel_pelo_aluno;
-describe aluno;
+describe responsavel_pelo_aluno;
 
 
-SELECT A.nome_responsavel
-FROM responsavel A
-INNER JOIN responsavel_pelo_aluno B
-ON A.cpf_responsavel = B.responsavel_cpf;
+SELECT a.nome_aluno, b.responsavel_cpf FROM aluno a
+JOIN responsavel_pelo_aluno b
+ON a.id_aluno = b.aluno_id
+JOIN responsavel r
+ON b.responsavel_cpf = r.cpf_responsavel;
+
+SELECT r.nome_responsavel, r.cpf_responsavel FROM responsavel_pelo_aluno b
+JOIN responsavel r
+ON r.cpf_responsavel = b.responsavel_cpf
+WHERE b.aluno_id = 17;
