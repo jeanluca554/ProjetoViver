@@ -9,7 +9,7 @@
 		
 		$responsavelDAO = new ResponsavelDAO();
 
-		$responsavelDAO->id = $ultimoId;
+		$responsavelDAO->cpf = $ultimoId;
 		$responsavelDAO->endereco = $enderecoId;
 		
 		$responsavelDAO->atualizarEndereco();

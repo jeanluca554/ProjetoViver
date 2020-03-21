@@ -140,7 +140,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <!-- <tr>
                                         <td>Mirela</td>
                                         <td>438.024.498-94</td>
                                         <td>
@@ -157,7 +157,7 @@
                                         <td align='center'>
                                             <a href='#' class='btn btn-outline-danger'><img src='img/menos-25.png'></a>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     
                                 </tbody>
                             </table>

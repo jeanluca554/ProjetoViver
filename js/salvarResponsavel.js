@@ -24,7 +24,7 @@ function salvaDadosPessoais()
             {
                 if(ultimoId['code'] == 'ok')
                 {
-                    ultimoIdLimpo = ultimoId['message'];
+                    ultimoIdLimpo = cpf;
                     //alert("Dados pessoais cadastrados com sucesso!");
                     Swal.fire({
                         type: 'success',
@@ -144,14 +144,14 @@ function salvaEnderecoResponsavel()
 
 function salvaResponsavelCompleto(idEndereco)
 {
-    var ultimoId = parseInt(ultimoIdLimpo);
+    var cpfResp = ultimoIdLimpo;
     var enderecoId = parseInt(idEndereco);
 
     $.ajax({
             url: 'responsavel-endereco-criar.php',
             method: 'post',
             dataType: 'json',
-            data: {ultimoId:ultimoId, enderecoId:enderecoId},
+            data: {ultimoId:cpfResp, enderecoId:enderecoId},
 
             success: function(data)
             {                

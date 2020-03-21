@@ -48,9 +48,8 @@ CREATE TABLE endereco_residencial
 
 CREATE TABLE responsavel
 (
-	id_responsavel INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nome_responsavel VARCHAR(255),
-    cpf_responsavel VARCHAR(14) UNIQUE,
+	cpf_responsavel VARCHAR(14) NOT NULL PRIMARY KEY,
+    nome_responsavel VARCHAR(255),    
     rg_responsavel VARCHAR(13),
     telefone_pessoal_responsavel VARCHAR(15),
     telefone_adicional_responsavel VARCHAR(15),
@@ -157,8 +156,9 @@ alter table camisas add column sexo ENUM('Masculino','Feminino');
 INSERT INTO aluno (sexo)
 VALUES ('Masculino');
 
-DROP TABLE responsavel_pelo_aluno;
+DROP TABLE responsavel;
 describe responsavel_pelo_aluno;
+DESCRIBE responsavel;
 
 
 SELECT a.nome_aluno, b.responsavel_cpf FROM aluno a
@@ -171,3 +171,5 @@ SELECT r.nome_responsavel, r.cpf_responsavel FROM responsavel_pelo_aluno b
 JOIN responsavel r
 ON r.cpf_responsavel = b.responsavel_cpf
 WHERE b.aluno_id = 17;
+
+ALTER TABLE aluno ADD resp_financeiro INT(11);

@@ -43,16 +43,16 @@
 		{
 			$query =   "INSERT INTO responsavel 
 						(
-							nome_responsavel,
 							cpf_responsavel,
+							nome_responsavel,							
 							rg_responsavel,
 							telefone_pessoal_responsavel, 
 							telefone_adicional_responsavel
 						) 
 					  	VALUES 
 					  	(
-					  		:nome_responsavel, 
-					  		:cpf_responsavel, 
+					  		:cpf_responsavel,
+							:nome_responsavel, 
 					  		:rg_responsavel,
 					  		:telefone_responsavel,
 					  		:telefone_adicional_responsavel
@@ -77,11 +77,11 @@
 
 		public function atualizarEndereco()
 	    {
-	        $query = "UPDATE responsavel SET id_endereco_residencia = :endereco WHERE id_responsavel = :id";
+	        $query = "UPDATE responsavel SET id_endereco_residencia = :endereco WHERE cpf_responsavel = :cpf";
 	        $conexao = Conexao::pegarConexao();
 	        $stmt = $conexao->prepare($query);
 	        $stmt->bindValue(':endereco', $this->endereco);
-	        $stmt->bindValue(':id', $this->id);
+	        $stmt->bindValue(':cpf', $this->cpf);
 	        
 	        $stmt->execute();
 	    }
