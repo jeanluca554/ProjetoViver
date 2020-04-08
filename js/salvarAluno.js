@@ -64,3 +64,12 @@ function salvaDadosAluno()
         });
     }    
 }
+
+function salvarResponsavelDoAluno() 
+{
+    var table = $(".tabelaParentesco tbody tr td").click(function() {
+        alert('mudou');
+    });
+
+    table.find('tr')
+}

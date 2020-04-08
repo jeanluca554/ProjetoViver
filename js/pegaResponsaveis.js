@@ -10,7 +10,7 @@ function buscaResponsaveis()
 {
     $("#selecionaResponsavel").keyup(function(){
         var responsavelDigitado = $(this).val();
-        if(responsavelDigitado != ''){
+        if(responsavelDigitado.length > 2){
             $.ajax({
                 url: 'DAO/banco-responsaveis-post.php',
                 method: 'post',
@@ -95,6 +95,8 @@ function buscaResponsaveisVinculadosAoAluno()
             //     }                      
             // })
 
+            insereSelectResponsavelFinanceiro(response);
+            insereSelectResponsavelDidatico(response);
             insereResponsaveisNaTabela2(response);            
         },
         error: function(response)
@@ -112,15 +114,34 @@ function buscaResponsaveisVinculadosAoAluno()
     });
 }
 
+function insereSelectResponsavelFinanceiro(response)
+{
+    $.each(response, function (key, value) {
+        var responsavel = value['nome'];
+        
+        var option = $("<option>").attr("value", responsavel).text(responsavel);
+
+        $("#selectResponsavelFinanceiro").append(option);
+    })
+}
+
+function insereSelectResponsavelDidatico(response)
+{
+    $.each(response, function (key, value) {
+        var responsavel = value['nome'];
+        
+        var option = $("<option>").attr("value", responsavel).text(responsavel);
+
+        $("#selectResponsavelDidatico").append(option);
+    })
+}
+
 function insereResponsaveisNaTabela2(response)
 {
-    // console.log(response);
     $.each(response, function(key, value) {
-        console.log(response);                     
         var corpoTabela = $(".tabelaParentesco").find("tbody");
         var responsavel = value['nome'];
         var cpfResponsavel = value["cpf"];
-
 
         var linha = novaLinha(responsavel, cpfResponsavel);
 
@@ -156,21 +177,6 @@ function novaLinha(responsavel, cpfResponsavel)
     colunaParentesco.append(selectParentesco);
 
     
-    /*Criação da coluna Financeiro:
-    colunaFinanceiro = $("<td>").attr("align", "center");
-    var selectFinanceiro = $("<select>").addClass("form-control").attr("id", "selectFinanceiro");
-
-    var optionFinanceiroSel = $("<option>").attr("value", "0").text("Selecione...");
-    var optionMensalidades = $("<option>").attr("value", "Mensalidades").text("Mensalidades");
-    var optionDidatico = $("<option>").attr("value", "Ditatico").text("Ditático");
-
-    selectFinanceiro.append(optionFinanceiroSel);
-    selectFinanceiro.append(optionMensalidades);
-    selectFinanceiro.append(optionDidatico);
-
-    colunaFinanceiro.append(selectFinanceiro);*/
-  
-    
     //Criação da coluna Editar:
     var colunaEditar = $("<td>").attr("align", "center");
     var botaoEditar = $("<a>").addClass("btn btn-outline-info").attr("href", "#");
@@ -189,7 +195,6 @@ function novaLinha(responsavel, cpfResponsavel)
     linha.append(colunaResponsavel);
     linha.append(colunaCpfResponsavel);
     linha.append(colunaParentesco);
-    //linha.append(colunaFinanceiro);
     linha.append(colunaEditar);
     linha.append(colunaRemover);
 

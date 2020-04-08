@@ -63,7 +63,7 @@ select * from funcionario;
 select * from aluno;
 select * from responsavel_pelo_aluno;
 
-delete from responsavel where id_responsavel = 4;
+delete from responsavel where cpf_responsavel = '459.321.248-06';
 
 truncate table responsavel;
 truncate table endereco_residencial;
@@ -102,7 +102,7 @@ CREATE TABLE responsavel_pelo_aluno
     FOREIGN KEY (responsavel_cpf) REFERENCES responsavel (cpf_responsavel)
 );
 
-DESCRIBE responsavel_pelo_aluno;
+DESCRIBE aluno;
 
 /*CREATE TABLE aluno
 (
