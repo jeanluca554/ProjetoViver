@@ -1,8 +1,8 @@
 $(function() {
     buscaResponsaveis();
     // $("#btnAdicionaResponsavel").click(insereResponsaveisNaTabela);
-    // $("#btnAdicionaResponsavel").click(adicionaResponsaveis); 
-    $("#btnAdicionaResponsavel").click(buscaResponsaveisVinculadosAoAluno); 
+    $("#btnAdicionaResponsavel").click(adicionaResponsaveis); 
+    //$("#btnAdicionaResponsavel").click(buscaResponsaveisVinculadosAoAluno); 
 });
 
 
@@ -32,8 +32,8 @@ function buscaResponsaveis()
             $("#show-list").html('');
             $("#btnAdicionaResponsavel").attr("disabled", false);
             //$("#btnAdicionaResponsavel").click(adicionaResponsaveis(responsavelSemCPF[1].trim()));
-            sessionStorage.setItem('cpfResponsavel', responsavelSemCPF[1].trim())
-            sessionStorage.setItem('nomeResponsavel', responsavelSemCPF[0].trim())
+            sessionStorage.setItem('cpfResponsavel', responsavelSemCPF[1].trim());
+            sessionStorage.setItem('nomeResponsavel', responsavelSemCPF[0].trim());
 
         });
     });
@@ -49,15 +49,8 @@ function adicionaResponsaveis()
 
         success: function(response)
         {
-            // Swal.fire({
-            //     type: 'success',
-            //     title: 'Deu certo',
-            //     text: response,
-            //     animation: true,
-            //     customClass: {
-            //         popup: 'animated bounce'
-            //     }                      
-            // })
+            //console.log(response);
+            sessionStorage.setItem('responsavelPeloAlunoID', response);
             buscaResponsaveisVinculadosAoAluno();            
         },
         error: function(response)
@@ -65,7 +58,7 @@ function adicionaResponsaveis()
             Swal.fire({
                 type: 'warning',
                 title: 'Algo errado aconteceu',
-                text: 'Erro ao responsavel ao aluno',
+                text: 'Erro ao vincular o responsavel ao aluno',
                 animation: false,
                 customClass: {
                     popup: 'animated tada'
@@ -73,6 +66,13 @@ function adicionaResponsaveis()
             })
         }
     });
+    /* }).done(function (resposta) {
+        console.log(resposta);
+
+    }).fail(function (jqXHR, textStatus) {
+        console.log("Request failed: " + textStatus);
+
+    }); */
 }
 
 function buscaResponsaveisVinculadosAoAluno()
@@ -83,28 +83,20 @@ function buscaResponsaveisVinculadosAoAluno()
         method: 'post',
         data: {funcao: 3},
 
-        success: function(response)
+         success: function(response)
         {
-            // Swal.fire({
-            //     type: 'success',
-            //     title: 'Deu certo',
-            //     text: 'Fomos buscar os responsáveis vinculados',
-            //     animation: true,
-            //     customClass: {
-            //         popup: 'animated bounce'
-            //     }                      
-            // })
-
+            $(".tabelaParentesco > tbody").empty();
             insereSelectResponsavelFinanceiro(response);
             insereSelectResponsavelDidatico(response);
-            insereResponsaveisNaTabela2(response);            
+            insereResponsaveisNaTabela2(response);          
         },
         error: function(response)
         {
             Swal.fire({
                 type: 'warning',
                 title: 'Algo errado aconteceu',
-                text: 'Erro ao responsavel ao aluno',
+                 text: 'Erro ao buscar responsáveis vinculados ao aluno',
+                 text: response['message'],
                 animation: false,
                 customClass: {
                     popup: 'animated tada'
@@ -112,6 +104,13 @@ function buscaResponsaveisVinculadosAoAluno()
             })
         }
     });
+    /* }).done(function (resposta) {
+        console.log(resposta);
+
+    }).fail(function (jqXHR, textStatus) {
+    console.log("Request failed: " + textStatus);
+
+    }); */
 }
 
 function insereSelectResponsavelFinanceiro(response)
@@ -154,15 +153,23 @@ function insereResponsaveisNaTabela2(response)
 function novaLinha(responsavel, cpfResponsavel) 
 {
     var linha = $("<tr>");
-    var colunaResponsavel = $("<td>").text(responsavel);
+    var colunaResponsavel = $("<td>").text(responsavel).attr("class", "align-middle");
 
-    var colunaCpfResponsavel = $("<td>").text(cpfResponsavel);
+    var colunaCpfResponsavel = $("<td>").text(cpfResponsavel).attr("class", "align-middle");
 
 
     //Criação da coluna Parentesco:
     var colunaParentesco = $("<td>").attr("align", "center");
 
-    var selectParentesco = $("<select>").addClass("form-control").attr("id", "parentesco");
+    var parentesco = "parentesco";
+    var cpf = cpfResponsavel;
+    var idSelect = parentesco.concat(cpf);
+
+    var selectParentesco = $("<select>").addClass("form-control").attr(
+        {
+            id: idSelect,
+            onchange: "salvarResponsavelDoAluno('"+cpf+"')"
+        });
 
     var optionSel = $("<option>").attr("value", "0").text("Selecione...");
     var optionMae = $("<option>").attr("value", "Mãe").text("Mãe");
@@ -174,7 +181,12 @@ function novaLinha(responsavel, cpfResponsavel)
     selectParentesco.append(optionPai);
     selectParentesco.append(optionRes);
 
+    //hidden do id_responsavel_pelo_aluno para usar mais tarde
+    //var idResponsavelPeloAluno = sessionStorage.getItem('responsavelPeloAlunoID');
+    //var hiddenIdResponsavelPeloAluno = $("input").attr({ type: "hidden", id: idResponsavelPeloAluno });
+
     colunaParentesco.append(selectParentesco);
+   // colunaParentesco.append(hiddenIdResponsavelPeloAluno);
 
     
     //Criação da coluna Editar:

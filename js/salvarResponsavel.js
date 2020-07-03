@@ -83,7 +83,7 @@ function salvaEnderecoResponsavel()
     if (logradouro != '')
     {
         $.ajax({
-            url: 'endereco-responsavel-criar-post.php',
+            url: 'endereco-criar-post.php',
             method: 'post',
             dataType: 'json',
             data: {cep:cep, logradouro:logradouro, numeroCasa:numeroCasa, complemento:complemento, bairro:bairro, cidade:cidade},

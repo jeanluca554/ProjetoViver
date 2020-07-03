@@ -77,7 +77,7 @@
                         <div class="form-row mt-4">                            
                             <div class="form-group col-md-2">
                                 <label for="cep">CEP</label>
-                                <input type="text" name="cep" class="form-control" id="cep" placeholder="00000-000" required>
+                                <input type="text" name="cep" class="form-control cep" id="cep" placeholder="00000-000" required>
                             </div>
 
                             <div class="form-group col-md-8">

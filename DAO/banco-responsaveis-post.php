@@ -3,7 +3,8 @@
 	require_once("config.php");
 	session_start();
 
-	
+	$idAluno = $_SESSION['alunoID'];
+
 	$funcao = $_POST['funcao'];
 
 
@@ -14,11 +15,15 @@
 			break;
 
 		case 2:
-			insereResponsavelPeloAluno();
+			insereResponsavelPeloAluno($idAluno);
 			break;
 
 		case 3:
-			colocaResponsaveisNaTabela();
+			colocaResponsaveisNaTabela($idAluno);
+			break;
+
+		case 4:
+			colocaResponsaveisNaTabela($idAluno);
 			break;
 		
 		default:
@@ -27,12 +32,10 @@
 	}
 
 
-	function insereResponsavelPeloAluno()		
+	function insereResponsavelPeloAluno($idAluno)		
 	{
 		try
 		{
-			$idAluno = $_SESSION['alunoID'];
-
 			$cpf = $_POST['cpf'];
 
 	        $query = "	INSERT INTO responsavel_pelo_aluno
@@ -52,14 +55,17 @@
 	        $stmt->bindValue(':cpf', $cpf);
 	        $stmt->bindValue(':idAluno', $idAluno);
 
-	        $stmt->execute();
+			$stmt->execute();
+			$ultimo = $conexao->lastInsertId();
+			$_SESSION['responsavelPeloAlunoID'] = $ultimo;
 
-	        return "Cadastrado";
+			echo json_encode($ultimo);
+			//return $cpf;
 
 		}
 		catch (Exception $e)
 		{
-			return "erro";
+			echo json_encode($e);
 		}
 
 		
@@ -114,34 +120,87 @@
 		}
 	}
 
-	function colocaResponsaveisNaTabela()
+	function colocaResponsaveisNaTabela($idAluno)
 	{
-		// $idAluno = $_SESSION['alunoID'];
-		$idAluno = 17;
-		$responsaveis = array();
-
-
-		$query = "	SELECT r.nome_responsavel, r.cpf_responsavel FROM responsavel_pelo_aluno b
-					JOIN responsavel r
-					ON r.cpf_responsavel = b.responsavel_cpf
-					WHERE b.aluno_id = ".$idAluno;
-
-		$conexao = Conexao::pegarConexao();
-		$stmt = $conexao->prepare($query);
-		$stmt->execute();
-		$fetchAll = $stmt->fetchAll();
-		//$responsaveis = json_encode($fetchAll);
-		//echo $responsaveis;
-		// echo print_r($fetchAll);
-		$i = 0;
-
-		foreach ($fetchAll as $linha)
+		try
 		{
-			$responsaveis[$i] = array('nome' => $linha['nome_responsavel'], 'cpf' =>$linha['cpf_responsavel']);
-			// $responsaveis['nome'] = $linha['nome_responsavel'];
-			// $responsaveis['cpf'] = $linha['cpf_responsavel'];
-			$i++;
+			$idDoAluno = $idAluno;
+			$responsaveis = array();
+
+
+			$query = "	SELECT r.nome_responsavel, r.cpf_responsavel FROM responsavel_pelo_aluno b
+						JOIN responsavel r
+						ON r.cpf_responsavel = b.responsavel_cpf
+						WHERE b.aluno_id = ".$idDoAluno;
+
+			$conexao = Conexao::pegarConexao();
+			$stmt = $conexao->prepare($query);
+			$stmt->execute();
+			$fetchAll = $stmt->fetchAll();
+			//$responsaveis = json_encode($fetchAll);
+			//echo $responsaveis;
+			// echo print_r($fetchAll);
+			$i = 0;
+
+			foreach ($fetchAll as $linha)
+			{
+				$responsaveis[$i] = array('nome' => $linha['nome_responsavel'], 'cpf' =>$linha['cpf_responsavel']);
+				// $responsaveis['nome'] = $linha['nome_responsavel'];
+				// $responsaveis['cpf'] = $linha['cpf_responsavel'];
+				$i++;
+			}
+				echo json_encode($responsaveis);
+				//echo $responsaveis;
+				//echo json_encode($idAluno);
 		}
-			echo json_encode($responsaveis);
+
+		catch (Exception $e)
+		{
+			//$erro = Erro::trataErro($e);
+			$response['code'] = 'erro';
+			//$response['message'] = "Erro ao associar o endereço ao AlunoDAO.";
+			$response['message'] = (string) $e;
+			echo json_encode($response);
+		}
 		
+		
+	}
+
+	function atribuirParentesco()
+	{
+		try
+		{
+			$cpf = $_POST['cpf'];
+			$parentesco = $_POST['parentescoSelecionado'];
+			$responsavelDoAluno = $_SESSION['responsavelPeloAlunoID'] ;
+
+	        $query = "	INSERT INTO responsavel_pelo_aluno
+	        			( 
+	        				responsavel_cpf,
+	        				aluno_id
+	        			)
+	        			VALUES
+	        			(
+	        				:cpf,
+	        				:idAluno
+	        			)";
+	                  
+	        $conexao = Conexao::pegarConexao();
+			$stmt = $conexao->prepare($query);
+	        
+	        $stmt->bindValue(':cpf', $cpf);
+	        $stmt->bindValue(':idAluno', $idAluno);
+
+			$stmt->execute();
+			$ultimo = $conexao->lastInsertId();
+			$_SESSION['responsavelPeloAlunoID'] = $ultimo;
+
+			echo json_encode($cpf);
+			//return $cpf;
+
+		}
+		catch (Exception $e)
+		{
+			echo json_encode($e);
+		}
 	}

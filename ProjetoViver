@@ -68,6 +68,8 @@ delete from responsavel where cpf_responsavel = '459.321.248-06';
 truncate table responsavel;
 truncate table endereco_residencial;
 
+truncate table responsavel_pelo_aluno;
+
 SET foreign_key_checks = 0;
 #Delete o que tiver que deletar
 SET foreign_key_checks = 1;
@@ -96,13 +98,15 @@ WHERE nome_funcionario like '%jean%';
 CREATE TABLE responsavel_pelo_aluno
 (
 	id_responsavel_pelo_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,    
-    responsavel_cpf VARCHAR(14) UNIQUE,
+    responsavel_cpf VARCHAR(14),
     aluno_id INT,
     FOREIGN KEY (aluno_id) REFERENCES aluno (id_aluno),
     FOREIGN KEY (responsavel_cpf) REFERENCES responsavel (cpf_responsavel)
 );
 
-DESCRIBE aluno;
+alter table responsavel_pelo_aluno add column parentesco_responsavel VARCHAR(12);
+
+DESCRIBE responsavel_pelo_aluno;
 
 /*CREATE TABLE aluno
 (
@@ -150,15 +154,17 @@ delete FROM aluno where id_aluno = 8;
 SELECT * FROM responsavel;
 SELECT * FROM aluno;
 SELECT * FROM responsavel_pelo_aluno;
+SELECT * FROM endereco_residencial;
 
 alter table camisas add column sexo ENUM('Masculino','Feminino');
 
 INSERT INTO aluno (sexo)
 VALUES ('Masculino');
 
-DROP TABLE responsavel;
+DROP TABLE responsavel_pelo_aluno;
 describe responsavel_pelo_aluno;
 DESCRIBE responsavel;
+describe aluno;
 
 
 SELECT a.nome_aluno, b.responsavel_cpf FROM aluno a
@@ -173,3 +179,24 @@ ON r.cpf_responsavel = b.responsavel_cpf
 WHERE b.aluno_id = 17;
 
 ALTER TABLE aluno ADD resp_financeiro INT(11);
+
+
+UPDATE aluno SET id_endereco_residencia = 59 WHERE id_aluno = 45;
+
+
+SELECT r.nome_responsavel, r.cpf_responsavel 
+FROM responsavel_pelo_aluno b
+JOIN responsavel r
+ON r.cpf_responsavel = b.responsavel_cpf
+WHERE b.aluno_id = 78;
+
+INSERT INTO responsavel_pelo_aluno
+( 
+	responsavel_cpf,
+	aluno_id
+)
+VALUES
+(
+	'459.321.248-06',
+	17
+);

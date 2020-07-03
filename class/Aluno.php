@@ -12,7 +12,7 @@
 			return $this->endereco;
 		}
 
-		public function setEndereco($endereco)
+		public function setEndereco(Endereco $endereco)
 		{
 			$this->endereco = $endereco;
 		}

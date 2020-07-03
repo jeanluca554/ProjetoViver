@@ -57,4 +57,15 @@
 
 		}
 
+		public function atualizarEndereco()
+	    {
+	        $query = "UPDATE aluno SET id_endereco_residencia = :endereco WHERE id_aluno = :idAluno";
+	        $conexao = Conexao::pegarConexao();
+	        $stmt = $conexao->prepare($query);
+	        $stmt->bindValue(':endereco', $this->endereco);
+	        $stmt->bindValue(':idAluno', $this->id);
+	        
+	        $stmt->execute();
+	    }
+
 	}

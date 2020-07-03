@@ -1,5 +1,6 @@
 $(function() {
-    buscaCidades();   
+    buscaCidades();       
+    buscaCidadesAluno();       
 });
 
 
@@ -56,4 +57,27 @@ function buscaCidades()
     });
 }
 
+function buscaCidadesAluno() {
+    $("#selectEstadoResidenciaAluno").on("change", function () {
+        var codEstado = $("#selectEstadoResidenciaAluno").val();
 
+        $.ajax({
+            url: 'DAO/banco-cidades-post.php',
+            type: 'POST',
+            data: { funcao: 1, id: codEstado },
+            beforeSend: function () {
+                $("#selectCidadeResidenciaAluno").html("<option>Carregando...</option>");
+            },
+
+            success: function (data) {
+                $("#selectCidadeResidenciaAluno").html(data);
+                //$("#cidadeResidencia").html(data);
+            },
+            error: function (data) {
+                alert("Informações da requisição: \n" + data.getAllResponseHeaders());
+                $("#selectCidadeResidenciaAluno").html("<option>Houve um erro ao carregar as cidades</option>");
+            }
+
+        })
+    });
+}

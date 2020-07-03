@@ -35,6 +35,6 @@
 		$response['code'] = 'erro';
 		$response['title'] = 'Ops...';
 		//$response['text'] = $e;
-		$response['text'] = "Houve um erro ao cadastrar endereço do Responsável";
+		$response['text'] = "Houve um erro ao cadastrar endereço";
 		echo json_encode($response);
 	}

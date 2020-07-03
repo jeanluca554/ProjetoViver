@@ -118,48 +118,48 @@
                         <div class="form-row mt-4">                            
                             <div class="form-group col-md-2">
                                 <label for="cep">CEP</label>
-                                <input type="text" name="cep" class="form-control" id="cep" placeholder="00000-000" required>
+                                <input type="text" name="cepAluno" class="form-control cep" id="cepAluno" placeholder="00000-000" required>
                             </div>
 
                             <div class="form-group col-md-8">
                                 <label for="logradouro">Logradouro</label>
-                                <input type="text" name="logradouro" class="form-control" id="logradouro" placeholder="Rua / Avenida">
+                                <input type="text" name="logradouroAluno" class="form-control" id="logradouroAluno" placeholder="Rua / Avenida">
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label for="numeroCasa">Número</label>
-                                <input type="text" name="numeroCasa" class="form-control" id="numeroCasa" placeholder="Nº">
+                                <input type="text" name="numeroCasaAluno" class="form-control" id="numeroCasaAluno" placeholder="Nº">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="complemento">Complemento</label>
-                                <input type="text" name="complemento" class="form-control" id="complemento" placeholder="Complemento">
+                                <input type="text" name="complementoAluno" class="form-control" id="complementoAluno" placeholder="Complemento">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="bairro">Bairro</label>
-                                <input type="text" name="bairro" class="form-control" id="bairro" placeholder="Bairro">
+                                <input type="text" name="bairroAluno" class="form-control" id="bairroAluno" placeholder="Bairro">
                             </div>
                         </div>
 
                         <div class="form-row">                            
                             <div class="form-group col-md-6" id="divEstadoResidencia">
-                                <label for="estadoResidencia">Estado</label>
-                                <select name="estadoResidencia" class="form-control" id="selectEstadoResidencia">
+                                <label for="estadoResidenciaAluno">Estado</label>
+                                <select name="estadoResidenciaAluno" class="form-control" id="selectEstadoResidenciaAluno">
                                     <option value="">Selecione o Estado</option>
                                     <?php EstadoDAO::carregaEstado();?>
                                 </select>
                             </div>
 
                             <div class="form-group col-md-6" id="divCidadeResidencia">
-                                <label for="cidadeResidencia">Cidade</label>
-                                <select name="cidadeResidencia" class="form-control" id="selectCidadeResidencia">
+                                <label for="cidadeResidenciaAluno">Cidade</label>
+                                <select name="cidadeResidenciaAluno" class="form-control" id="selectCidadeResidenciaAluno">
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-success mr-auto mt-3" id="botao-salvar-endereco-responsavel">Salvar</button>
+                            <button type="submit" class="btn btn-success mr-auto mt-3" id="botao-salvar-endereco-aluno">Salvar</button>
 
                             <button type="reset" class="btn btn-danger mt-3 fecharModalCadastroResponsavel" data-dismiss="modal" id="closeButton">Fechar</button>
                         </div> 
@@ -203,27 +203,7 @@
                                         <th width="50">Remover</th>              
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <!-- <tr>
-                                        <td>Mirela</td>
-                                        <td>438.024.498-94</td>
-                                        <td>
-                                            <select name='parentesco' class='form-control' id='parentesco'>
-                                                <option value='0'>Selecione...</option>
-                                                <option value='Mãe'>Mãe</option>
-                                                <option value='Pai'>Pai</option>
-                                                <option value='Responsavel'>Responsável</option>
-                                            </select>
-                                        </td>
-                                        <td align='center'>
-                                            <a href='#'class='btn btn-outline-info'><img src='img/editar.png'></a>
-                                        </td>
-                                        <td align='center'>
-                                            <a href='#' class='btn btn-outline-danger'><img src='img/menos-25.png'></a>
-                                        </td>
-                                    </tr> -->
-                                    
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
 
