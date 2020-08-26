@@ -86,6 +86,8 @@ function buscaResponsaveisVinculadosAoAluno()
          success: function(response)
         {
             $(".tabelaParentesco > tbody").empty();
+             $("#selectResponsavelFinanceiro").empty();
+             $("#selectResponsavelDidatico").empty();
             insereSelectResponsavelFinanceiro(response);
             insereSelectResponsavelDidatico(response);
             insereResponsaveisNaTabela2(response);          
@@ -141,8 +143,9 @@ function insereResponsaveisNaTabela2(response)
         var corpoTabela = $(".tabelaParentesco").find("tbody");
         var responsavel = value['nome'];
         var cpfResponsavel = value["cpf"];
+        var IdResponsavelPeloAluno = value["idResponsavelPeloAluno"];
 
-        var linha = novaLinha(responsavel, cpfResponsavel);
+        var linha = novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno);
 
         corpoTabela.append(linha);
 
@@ -150,7 +153,7 @@ function insereResponsaveisNaTabela2(response)
      })
 }
 
-function novaLinha(responsavel, cpfResponsavel) 
+function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno) 
 {
     var linha = $("<tr>");
     var colunaResponsavel = $("<td>").text(responsavel).attr("class", "align-middle");
@@ -168,7 +171,7 @@ function novaLinha(responsavel, cpfResponsavel)
     var selectParentesco = $("<select>").addClass("form-control").attr(
         {
             id: idSelect,
-            onchange: "salvarResponsavelDoAluno('"+cpf+"')"
+            onchange: "salvarResponsavelDoAluno('" + cpf + "', "+ IdResponsavelPeloAluno +")"
         });
 
     var optionSel = $("<option>").attr("value", "0").text("Selecione...");
@@ -181,12 +184,9 @@ function novaLinha(responsavel, cpfResponsavel)
     selectParentesco.append(optionPai);
     selectParentesco.append(optionRes);
 
-    //hidden do id_responsavel_pelo_aluno para usar mais tarde
-    //var idResponsavelPeloAluno = sessionStorage.getItem('responsavelPeloAlunoID');
-    //var hiddenIdResponsavelPeloAluno = $("input").attr({ type: "hidden", id: idResponsavelPeloAluno });
+    // hidden do id_responsavel_pelo_aluno para usar mais tarde
 
     colunaParentesco.append(selectParentesco);
-   // colunaParentesco.append(hiddenIdResponsavelPeloAluno);
 
     
     //Criação da coluna Editar:

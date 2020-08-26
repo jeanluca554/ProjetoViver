@@ -152,11 +152,11 @@ VALUES ('459.321.248-06', 17);
 
 delete FROM aluno where id_aluno = 8;
 SELECT * FROM responsavel;
-SELECT * FROM aluno;
+SELECT nome_aluno, id_aluno FROM aluno ORDER BY nome_aluno;
 SELECT * FROM responsavel_pelo_aluno;
 SELECT * FROM endereco_residencial;
 
-alter table camisas add column sexo ENUM('Masculino','Feminino');
+alter table aluno add column situacao ENUM('Masculino','Feminino');
 
 INSERT INTO aluno (sexo)
 VALUES ('Masculino');
@@ -173,10 +173,11 @@ ON a.id_aluno = b.aluno_id
 JOIN responsavel r
 ON b.responsavel_cpf = r.cpf_responsavel;
 
-SELECT r.nome_responsavel, r.cpf_responsavel FROM responsavel_pelo_aluno b
+SELECT r.nome_responsavel, r.cpf_responsavel, b.id_responsavel_pelo_aluno 
+FROM responsavel_pelo_aluno b
 JOIN responsavel r
 ON r.cpf_responsavel = b.responsavel_cpf
-WHERE b.aluno_id = 17;
+WHERE b.aluno_id = 107;
 
 ALTER TABLE aluno ADD resp_financeiro INT(11);
 
@@ -188,7 +189,7 @@ SELECT r.nome_responsavel, r.cpf_responsavel
 FROM responsavel_pelo_aluno b
 JOIN responsavel r
 ON r.cpf_responsavel = b.responsavel_cpf
-WHERE b.aluno_id = 78;
+WHERE b.aluno_id = 10;
 
 INSERT INTO responsavel_pelo_aluno
 ( 
@@ -200,3 +201,8 @@ VALUES
 	'459.321.248-06',
 	17
 );
+
+
+UPDATE responsavel_pelo_aluno 
+SET parentesco_responsavel = 'responsavel' 
+WHERE id_responsavel_pelo_aluno = 38;

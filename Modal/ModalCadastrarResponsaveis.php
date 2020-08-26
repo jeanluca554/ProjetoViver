@@ -87,7 +87,7 @@
 
                             <div class="form-group col-md-2">
                                 <label for="numeroCasa">Número</label>
-                                <input type="text" name="numeroCasa" class="form-control" id="numeroCasa" placeholder="Nº">
+                                <input type="number" name="numeroCasa" class="form-control" id="numeroCasa" placeholder="Nº">
                             </div>
                         </div>
 

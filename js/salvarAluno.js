@@ -190,50 +190,35 @@ function vincularEnderecoAoAluno(idEndereco) {
     }); */
 }
 
-function salvarResponsavelDoAluno(cpfResponsavel) 
+function salvarResponsavelDoAluno(cpfResponsavel, IdResponsavelPeloAluno) 
 {
+    var idRespAluno = IdResponsavelPeloAluno;
+
+    console.log(idRespAluno);
     var parentesco = "parentesco";
     var cpf = cpfResponsavel;
+    console.log(cpf);
     var idSelect = parentesco.concat(cpf);
+    console.log(idSelect);
     var x = document.getElementById(idSelect).selectedIndex;
     var y = document.getElementById(idSelect).options;
     //alert("Index: " + y[x].index + " is " + y[x].text);
     var parentescoSelecionado = y[x].text;
-    // console.log(parentescoSelecionado);
+    console.log(parentescoSelecionado);
 
     $.ajax({
         url: 'DAO/banco-responsaveis-post.php',
         method: 'post',
         dataType: 'json',
         data: { 
-            cpf: cpf, 
+            cpf: cpf,
+            idResponsavelPeloAluno: idRespAluno,
             parentescoSelecionado: parentescoSelecionado,
             funcao: 4
         },
 
-        success: function (ultimoId) {
-            if (ultimoId['mensagem'] == 'ok') {
-                Swal.fire({
-                    type: 'success',
-                    title: 'Concluído',
-                    text: 'Dados pessoais cadastrados com sucesso!',
-                    animation: true,
-                    customClass: {
-                        popup: 'animated bounce'
-                    }
-                })
-            }
-            else {
-                Swal.fire({
-                    type: 'warning',
-                    title: ultimoId['title'],
-                    text: ultimoId['text'],
-                    animation: false,
-                    customClass: {
-                        popup: 'animated tada'
-                    }
-                })
-            }
+        success: function (response) {
+            console.log(response);
         },
 
         error: function (ultimoId) {

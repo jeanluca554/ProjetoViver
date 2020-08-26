@@ -4,10 +4,11 @@
 
 	
 	$funcao = $_POST['funcao'];
+	$id = $_POST['id'];
 	
 	if($funcao == 1)
 	{
-		pegaCidadePeloEstado();
+		pegaCidadePeloEstado($id);
 	}
 	else
 	{
@@ -18,9 +19,8 @@
 	}
 
 
-	function pegaCidadePeloEstado()
+	function pegaCidadePeloEstado($id)
 	{
-		$id = $_POST['id'];
 		$query = "SELECT * FROM cidade WHERE uf='".$id."'";
 		//$query = "SELECT * FROM cidades WHERE uf=4";
 		$conexao = Conexao::pegarConexao();

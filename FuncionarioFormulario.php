@@ -132,8 +132,8 @@
     
 </form>
 
-<script type="text/javascript" src="node_modules/bootstrap/js/jquery-3.3.1.min.js"/></script>
-<script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"/></script>
+<script type="text/javascript" src="node_modules/bootstrap/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"></script>
 <script src="js/formataCamposFuncionarios.js"></script>
 
 <?php 

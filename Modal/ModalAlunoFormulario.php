@@ -57,20 +57,22 @@
                                     </span>
                                     <input type="text" class="form-control" id="dataNascimento" name="dataNascimento">
                                 </div>
-                            </div> 
-
-                            <div class="form-group col-md-6">
-                                <label for="sexo">Sexo</label>
-                                <select name="sexo" class="form-control" id="sexo">
-                                    <option>
-                                        Masculino
-                                    </option>
-                                    
-                                    <option>
-                                        Feminino
-                                    </option>                                
-                                </select>        
                             </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="sexo">Sexo</label>
+                                    <select name="sexo" class="form-control" id="sexo">
+                                        <option>
+                                            Masculino
+                                        </option>
+                                        
+                                        <option>
+                                            Feminino
+                                        </option>                                
+                                    </select>        
+                                </div>
+                            
+
                         </div>
 
                         <div class="form-row">
@@ -104,7 +106,7 @@
                         </div> 
                         
                         <div class="form-row mt-4">
-                            <div class="form-row col-md-12">       
+                            <div class="form-row col-md-12 botao-salvar-aluno">       
                                 <button type="submit" class="btn btn-success btn-lg" id="botao-salvar-aluno">Salvar</button>
                                 
                                 <div class="ml-auto">
@@ -128,7 +130,7 @@
 
                             <div class="form-group col-md-2">
                                 <label for="numeroCasa">Número</label>
-                                <input type="text" name="numeroCasaAluno" class="form-control" id="numeroCasaAluno" placeholder="Nº">
+                                <input type="number" name="numeroCasaAluno" class="form-control" id="numeroCasaAluno" placeholder="Nº">
                             </div>
                         </div>
 
@@ -256,7 +258,7 @@
 </div>
 
 
-<script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"/></script>
+<script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"></script>
 <script src="datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="datepicker/js/bootstrap-datepicker.pt-BR.min.js" charset="UTF-8"></script> 
 <script src="js/DatepikerComum.js"></script>

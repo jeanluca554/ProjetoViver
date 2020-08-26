@@ -7,7 +7,7 @@
 	 */
 	class EstadoDAO extends Estado
 	{
-		function carregaEstado()
+		public static function carregaEstado()
 		{
 			$query = "SELECT * FROM estado ORDER BY nome ASC";
 			$conexao = Conexao::pegarConexao();

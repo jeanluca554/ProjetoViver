@@ -1,7 +1,7 @@
 <?php 
     require_once("cabecalho.php");
     require_once("logica-usuario.php");
-    require_once 'DAO/FuncionarioDAO.php';
+    require_once('DAO/FuncionarioDAO.php');
 
     verificaUsuario();
 ?>
@@ -36,7 +36,9 @@
                     <tr>
                         <td><?php echo $linha['nome_funcionario'] ?></td>
                         <td><?php echo $linha['cargo_funcionario'] ?></td>
-                        <td align="center"><a href="CalculaSalarioFormulario.php?id=<?php echo $linha['id_funcionario'] ?>" class="btn btn-info">Calcular Salário</a></td>
+                        <td align="center"><a 
+                            href="CalculaSalarioFormulario.php?id=<?php echo $linha['id_funcionario'] ?>" class="btn btn-info">Calcular Salário</a>
+                        </td>
                     </tr>
                 <?php endforeach ?>
             </tbody>

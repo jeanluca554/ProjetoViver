@@ -1,5 +1,5 @@
 <?php
-	require_once("Conexao.php");
+	require("Conexao.php");
 	require_once("config.php");
 	session_start();
 
@@ -23,7 +23,7 @@
 			break;
 
 		case 4:
-			colocaResponsaveisNaTabela($idAluno);
+			atribuirParentesco();
 			break;
 		
 		default:
@@ -128,7 +128,8 @@
 			$responsaveis = array();
 
 
-			$query = "	SELECT r.nome_responsavel, r.cpf_responsavel FROM responsavel_pelo_aluno b
+			$query = "	SELECT r.nome_responsavel, r.cpf_responsavel, b.id_responsavel_pelo_aluno
+						FROM responsavel_pelo_aluno b
 						JOIN responsavel r
 						ON r.cpf_responsavel = b.responsavel_cpf
 						WHERE b.aluno_id = ".$idDoAluno;
@@ -144,7 +145,11 @@
 
 			foreach ($fetchAll as $linha)
 			{
-				$responsaveis[$i] = array('nome' => $linha['nome_responsavel'], 'cpf' =>$linha['cpf_responsavel']);
+				$responsaveis[$i] = array(
+					'nome' => $linha['nome_responsavel'], 
+					'cpf' =>$linha['cpf_responsavel'], 
+					'idResponsavelPeloAluno' => $linha['id_responsavel_pelo_aluno']
+				);
 				// $responsaveis['nome'] = $linha['nome_responsavel'];
 				// $responsaveis['cpf'] = $linha['cpf_responsavel'];
 				$i++;
@@ -170,33 +175,27 @@
 	{
 		try
 		{
-			$cpf = $_POST['cpf'];
+			$idRespAluno = $_POST['idResponsavelPeloAluno'];
 			$parentesco = $_POST['parentescoSelecionado'];
-			$responsavelDoAluno = $_SESSION['responsavelPeloAlunoID'] ;
+			$respAlunoId = $_SESSION['responsavelPeloAlunoID'];
 
-	        $query = "	INSERT INTO responsavel_pelo_aluno
-	        			( 
-	        				responsavel_cpf,
-	        				aluno_id
-	        			)
-	        			VALUES
-	        			(
-	        				:cpf,
-	        				:idAluno
-	        			)";
-	                  
+			$query = 	"	UPDATE responsavel_pelo_aluno 
+							SET parentesco_responsavel = :parentesco 
+							WHERE id_responsavel_pelo_aluno = :respAlunoId
+						";
+
 	        $conexao = Conexao::pegarConexao();
 			$stmt = $conexao->prepare($query);
 	        
-	        $stmt->bindValue(':cpf', $cpf);
-	        $stmt->bindValue(':idAluno', $idAluno);
+	        $stmt->bindValue(':parentesco', $parentesco);
+	        $stmt->bindValue(':respAlunoId', $respAlunoId);
 
 			$stmt->execute();
 			$ultimo = $conexao->lastInsertId();
 			$_SESSION['responsavelPeloAlunoID'] = $ultimo;
 
-			echo json_encode($cpf);
-			//return $cpf;
+			$response['message'] = "Parentesco atribuído com sucesso" .$parentesco;
+			echo json_encode($response);
 
 		}
 		catch (Exception $e)
