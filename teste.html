@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
+<link rel="stylesheet" href="node_modules/bootstrap/compiler/home.css">
+<link rel="stylesheet" href="node_modules/bootstrap/compiler/jquery-ui-1.10.3.custom.min.css">
+<link rel="stylesheet" href="node_modules/bootstrap/compiler/animate.css">
+<a href="#tab-mileage" data-toggle="modal" data-target="#buyers-report-modal">Mileage</a>
+
+<a href="#tab-wrong-vehicle" data-toggle="modal" data-target="#buyers-report-modal">Wrong vehicle?</a>
+
+<div class="modal" id="buyers-report-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-offset-top">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="sd-tabs sd-tab-interaction">
+                    <div class="row">
+                        <ul class="nav nav-tabs col-md-3 custom-bullet">
+                            <li class="active"><a data-toggle="tab" href="#tab-wrong-vehicle"> Wrong Vehicle?</a>
+
+                            </li>
+                            <li><a data-toggle="tab" href="#tab-mileage"> Mileage</a>
+
+                            </li>
+                        </ul>
+                        <div class="tab-content col-md-9">
+                            <form id="tab-wrong-vehicle" class="tab-pane active" action="" method="post">
+                                <!-- Wrong Vehicle? -->
+                                 <h3 class="tab-title">Tab 1</h3>
+
+                            </form>
+                            <!-- Wrong Vehicle? -->
+                            <form id="tab-mileage" class="tab-pane">
+                                <!-- Mileage -->
+                                 <h2 class="tab-title-resp hidden-md hidden-lg"> Mileage</h2>
+
+                                 <h3 class="tab-title">Tab 2</h3>
+
+                            </form>
+                            <!-- Mileage -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        $('a[data-toggle=modal][data-target]').click(function () {
+            var target = $(this).attr('href');
+            $('a[data-toggle=tab][href=' + target + ']').tab('show');
+        });
+</script>
+<script type="text/javascript" src="node_modules/bootstrap/js/jquery-3.3.1.min.js"></script>
+<script src="node_modules/jquery/dist/jquery.js"></script>

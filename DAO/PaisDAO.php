@@ -9,7 +9,7 @@
 	class PaisDao extends Pais
 	{
 		
-		function carregaPais()
+		static function carregaPais()
 		{
 			$query = "SELECT * FROM pais ORDER BY nome_pt ASC";
 			$conexao = Conexao::pegarConexao();

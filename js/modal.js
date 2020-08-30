@@ -2,13 +2,20 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var nome = button.data('nome')
     var id = button.data('id')
+    var idEnderecoResidencial = button.data('endereco');
+
+    idEnderecoResidencial == '' ? sessionStorage.setItem('idEnderecoAluno', 1) : sessionStorage.setItem('idEnderecoAluno', idEnderecoResidencial);
 
     if (typeof nome === "undefined")
     {
         var modal = $(this)
         modal.find('.modal-title').text('Cadastrar Aluno ');
+
         modal.find('#botao-salvar-aluno').show();
         modal.find('#botao-alterar-aluno').hide();
+
+        modal.find('#botao-salvar-endereco-aluno').show();
+        modal.find('#botao-alterar-endereco-aluno').hide();
     }
 
     else
@@ -73,19 +80,78 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
                     modal.find('#botao-alterar-aluno').show();
                 })
             },
-            error: function (response) {
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                for (i in XMLHttpRequest) {
+                    if (i != "channel")
+                        document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+                }
+            }
+            /* error: function (response) {
                 console.log(response);
                 Swal.fire({
                     type: 'warning',
                     title: 'Algo errado aconteceu',
-                    text: 'Erro ao buscar os dados do aluno' + response,
+                    text: 'Erro ao buscar os dados do aluno, Jovem' + response,
                     animation: false,
                     customClass: {
                         popup: 'animated tada'
                     }
                 })
-            }
+            } */
         });
+
+        $.ajax({
+            url: 'DAO/banco-alunos-post.php',
+            dataType: 'json',
+            method: 'post',
+            data: { idEndereco: idEnderecoResidencial, funcao: 2 },
+
+            success: function (response) {
+                $.each(response, function (key, value) {
+                    var cep = value["cep"];
+                    var logradouro = value["logradouro"];
+                    var numeroCasa = value["numero_casa"];
+                    var complemento = value["complemento"];
+                    var bairro = value["bairro"];
+                    var cidade = value["cidade"];
+                    var estado = value["estado"];
+
+                    modal.find('#cepAluno').val(cep);
+                    modal.find('#logradouroAluno').val(logradouro);
+                    modal.find('#numeroCasaAluno').val(numeroCasa);
+                    modal.find('#complementoAluno').val(complemento);
+                    modal.find('#bairroAluno').val(bairro);
+                    modal.find('#selectEstadoResidenciaAluno').val(estado);
+                    var option = $("<option>").attr("value", cidade).text(cidade);
+                    modal.find('#selectCidadeResidenciaAluno').append(option);
+
+                    modal.find('#botao-salvar-endereco-aluno').hide();
+                    modal.find('#botao-alterar-endereco-aluno').show();
+                })
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                for (i in XMLHttpRequest) {
+                    if (i != "channel")
+                        document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+                }
+            }
+
+            /* error: function (response) {
+                console.log(response);
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Algo errado aconteceu',
+                    text: 'Erro ao buscar os dados do aluno eita' + response,
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
+            } */
+        });
+
     }   
 
     function trataData(date) {

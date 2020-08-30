@@ -4,12 +4,24 @@
     session_start();
     
     $funcao = $_POST['funcao'];
-    $idAluno = $_POST['idAluno'];
 
 	switch ($funcao) 
 	{
-		case 1:
+        case 1:
+            $idAluno = $_POST['idAluno'];
 			buscaDadosAluno($idAluno);
+        break;
+
+        case 2:
+            $idEndereco = $_POST['idEndereco'];
+
+            if ($idEndereco == null)
+            {
+                $idEndereco = 1;
+            }
+
+            // $idEndereco = 142;
+			buscaEnderecoAluno($idEndereco);
         break;
 		
 		default:
@@ -42,5 +54,34 @@
             echo Erro::trataErro($e);
 
             echo json_encode( (string) $e);
+        }
+    }
+
+    function buscaEnderecoAluno($idEndereco)
+    {
+        try
+        {
+            $query = "  SELECT 
+                            cep,
+                            logradouro,
+                            numero_casa,
+                            complemento,
+                            bairro,
+                            cidade, 
+                            estado
+                        FROM endereco_residencial
+                        WHERE id_endereco_residencia = ".$idEndereco;
+                $conexao = Conexao::pegarConexao();
+                $resultado = $conexao->query($query);
+                $lista = $resultado->fetchAll();
+                echo json_encode($lista);
+        }
+
+        catch (Exception $e)
+        {
+            echo Erro::trataErro($e);
+
+            // echo json_encode( (string) $e);
+            echo "eita Jovem!";
         }
     }

@@ -12,6 +12,7 @@
 		$complemento = $_POST['complemento'];
 		$bairro = $_POST['bairro'];
 		$cidade = $_POST['cidade'];
+		$estado = $_POST['estado'];
 
 		$enderecoDAO = new EnderecoDAO();
 
@@ -21,6 +22,7 @@
 		$enderecoDAO->complemento = $complemento;
 		$enderecoDAO->bairro = $bairro;
 		$enderecoDAO->cidade = $cidade;
+		$enderecoDAO->estado = $estado;
 
 		$ultimoID = $enderecoDAO->create();
 	

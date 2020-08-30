@@ -1,6 +1,6 @@
 $(function () {
     $("#botao-alterar-aluno").click(alterarDadosAluno);
-    $("#botao-salvar-endereco-aluno").click(salvaEnderecoAluno);
+    $("#botao-alterar-endereco-aluno").click(alterarEnderecoAluno);
     //$("#parentesco438.024.498-94").onchange="salvarResponsavelDoAluno(438.024.498-94)";
 });
 
@@ -74,6 +74,80 @@ function alterarDadosAluno() {
                     }
                 })
             }
+        });
+    }
+}
+
+function alterarEnderecoAluno() {
+    var cep = $("#cepAluno").val();
+    var logradouro = $("#logradouroAluno").val();
+    var numeroCasa = $("#numeroCasaAluno").val();
+    var complemento = $("#complementoAluno").val();
+    var bairro = $("#bairroAluno").val();
+    var estado = $("#selectEstadoResidenciaAluno").val();
+    var cidade = $("#selectCidadeResidenciaAluno").val();
+    var id = parseInt(sessionStorage.getItem('idEnderecoAluno'));
+    console.log(id);
+
+    if (id != '') {
+        $.ajax({
+            url: 'aluno-endereco-alterar-post.php',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                id: id,
+                cep: cep,
+                logradouro: logradouro,
+                numeroCasa: numeroCasa,
+                complemento: complemento,
+                bairro: bairro,
+                estado: estado,
+                cidade: cidade,
+            },
+
+            success: function (response) {
+                if (response['mensagem'] == 'ok') {
+
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Concluído',
+                        text: 'Endereço do aluno alterado com sucesso!',
+                        animation: true,
+                        customClass: {
+                            popup: 'animated bounce'
+                        }
+                    })
+                }
+                else {
+                    Swal.fire({
+                        type: 'warning',
+                        title: response['title'],
+                        text: response['text'],
+                        animation: false,
+                        customClass: {
+                            popup: 'animated tada'
+                        }
+                    })
+                }
+            },
+
+             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                for (i in XMLHttpRequest) {
+                    if (i != "channel")
+                        document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+                }
+            } 
+           /* error: function (response) {
+                Swal.fire({
+                    type: 'warning',
+                    title: 'mensagemzinha',
+                    text: response['text'],
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
+            }*/
         });
     }
 }

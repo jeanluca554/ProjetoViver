@@ -1,6 +1,6 @@
 <?php
 	require_once 'global.php';
-	require_once 'DAO/AlunoDAO.php';
+	require_once 'DAO/EnderecoDAO.php';
 	session_start();
 
 	$response = array();
@@ -8,26 +8,25 @@
 	try
 	{
 		$id = $_POST['id'];
-		$nome = $_POST['nome'];
-		$postNascimento = $_POST['dataNascimento'];
-		$nascimento = trataData($postNascimento);
-		$sexo = $_POST['sexo'];
-		$nacionalidade = $_POST['nacionalidade'];
+		$cep = $_POST['cep'];
+		$logradouro = $_POST['logradouro'];
+		$numero = $_POST['numeroCasa'];
+		$complemento = $_POST['complemento'];
+		$bairro = $_POST['bairro'];
 		$estado = $_POST['estado'];
 		$cidade = $_POST['cidade'];
-		$pais = $_POST['pais'];
 		
-		$alunoDAO = new AlunoDAO($id);
+		$enderecoDAO = new EnderecoDAO($id);
 
-		$alunoDAO->nome = $nome;
-		$alunoDAO->nascimento = $nascimento;
-		$alunoDAO->sexo = $sexo;
-		$alunoDAO->nacionalidade = $nacionalidade;
-		$alunoDAO->estado = $estado;
-		$alunoDAO->cidade = $cidade;
-		$alunoDAO->pais = $pais;
+		$enderecoDAO->cep = $cep;
+		$enderecoDAO->logradouro = $logradouro;
+		$enderecoDAO->numero = $numero;
+		$enderecoDAO->complemento = $complemento;
+		$enderecoDAO->bairro = $bairro;
+		$enderecoDAO->estado = $estado;
+		$enderecoDAO->cidade = $cidade;
 
-		$alunoDAO->update();
+		$enderecoDAO->update();
 
 		$response['mensagem'] = 'ok';
 		// $response['teste'] = $teste;
@@ -41,8 +40,8 @@
 		//Erro::trataErro($e);
 		$response['mensagem'] = 'erro';
 		$response['title'] = "Ops...";
-		$response['text'] = "Eita";
-		// $response['text'] = (string) $e;
+		//$response['text'] = "Eita";
+		$response['text'] = (string) $e;
 		echo json_encode($response);
 	}
 

@@ -27,7 +27,7 @@
 
 		public function create()
 		{
-			$query = "INSERT INTO endereco_residencial (cep, logradouro, numero_casa, complemento, bairro, cidade) VALUES (:cep, :logradouro, :numero, :complemento, :bairro, :cidade)";
+			$query = "INSERT INTO endereco_residencial (cep, logradouro, numero_casa, complemento, bairro, cidade, estado) VALUES (:cep, :logradouro, :numero, :complemento, :bairro, :cidade, :estado)";
 
 			$conexao = Conexao::pegarConexao();
 
@@ -39,6 +39,7 @@
 			$stmt->bindValue(':complemento', $this->complemento);
 			$stmt->bindValue(':bairro', $this->bairro);
 			$stmt->bindValue(':cidade', $this->cidade);
+			$stmt->bindValue(':estado', $this->estado);
 
 			$stmt->execute();
 			$ultimo = $conexao->lastInsertId();
@@ -56,12 +57,31 @@
 	        return $lista;
 	    }
 
-	    public function limpaSalario($valor)
+	    public function update()
 		{
-			$valor = trim($valor);
-			$valor = str_replace(".", "", $valor);
-			$valor = str_replace(",", "", $valor);
-			
-			return (double)$valor;
+			$query ="	UPDATE endereco_residencial 
+						SET	cep = :cep,
+					      	logradouro = :logradouro,
+					      	numero_casa = :numero, 
+					      	complemento = :complemento, 
+					      	bairro = :bairro, 
+					      	estado = :estado, 
+					      	cidade = :cidade 
+							WHERE id_endereco_residencia = :id ";
+					  	
+			$conexao = Conexao::pegarConexao();
+
+			$stmt = $conexao->prepare($query);
+
+			$stmt->bindValue(':cep', $this->cep);
+			$stmt->bindValue(':logradouro', $this->logradouro);
+			$stmt->bindValue(':numero', $this->numero);
+			$stmt->bindValue(':complemento', $this->complemento);
+			$stmt->bindValue(':bairro', $this->bairro);
+			$stmt->bindValue(':estado', $this->estado);
+			$stmt->bindValue(':cidade', $this->cidade);
+			$stmt->bindValue(':id', $this->id);
+
+			$stmt->execute();
 		}
 	}

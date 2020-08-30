@@ -85,14 +85,15 @@ function salvaEnderecoAluno() {
     var numeroCasa = $('#numeroCasaAluno').val();
     var complemento = $('#complementoAluno').val();
     var bairro = $('#bairroAluno').val();
-    var cidade = $('#selectCidadeResidencia').val();
+    var cidade = $('#selectCidadeResidenciaAluno').val();
+    var estado = $('#selectEstadoResidenciaAluno').val();
 
     if (logradouro != '') {
         $.ajax({
             url: 'endereco-criar-post.php',
             method: 'post',
             dataType: 'json',
-            data: { cep: cep, logradouro: logradouro, numeroCasa: numeroCasa, complemento: complemento, bairro: bairro, cidade: cidade },
+            data: { cep: cep, logradouro: logradouro, numeroCasa: numeroCasa, complemento: complemento, bairro: bairro, cidade: cidade, estado: estado },
 
             success: function (ultimoId) {
                 if (ultimoId['code'] == 'ok') {
@@ -115,7 +116,13 @@ function salvaEnderecoAluno() {
 
             },
 
-            error: function () {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                for (i in XMLHttpRequest) {
+                    if (i != "channel")
+                        document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+                }
+            }
+            /* error: function () {
                 //alert("Erro ao criar o endereço do responsável");
                 Swal.fire({
                     type: 'error',
@@ -126,7 +133,7 @@ function salvaEnderecoAluno() {
                         popup: 'animated tada'
                     }
                 })
-            }
+            } */
         });
 
     }

@@ -51,6 +51,7 @@
                                 data-target="#ModalAlunoFormulario" 
                                 data-nome="<?php echo $linha['nome_aluno'] ?>"
                                 data-id="<?php echo $linha['id_aluno'] ?>"
+                                data-endereco="<?php echo $linha['id_endereco_residencia'] ?>"
                             >
                                 <img src="img/editar.png">
                             </button>
@@ -81,14 +82,18 @@
             <div class="modal-header">              
                 <h5 class="modal-title">Cadastrar Aluno</h5>
 
-                <button type="button" class="close fecharModalCadastroAluno" data-dismiss="modal">
+                <button 
+                    type="button" 
+                    class="close fecharModalCadastroAluno" 
+                    id="fecharMoldalAluno" 
+                    data-dismiss="modal">
                     <span>&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
+                    <li class="nav-item pessoaisAluno">
                         <a class="nav-link active" id="dadosPessoaisAluno-tab" data-toggle="tab" href="#abaDadosPessoaisAluno" role="tab" aria-controls="hom" aria-selected="true">Dados Pessoais</a>
                     </li>
                     <li class="nav-item">
@@ -149,6 +154,7 @@
                             <div class="form-group col-md-3" id="divEstadoNascimento">
                                 <label for="estadoNascimento">Estado</label>
                                 <select class="form-control" id="selectEstadoNascimento" name="estado">
+                                    <option value="0">Selecione o Estado</option>    
                                     <?php EstadoDAO::carregaEstado();?>
                                 </select>
                             </div>
@@ -173,42 +179,128 @@
                                 <button type="submit" class="btn btn-success btn-lg" id="botao-alterar-aluno">Alterar</button>
                                 
                                 <div class="ml-auto cancelar-aluno">
-                                    <button type="reset" class="btn btn-danger btn-lg fecharModalCadastroAlunos" data-dismiss="modal">Cancelar</button>
+                                    <button type="reset" class="btn btn-danger btn-lg fecharModalCadastroAluno" data-dismiss="modal">Cancelar</button>
                                 </div> 
                             </div>
                         </div>
+                    </div>
+
+                    <div class="tab-pane fade divEndereco" id="abaEnderecoAluno" role="tabpanel" aria-labelledby="profile-tab">                       
+                        <div class="form-row mt-4">                            
+                            <div class="form-group col-md-2">
+                                <label for="cep">CEP</label>
+                                <input 
+                                    type="text" 
+                                    name="cepAluno" 
+                                    class="form-control cep" 
+                                    id="cepAluno" 
+                                    placeholder="00000-000" 
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label for="logradouro">Logradouro</label>
+                                <input 
+                                    type="text" 
+                                    name="logradouroAluno" 
+                                    class="form-control" 
+                                    id="logradouroAluno" 
+                                    placeholder="Rua / Avenida"
+                                >
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="numeroCasa">Número</label>
+                                <input 
+                                    type="number" 
+                                    name="numeroCasaAluno" 
+                                    class="form-control" 
+                                    id="numeroCasaAluno" 
+                                    placeholder="Nº"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="complemento">Complemento</label>
+                                <input 
+                                    type="text" 
+                                    name="complementoAluno" 
+                                    class="form-control" 
+                                    id="complementoAluno" 
+                                    placeholder="Complemento"
+                                >
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="bairro">Bairro</label>
+                                <input 
+                                    type="text" 
+                                    name="bairroAluno" 
+                                    class="form-control" 
+                                    id="bairroAluno" 
+                                    placeholder="Bairro"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-row">                            
+                            <div class="form-group col-md-6" id="divEstadoResidencia">
+                                <label for="estadoResidenciaAluno">Estado</label>
+                                <select 
+                                    name="estadoResidenciaAluno" 
+                                    class="form-control" 
+                                    id="selectEstadoResidenciaAluno"
+                                >
+                                    <option value="">Selecione o Estado</option>
+                                    <?php EstadoDAO::carregaEstado();?>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6" id="divCidadeResidencia">
+                                <label for="cidadeResidenciaAluno">Cidade</label>
+                                <select 
+                                    name="cidadeResidenciaAluno" 
+                                    class="form-control" 
+                                    id="selectCidadeResidenciaAluno"
+                                >
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-success mr-auto mt-3" id="botao-salvar-endereco-aluno">Salvar</button>
+
+                            <button type="submit" class="btn btn-success mr-auto mt-3" id="botao-alterar-endereco-aluno">Alterar</button>
+
+                            <button type="reset" class="btn btn-danger mt-3 fecharModalCadastroAluno" data-dismiss="modal" id="closeButton">Fechar</button>
+                        </div> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <!-- Fim do modal Aluno Formulário -->
+
+
+
 
 <script src="js/salvarAluno.js"></script>
 <script src="js/alterarAluno.js"></script>
 <script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"></script>
 <script src="datepicker/js/bootstrap-datepicker.min.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 <script src="datepicker/js/bootstrap-datepicker.pt-BR.min.js" charset="UTF-8"></script> 
 <script src="js/DatepikerComum.js"></script>
 <script src="js/nacionalidadeAluno.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/pegaResponsaveis.js"></script>
+<script src="js/pegaCidades.js"></script>
 <script src="js/formataCamposAluno.js"></script>
 <script type="text/javascript" src="js/modal.js"></script>
 <script type="text/javascript" src="node_modules/DataTables/datatables.min.js"></script>
 <script src="js/dataTable.js"></script>
-<script>
-  $( function() {
-    $( "#dataNascimento" ).datepicker();
-  } );
-  </script>
-
-
-
+<script src="js/limpaModalCadastroAluno.js"></script>
 
 <?php 
     //include("Modal/ModalAlunoFormulario.php");
