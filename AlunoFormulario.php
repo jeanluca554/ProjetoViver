@@ -173,13 +173,13 @@
                         </div>
 
                         <div class="form-row mt-4 footer-botoes">
-                            <div class="form-row col-md-12 footer-dados-aluno">       
-                                <button type="submit" class="btn btn-success btn-lg" id="botao-salvar-aluno">Salvar</button>
+                            <div class="form-row col-md-12 ml-auto">       
+                                <button type="submit" class="btn btn-success mr-2 ml-auto" id="botao-salvar-aluno">Salvar</button>
 
-                                <button type="submit" class="btn btn-success btn-lg" id="botao-alterar-aluno">Alterar</button>
+                                <button type="submit" class="btn btn-success mr-2 ml-auto" id="botao-alterar-aluno">Alterar</button>
                                 
-                                <div class="ml-auto cancelar-aluno">
-                                    <button type="reset" class="btn btn-danger btn-lg fecharModalCadastroAluno" data-dismiss="modal">Cancelar</button>
+                                <div class="cancelar-aluno">
+                                    <button type="reset" class="btn btn-danger fecharModalCadastroAluno" data-dismiss="modal">Cancelar</button>
                                 </div> 
                             </div>
                         </div>
@@ -269,11 +269,11 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-success mr-auto mt-3" id="botao-salvar-endereco-aluno">Salvar</button>
+                            <button type="submit" class="btn btn-success ml-auto mt-3" id="botao-salvar-endereco-aluno">Salvar</button>
 
-                            <button type="submit" class="btn btn-success mr-auto mt-3" id="botao-alterar-endereco-aluno">Alterar</button>
+                            <button type="submit" class="btn btn-success ml-auto mt-3" id="botao-alterar-endereco-aluno">Alterar</button>
 
-                            <button type="reset" class="btn btn-danger mt-3 fecharModalCadastroAluno" data-dismiss="modal" id="closeButton">Fechar</button>
+                            <button type="reset" class="btn btn-danger ml-2 mt-3 fecharModalCadastroAluno" data-dismiss="modal" id="closeButton">Fechar</button>
                         </div> 
                     </div>
                 </div>

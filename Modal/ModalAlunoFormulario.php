@@ -226,14 +226,17 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-row col-md-12 ml-auto">
+                            <div class="form-row mt-5">
+                                <div class="form-row col-md-12">       
+                                    <button type="submit" class="btn btn-success btn-lg" id="botao-salvar-resonsavel-do-aluno">Salvar</button>
 
-                        <div class="form-row mt-5">
-                            <div class="form-row col-md-12">       
-                                <button type="submit" class="btn btn-success btn-lg" id="botao-salvar-resonsavel-do-aluno">Salvar</button>
-                                
-                                <div class="ml-auto">
-                                    <button type="reset" class="btn btn-danger btn-lg fecharModalCadastroAlunos" data-dismiss="modal">Cancelar</button>
-                                </div> 
+                                    <button type="submit" class="btn btn-success btn-lg" id="botao-alterar-resonsavel-do-aluno">Alterar</button>
+                                    
+                                    <div class="ml-auto mt-auto">
+                                        <button type="reset" class="btn btn-danger btn-lg fecharModalCadastroAlunos" data-dismiss="modal">Cancelar</button>
+                                    </div> 
+                                </div>
                             </div>
                         </div>
 
