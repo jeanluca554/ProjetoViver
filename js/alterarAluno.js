@@ -12,7 +12,7 @@ function alterarDadosAluno() {
     var estado = $("#selectEstadoNascimento").val();
     var cidade = $("#selectCidadeNascimento").val();
     var pais = $("#paisOrigem").val();
-    var id = parseInt(sessionStorage.getItem('alunoAlterando'));
+    var id = parseInt(sessionStorage.getItem('alunoID'));
     console.log(id);
 
     if (nome != '') {
@@ -131,23 +131,24 @@ function alterarEnderecoAluno() {
                 }
             },
 
-             error: function (XMLHttpRequest, textStatus, errorThrown) {
+             /* error: function (XMLHttpRequest, textStatus, errorThrown) {
                 for (i in XMLHttpRequest) {
                     if (i != "channel")
                         document.write(i + " : " + XMLHttpRequest[i] + "<br>")
                 }
-            } 
-           /* error: function (response) {
+            }  */
+           error: function (response) {
                 Swal.fire({
                     type: 'warning',
-                    title: 'mensagemzinha',
-                    text: response['text'],
+                    title: 'Algo errado aconteceu',
+                    text: response['Erro ao alterar o endereço do aluno'],
+                    //text: response['text'],
                     animation: false,
                     customClass: {
                         popup: 'animated tada'
                     }
                 })
-            }*/
+            }
         });
     }
 }

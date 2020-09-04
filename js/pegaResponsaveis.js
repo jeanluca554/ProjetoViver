@@ -1,7 +1,9 @@
 $(function() {
     buscaResponsaveis();
+    // buscaResponsaveisVinculadosAoAluno();
     // $("#btnAdicionaResponsavel").click(insereResponsaveisNaTabela);
     $("#btnAdicionaResponsavel").click(adicionaResponsaveis); 
+    $("#responsaveisAluno-tab").click(buscaResponsaveisVinculadosAoAluno);
     //$("#btnAdicionaResponsavel").click(buscaResponsaveisVinculadosAoAluno); 
 });
 
@@ -12,6 +14,7 @@ function buscaResponsaveis()
         var responsavelDigitado = $(this).val();
         if(responsavelDigitado.length > 2){
             $.ajax({
+                async: false,
                 url: 'DAO/banco-responsaveis-post.php',
                 method: 'post',
                 data: {responsavel:responsavelDigitado, funcao: 1},
@@ -32,7 +35,11 @@ function buscaResponsaveis()
             $("#show-list").html('');
             $("#btnAdicionaResponsavel").attr("disabled", false);
             //$("#btnAdicionaResponsavel").click(adicionaResponsaveis(responsavelSemCPF[1].trim()));
-            sessionStorage.setItem('cpfResponsavel', responsavelSemCPF[1].trim());
+            
+            if (responsavelSemCPF[1] != undefined)
+            {
+                sessionStorage.setItem('cpfResponsavel', responsavelSemCPF[1].trim());
+            }
             sessionStorage.setItem('nomeResponsavel', responsavelSemCPF[0].trim());
 
         });
@@ -43,6 +50,7 @@ function adicionaResponsaveis()
 {
     var cpf_responsavel = sessionStorage.getItem('cpfResponsavel');
     $.ajax({
+        async: false,
         url: 'DAO/banco-responsaveis-post.php',
         method: 'post',
         data: {cpf: cpf_responsavel, funcao: 2},
@@ -78,6 +86,7 @@ function adicionaResponsaveis()
 function buscaResponsaveisVinculadosAoAluno()
 {
     $.ajax({
+        async: false,
         url: 'DAO/banco-responsaveis-post.php',
         dataType: 'json',
         method: 'post',
@@ -86,19 +95,25 @@ function buscaResponsaveisVinculadosAoAluno()
          success: function(response)
         {
             $(".tabelaParentesco > tbody").empty();
-             $("#selectResponsavelFinanceiro").empty();
-             $("#selectResponsavelDidatico").empty();
+            $("#selectResponsavelFinanceiro").empty();
+            $("#selectResponsavelDidatico").empty();
             insereSelectResponsavelFinanceiro(response);
             insereSelectResponsavelDidatico(response);
             insereResponsaveisNaTabela2(response);          
         },
+        /* error: function (XMLHttpRequest, textStatus, errorThrown) {
+            for (i in XMLHttpRequest) {
+                if (i != "channel")
+                    document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+            }
+        } */
         error: function(response)
         {
             Swal.fire({
                 type: 'warning',
                 title: 'Algo errado aconteceu',
-                 text: 'Erro ao buscar responsáveis vinculados ao aluno',
-                 text: response['message'],
+                text: 'Erro ao buscar responsáveis vinculados ao aluno',
+                //  text: response['message'],
                 animation: false,
                 customClass: {
                     popup: 'animated tada'
@@ -119,22 +134,30 @@ function insereSelectResponsavelFinanceiro(response)
 {
     $.each(response, function (key, value) {
         var responsavel = value['nome'];
+        var cpfResponsavel = value["cpf"];
         
-        var option = $("<option>").attr("value", responsavel).text(responsavel);
+        var option = $("<option>").attr("value", cpfResponsavel).text(responsavel);
 
         $("#selectResponsavelFinanceiro").append(option);
     })
+    var respFinanceiro = sessionStorage.getItem('respFinanceiro');
+    //console.log(respFinanceiro);
+    $("#selectResponsavelFinanceiro").val(respFinanceiro);
 }
 
 function insereSelectResponsavelDidatico(response)
 {
     $.each(response, function (key, value) {
         var responsavel = value['nome'];
+        var cpfResponsavel = value["cpf"];
         
-        var option = $("<option>").attr("value", responsavel).text(responsavel);
+        var option = $("<option>").attr("value", cpfResponsavel).text(responsavel);
 
         $("#selectResponsavelDidatico").append(option);
     })
+    var respDidatico = sessionStorage.getItem('respDidatico');
+    //console.log(respDidatico);
+    $("#selectResponsavelDidatico").val(respDidatico);
 }
 
 function insereResponsaveisNaTabela2(response)
@@ -144,8 +167,8 @@ function insereResponsaveisNaTabela2(response)
         var responsavel = value['nome'];
         var cpfResponsavel = value["cpf"];
         var IdResponsavelPeloAluno = value["idResponsavelPeloAluno"];
-
-        var linha = novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno);
+        var parentescoResponsavel = value["parentescoResponsavel"];
+        var linha = novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentescoResponsavel);
 
         corpoTabela.append(linha);
 
@@ -153,7 +176,7 @@ function insereResponsaveisNaTabela2(response)
      })
 }
 
-function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno) 
+function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentescoResponsavel) 
 {
     var linha = $("<tr>");
     var colunaResponsavel = $("<td>").text(responsavel).attr("class", "align-middle");
@@ -168,27 +191,28 @@ function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno)
     var cpf = cpfResponsavel;
     var idSelect = parentesco.concat(cpf);
 
+    // var selectParentesco = $("<select>").addClass("form-control");
     var selectParentesco = $("<select>").addClass("form-control").attr(
-        {
-            id: idSelect,
-            onchange: "salvarResponsavelDoAluno('" + cpf + "', "+ IdResponsavelPeloAluno +")"
-        });
+    {
+        id: idSelect,
+        onclick: "salvarResponsavelDoAluno('" + cpf + "', "+ IdResponsavelPeloAluno +")"
+    });
+    
 
     var optionSel = $("<option>").attr("value", "0").text("Selecione...");
     var optionMae = $("<option>").attr("value", "Mãe").text("Mãe");
     var optionPai = $("<option>").attr("value", "Pai").text("Pai");
-    var optionRes = $("<option>").attr("value", "Responsavel").text("Responsável");
+    var optionRes = $("<option>").attr("value", "Responsável").text("Responsável");
 
     selectParentesco.append(optionSel);
     selectParentesco.append(optionMae);
     selectParentesco.append(optionPai);
     selectParentesco.append(optionRes);
-
-    // hidden do id_responsavel_pelo_aluno para usar mais tarde
-
     colunaParentesco.append(selectParentesco);
 
-    
+
+    parentescoResponsavel === null ? selectParentesco.val(parentescoResponsavel = "0") : selectParentesco.val(parentescoResponsavel);
+
     //Criação da coluna Editar:
     var colunaEditar = $("<td>").attr("align", "center");
     var botaoEditar = $("<a>").addClass("btn btn-outline-info").attr("href", "#");

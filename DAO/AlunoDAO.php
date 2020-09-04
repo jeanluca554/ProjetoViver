@@ -51,8 +51,6 @@
 			$stmt->execute();
 			$ultimo = $conexao->lastInsertId();
 			return $ultimo;
-
-
 		}
 
 		public function update()
@@ -107,6 +105,19 @@
 	        $resultado = $conexao->query($query);
 	        $lista = $resultado->fetchAll();
 	        return $lista;
-	    }
-
+		}
+		
+		public function updateResponsavelDidaticoFinanceiro()
+		{
+			$query = "	UPDATE aluno 
+						SET resp_financeiro = :respFinanceiro, resp_didatico = :respDidatico
+						WHERE id_aluno = :idAluno";
+	        $conexao = Conexao::pegarConexao();
+	        $stmt = $conexao->prepare($query);
+	        $stmt->bindValue(':respFinanceiro', $this->responsavelFinanceiro);
+	        $stmt->bindValue(':respDidatico', $this->responsavelDidatico);
+	        $stmt->bindValue(':idAluno', $this->id);
+	        
+			$stmt->execute();
+		}
 	}

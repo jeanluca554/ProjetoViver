@@ -60,7 +60,7 @@ CREATE TABLE responsavel
 select * from responsavel;
 select * from endereco_residencial;
 select * from funcionario;
-select * from aluno;
+SELECT * FROM aluno ORDER BY nome_aluno;
 select * from responsavel_pelo_aluno;
 
 delete from responsavel where cpf_responsavel = '459.321.248-06';
@@ -152,8 +152,22 @@ VALUES ('459.321.248-06', 17);
 
 delete FROM aluno where id_aluno = 8;
 SELECT * FROM responsavel;
-SELECT nome_aluno, id_aluno FROM aluno ORDER BY nome_aluno;
+SELECT * FROM aluno order by nome_aluno;
+SELECT * from aluno where id_aluno = 124;
 SELECT * FROM responsavel_pelo_aluno;
+SELECT 
+	nome_aluno, 
+	id_aluno, 
+	nascimento_aluno, 
+	sexo, 
+	nacionalidade, 
+	estado_nascimento, 
+	cidade_nascimento, 
+	pais_nascimento, 
+	id_endereco_residencia 
+FROM aluno ORDER BY nome_aluno;
+
+
 SELECT * FROM endereco_residencial;
 
 alter table aluno add column situacao ENUM('Masculino','Feminino');
@@ -164,6 +178,7 @@ VALUES ('Masculino');
 DROP TABLE responsavel_pelo_aluno;
 describe responsavel_pelo_aluno;
 DESCRIBE responsavel;
+describe endereco_residencial;
 describe aluno;
 
 
@@ -185,11 +200,11 @@ ALTER TABLE aluno ADD resp_financeiro INT(11);
 UPDATE aluno SET id_endereco_residencia = 59 WHERE id_aluno = 45;
 
 
-SELECT r.nome_responsavel, r.cpf_responsavel 
+SELECT r.nome_responsavel, r.cpf_responsavel, b.id_responsavel_pelo_aluno, b.parentesco_responsavel
 FROM responsavel_pelo_aluno b
 JOIN responsavel r
 ON r.cpf_responsavel = b.responsavel_cpf
-WHERE b.aluno_id = 10;
+WHERE b.aluno_id = 123;
 
 INSERT INTO responsavel_pelo_aluno
 ( 
@@ -204,5 +219,55 @@ VALUES
 
 
 UPDATE responsavel_pelo_aluno 
-SET parentesco_responsavel = 'responsavel' 
-WHERE id_responsavel_pelo_aluno = 38;
+SET parentesco_responsavel = null 
+WHERE id_responsavel_pelo_aluno = 49;
+
+ALTER TABLE endereco_residencial ADD estado VARCHAR(75);
+
+SELECT 
+	cep,
+	logradouro,
+	numero_casa,
+	complemento,
+	bairro,
+	cidade, 
+	estado
+FROM endereco_residencial
+WHERE id_endereco_residencia = 142;
+
+ALTER TABLE aluno ADD COLUMN resp_financeiro VARCHAR(14);
+
+ALTER TABLE aluno 
+ADD FOREIGN KEY (resp_financeiro) 
+REFERENCES responsavel(cpf_responsavel);
+
+ALTER TABLE aluno ADD COLUMN resp_didatico VARCHAR(14);
+
+ALTER TABLE aluno 
+ADD FOREIGN KEY (resp_didatico) 
+REFERENCES responsavel(cpf_responsavel);
+
+UPDATE aluno 
+SET resp_financeiro = '459.321.248-06' 
+WHERE id_aluno = 119;
+
+SELECT 
+	a.nascimento_aluno, 
+	a.sexo, 
+	a.nacionalidade, 
+	a.estado_nascimento, 
+	a.cidade_nascimento, 
+	a.pais_nascimento, 
+	a.id_endereco_residencia,
+    (select r.nome_responsavel
+		FROM aluno a
+		JOIN responsavel r
+		ON a.resp_financeiro = r.cpf_responsavel
+        WHERE id_aluno = 119) as resp_financeiro,
+	(select r.nome_responsavel
+		FROM aluno a
+		JOIN responsavel r
+		ON a.resp_didatico = r.cpf_responsavel
+        WHERE id_aluno = 119) as resp_didatico
+FROM aluno a
+WHERE id_aluno = 119;

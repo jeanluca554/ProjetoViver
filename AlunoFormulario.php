@@ -45,8 +45,9 @@
                         <td><?php echo $linha['nome_aluno'] ?></td>
                         <td align="center">
                             <button 
-                                type="button" 
-                                class="btn btn-outline-info" 
+                                type="button"
+                                id="bnt-editar-aluno"
+                                class="btn btn-outline-info btn-editar-aluno" 
                                 data-toggle="modal" 
                                 data-target="#ModalAlunoFormulario" 
                                 data-nome="<?php echo $linha['nome_aluno'] ?>"
@@ -58,10 +59,10 @@
                         </td>
                         <td align="center">
                             <button 
-                                type="button" 
-                                class="btn btn-outline-danger" 
-                                data-toggle="modal" 
-                                data-target="#"
+                                type="button"
+                                id="<?php echo $linha['id_aluno'] ?>"
+                                class="btn btn-outline-danger btn-excluir-aluno" 
+                                onclick="excluirDadosAluno(<?php echo $linha['id_aluno'] ?>)"
                             >
                                 <img src="img/menos-25.png">
                             </button>
@@ -186,7 +187,7 @@
                     </div>
 
                     <div class="tab-pane fade divEndereco" id="abaEnderecoAluno" role="tabpanel" aria-labelledby="profile-tab">                       
-                        <div class="form-row mt-4">                            
+                        <div class="form-row mt-5">                       
                             <div class="form-group col-md-2">
                                 <label for="cep">CEP</label>
                                 <input 
@@ -276,6 +277,117 @@
                             <button type="reset" class="btn btn-danger ml-2 mt-3 fecharModalCadastroAluno" data-dismiss="modal" id="closeButton">Fechar</button>
                         </div> 
                     </div>
+
+                    <div 
+                        class="tab-pane fade" 
+                        id="abaResponsaveisAluno" 
+                        role="tabpanel" 
+                        aria-labelledby="profile-tab"
+                    >
+                       
+                        <div class="form-row align-items-end mt-5">
+                            <div class="col-md-4 my-1">
+                                <label for="selecionarResponsavel">Selecione o Responsável</label>
+                                <input 
+                                    type="text" 
+                                    name="selecionaResponsavel" 
+                                    class="form-control" 
+                                    id="selecionaResponsavel" 
+                                    placeholder="Digite o nome do responsável"
+                                >
+
+                            </div>
+                            <div class="col-auto my-1">
+                                <button 
+                                    type="button" 
+                                    class="btn btn-outline-primary" 
+                                    id="btnAdicionaResponsavel" 
+                                    disabled
+                                >
+                                    Adicionar
+                                </button>
+                            </div>
+
+                            <div class="ml-auto">
+                                <button 
+                                    type="button" 
+                                    class="btn btn-outline-success" 
+                                    data-toggle="modal" 
+                                    data-target="#ResponsaveisModal" 
+                                    id="btnPesquisaResponsaveis"
+                                >
+                                    <img src="img/laranja-adicionar-25.png">Cadastrar Responsável
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-row align-items-end">                           
+                            <div class="col-md-4">                                
+                                <div class="list-group table table-borderless" id="show-list">             
+                                    <!--Aqui entra a janela com todos os responsáveis -->
+                                </div>                               
+                            </div>                        
+                        </div>
+
+                        <div class="table-responsive-xl mt-5 table-striped table-bordered">
+                            <table class="table table-hover table-responsive-sm tabelaParentesco" id="tabelaParentesco">
+                                <thead class="thead-dark" align="center">
+                                    <tr>
+                                        <th>Responsável</th>
+                                        <th width="150">CPF</th>
+                                        <th width="170">Parentesco</th>
+                                        
+                                        <th width="50">Editar</th>
+                                        <th width="50">Remover</th>              
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        
+
+                        <div class="form-row mt-5">
+                            <div class="form-group col-md-4">
+                                <label for="responsavelFinanceiro">Responsável Financeiro</label>
+                                <select name="selectResponsavelFinanceiro" class="form-control" id="selectResponsavelFinanceiro">
+                                    <option value='Selecione'>Selecione o responsável</option>
+                                </select>
+                            </div>
+                        
+                            <div class="form-group col-md-4">
+                                <label for="responsavelDidatico">Responsável Didático</label>
+                                <select name="responsavelDidatico" class="form-control" id="selectResponsavelDidatico">
+                                <option value='Selecione'>Selecione o responsável</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class='form-row col-md-12 ml-auto'>
+                            <button 
+                                type="submit" 
+                                class="btn btn-success ml-auto mt-3" 
+                                id="botao-salvar-resonsavel-do-aluno"
+                            >
+                                Salvar
+                            </button>
+
+                            <button 
+                                type="submit" 
+                                class="btn btn-success ml-auto mt-3" 
+                                id="botao-alterar-resonsavel-do-aluno"
+                            >
+                                Alterar
+                            </button>
+
+                            <button 
+                                type="reset" 
+                                class="btn btn-danger ml-2 mt-3 fecharModalCadastroAluno" data-dismiss="modal" 
+                                id="closeButton"
+                            >
+                                Fechar
+                        </button>  
+                        </div>  
+                    </div>
                 </div>
             </div>
         </div>
@@ -301,6 +413,7 @@
 <script type="text/javascript" src="node_modules/DataTables/datatables.min.js"></script>
 <script src="js/dataTable.js"></script>
 <script src="js/limpaModalCadastroAluno.js"></script>
+<script src="js/excluirAluno.js"></script>
 
 <?php 
     //include("Modal/ModalAlunoFormulario.php");

@@ -1,6 +1,7 @@
 $(function() {
     $("#botao-salvar-aluno").click(salvaDadosAluno);
     $("#botao-salvar-endereco-aluno").click(salvaEnderecoAluno);
+    $("#botao-alterar-resonsavel-do-aluno").click(salvarResponsavelFinanceiroDidatico);
     //$("#parentesco438.024.498-94").onchange="salvarResponsavelDoAluno(438.024.498-94)";
 });
 
@@ -228,16 +229,88 @@ function salvarResponsavelDoAluno(cpfResponsavel, IdResponsavelPeloAluno)
             console.log(response);
         },
 
-        error: function (ultimoId) {
+        /* error: function (ultimoId) {
             Swal.fire({
                 type: 'warning',
-                title: 'Erro ao Salvar o Aluno',
+                title: 'Erro ao Salvar o responsável do aluno',
                 text: ultimoId['text'],
                 animation: false,
                 customClass: {
                     popup: 'animated tada'
                 }
             })
+        } */
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+            for (i in XMLHttpRequest) {
+                if (i != "channel")
+                    document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+            }
         }
     });
+}
+
+function salvarResponsavelFinanceiroDidatico() {
+    var respFinanceiro = $('#selectResponsavelFinanceiro').val();
+    var respDidatico = $('#selectResponsavelDidatico').val();
+    var idAluno = sessionStorage.getItem('alunoID');
+    console.log(respDidatico);
+    console.log(respFinanceiro);
+
+    if ((respFinanceiro != null) && (respDidatico != null))
+    {
+        $.ajax({
+            url: 'responsavel-financeiro-didatico-alterar.php',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                idAluno: idAluno,
+                respFinanceiro: respFinanceiro,
+                respDidatico: respDidatico
+            },
+
+            success: function (data) {
+                //alert(data['message']);
+                Swal.fire({
+                    type: 'success',
+                    title: 'Concluído',
+                    text: 'Os responsaveis foram vinculados ao aluno com sucesso!',
+                    // text: data['text'],
+                    animation: true,
+                    customClass: {
+                        popup: 'animated bounce'
+                    }
+                })
+            },
+
+            error: function (ultimoId) {
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Erro ao vincular os responsáveis Financeiro e Didáticos ao aluno',
+                    text: ultimoId['text'],
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
+            }
+            /* error: function (XMLHttpRequest, textStatus, errorThrown) {
+                for (i in XMLHttpRequest) {
+                    if (i != "channel")
+                        document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+                }
+            } */
+        });
+    }
+    else
+    {
+        Swal.fire({
+            type: 'warning',
+            title: 'Atenção!',
+            text: 'Para salvar é preciso selecionar um Responsável Financeiro e um Responsável Didático',
+            animation: false,
+            customClass: {
+                popup: 'animated tada'
+            }
+        })
+    }
 }

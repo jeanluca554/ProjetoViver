@@ -16,13 +16,16 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
 
         modal.find('#botao-salvar-endereco-aluno').show();
         modal.find('#botao-alterar-endereco-aluno').hide();
+        
+        modal.find('#botao-salvar-resonsavel-do-aluno').show();
+        modal.find('#botao-alterar-resonsavel-do-aluno').hide();
     }
 
     else
     {
         var modal = $(this)
-        modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nome)
-        sessionStorage.setItem('alunoAlterando', id);
+        modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nome + '-' + id);
+        sessionStorage.setItem('alunoID', id);
 
         $.ajax({
             url: 'DAO/banco-alunos-post.php',
@@ -39,6 +42,10 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
                     var estadoNascimento = value["estado_nascimento"];
                     var cidadeNascimento = value["cidade_nascimento"];
                     var paisNascimento = value["pais_nascimento"];
+                    var respFinanceiro = value["resp_financeiro"];
+                    sessionStorage.setItem('respFinanceiro', respFinanceiro);
+                    var respDidatico = value["resp_didatico"];
+                    sessionStorage.setItem('respDidatico', respDidatico);
 
                     modal.find('#nomeAluno').val(nome);
                     modal.find('#dataNascimento').datepicker("setDate", dataNascimento);
@@ -78,6 +85,11 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
                     
                     modal.find('#botao-salvar-aluno').hide();
                     modal.find('#botao-alterar-aluno').show();
+
+
+
+                    modal.find('#botao-salvar-resonsavel-do-aluno').hide();
+                    modal.find('#botao-alterar-resonsavel-do-aluno').show();
                 })
             },
 

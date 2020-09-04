@@ -1,8 +1,37 @@
 $(function(){
 	$('.fecharModalCadastroAluno').click(limparCampos);
+    $('#btnExluirAluno').click(function () {
+        location.reload(true);
+    });
 	$('#botao-salvar-endereco-responsavel').click(limparCampos);
+
+    $('#ModalAlunoFormulario').on('hidden.bs.modal', function () {
+        
+        $('#abaDadosPessoaisAluno').addClass('tab-pane fade active show');
+        $('#dadosPessoaisAluno-tab').addClass('nav-link active');
+        $('#dadosPessoaisAluno-tab').attr({
+            'aria-selected': "true"
+        });
+
+        $('#abaEnderecoAluno').removeClass('tab-pane fade active show');
+        $('#abaEnderecoAluno').addClass('tab-pane fade');
+        $('#enderecoAluno-tab').removeClass('active');
+        $('#enderecoAluno-tab').addClass('nav-link');
+        $('#enderecoAluno-tab').attr({
+            'aria-selected': "false"
+        });
+
+        $('#abaResponsaveisAluno').removeClass('tab-pane fade active show');
+        $('#abaResponsaveisAluno').addClass('tab-pane fade');
+        $('#responsaveisAluno-tab').removeClass('active');
+        $('#responsaveisAluno-tab').addClass('nav-link');
+        $('#responsaveisAluno-tab').attr({
+            'aria-selected': "false"
+        });
+    });
 	
 });
+
 
 function limparCampos()
 {
@@ -25,12 +54,7 @@ function limparCampos()
     $('#selectEstadoResidenciaAluno').attr('option value', 'Selecione o Estado');
     $('#selectCidadeResidenciaAluno').hide();
 
-    //$('#abaDadosPessoaisAluno-tab').addClass('active');
-    //$('#abaDadosPessoaisAluno-tab').attr({
-      //  'aria-selected': "true"
-   // });
-    //$('.nav-tabs li a[data-toggle=tab][href="#dadosPessoaisAluno-tab"]').tab('show');
-    //$('.nav-tabs li a[href="#enderecoAluno-tab"]').addClass('nav-link');
+    
         
 
     

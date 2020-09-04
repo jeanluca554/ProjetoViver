@@ -6,6 +6,8 @@
 		private $nacionalidade;
 		private $estado;
 		private $cidade;
+		private $responsavelFinanceiro;
+		private $responsavelDidatico;
 
 		public function getEndereco()
 		{
@@ -55,5 +57,23 @@
 		public function setEstado(Estado $estado)
 		{
 			$this->estado = $estado;
+		}
+		public function getResponsavelFinanceiro()
+		{
+			return $this->responsavelFinanceiro;
+		}
+
+		public function setResponsavelFinanceiro($responsavelFinanceiro)
+		{
+			$this->responsavelFinanceiro = $responsavelFinanceiro;
+		}
+		public function getResponsavelDidatico()
+		{
+			return $this->responsavelDidatico;
+		}
+
+		public function setResponsavelDidatico($responsavelDidatico)
+		{
+			$this->responsavelDidatico = $responsavelDidatico;
 		}
 	}

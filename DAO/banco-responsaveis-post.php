@@ -3,6 +3,9 @@
 	require_once("config.php");
 	session_start();
 
+	// isset($_SESSION['alunoID']) ? $idAluno = $_SESSION['alunoID'] : $idAluno = 1;
+	// $idAluno = isset($_SESSION['alunoID']);
+	//$idAluno = 123;
 	$idAluno = $_SESSION['alunoID'];
 
 	$funcao = $_POST['funcao'];
@@ -24,6 +27,11 @@
 
 		case 4:
 			atribuirParentesco();
+			break;
+
+		case 5:
+			$id = $_POST['id'];
+			buscarEExcluirResponsavelPeloAluno($id);
 			break;
 		
 		default:
@@ -128,7 +136,10 @@
 			$responsaveis = array();
 
 
-			$query = "	SELECT r.nome_responsavel, r.cpf_responsavel, b.id_responsavel_pelo_aluno
+			$query = "	SELECT 	r.nome_responsavel, 
+								r.cpf_responsavel, 
+								b.id_responsavel_pelo_aluno,
+								b.parentesco_responsavel
 						FROM responsavel_pelo_aluno b
 						JOIN responsavel r
 						ON r.cpf_responsavel = b.responsavel_cpf
@@ -148,7 +159,8 @@
 				$responsaveis[$i] = array(
 					'nome' => $linha['nome_responsavel'], 
 					'cpf' =>$linha['cpf_responsavel'], 
-					'idResponsavelPeloAluno' => $linha['id_responsavel_pelo_aluno']
+					'idResponsavelPeloAluno' => $linha['id_responsavel_pelo_aluno'],
+					'parentescoResponsavel' => $linha['parentesco_responsavel']
 				);
 				// $responsaveis['nome'] = $linha['nome_responsavel'];
 				// $responsaveis['cpf'] = $linha['cpf_responsavel'];
@@ -177,7 +189,6 @@
 		{
 			$idRespAluno = $_POST['idResponsavelPeloAluno'];
 			$parentesco = $_POST['parentescoSelecionado'];
-			$respAlunoId = $_SESSION['responsavelPeloAlunoID'];
 
 			$query = 	"	UPDATE responsavel_pelo_aluno 
 							SET parentesco_responsavel = :parentesco 
@@ -188,18 +199,69 @@
 			$stmt = $conexao->prepare($query);
 	        
 	        $stmt->bindValue(':parentesco', $parentesco);
-	        $stmt->bindValue(':respAlunoId', $respAlunoId);
+	        $stmt->bindValue(':respAlunoId', $idRespAluno);
 
 			$stmt->execute();
 			$ultimo = $conexao->lastInsertId();
 			$_SESSION['responsavelPeloAlunoID'] = $ultimo;
 
-			$response['message'] = "Parentesco atribuído com sucesso" .$parentesco;
+			$response['message'] = "Parentesco atribuído com sucesso" .$idRespAluno;
 			echo json_encode($response);
 
 		}
 		catch (Exception $e)
 		{
 			echo json_encode($e);
+		}
+	}
+
+	function buscarEExcluirResponsavelPeloAluno($id)
+	{
+		try
+		{	
+			$query = 	"	SELECT 	id_responsavel_pelo_aluno
+							FROM 	responsavel_pelo_aluno
+							WHERE 	aluno_id = :idAluno;
+						";
+
+						
+
+	        $conexao = Conexao::pegarConexao();
+			$stmt = $conexao->prepare($query);
+	        $stmt->bindValue(':idAluno', $id);
+
+			$stmt->execute();
+			$fetchAll = $stmt->fetchAll();
+
+			foreach ($fetchAll as $linha)
+			{
+				$idResponsavelPeloAluno = $linha['id_responsavel_pelo_aluno'];
+				try 
+				{	
+					$query = 	"	DELETE FROM responsavel_pelo_aluno
+									WHERE id_responsavel_pelo_aluno = :idResponsavel
+								";
+
+					$conexao = Conexao::pegarConexao();
+					$stmt = $conexao->prepare($query);
+					$stmt->bindValue(':idResponsavel', $idResponsavelPeloAluno);
+
+					$stmt->execute();
+				} 
+				catch (Exception $e)
+				{
+					$response['text'] = (string) $e;
+					// echo json_encode($e);
+				}
+			}		
+			// $response['message'] = "Parentesco atribuído com sucesso";
+			echo json_encode($fetchAll);
+
+		}
+
+		catch (Exception $e)
+		{
+			$response['text'] = (string) $e;
+			// echo json_encode($e);
 		}
 	}
