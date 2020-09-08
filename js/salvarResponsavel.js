@@ -1,5 +1,5 @@
-    $(function() {
-    $("#botao-salvar-dados-pessoais").click(salvaDadosPessoais);
+$(function() {
+    $("#botao-salvar-dados-pessoais-responsavel").click(salvaDadosPessoais);
     $("#botao-salvar-endereco-responsavel").click(salvaEnderecoResponsavel);
 });
 
@@ -73,12 +73,15 @@ function salvaDadosPessoais()
 
 function salvaEnderecoResponsavel() 
 {
-    var cep = $('#cep').val();
-    var logradouro = $('#logradouro').val();
-    var numeroCasa = $('#numeroCasa').val();
-    var complemento = $('#complemento').val();
-    var bairro = $('#bairro').val();
-    var cidade = $('#selectCidadeResidencia').val();
+    var cep = $('#cepResponsavel').val();
+    var logradouro = $('#logradouroResponsavel').val();
+    var numeroCasa = $('#numeroCasaResponsavel').val();
+    var complemento = $('#complementoResponsavel').val();
+    var bairro = $('#bairroResponsavel').val();
+    var estado = $('#selectEstadoResidenciaResponsavel').val();
+    var cidade = $('#selectCidadeResidenciaResponsavel').val();
+
+    console.log(logradouro);
 
     if (logradouro != '')
     {
@@ -86,7 +89,7 @@ function salvaEnderecoResponsavel()
             url: 'endereco-criar-post.php',
             method: 'post',
             dataType: 'json',
-            data: {cep:cep, logradouro:logradouro, numeroCasa:numeroCasa, complemento:complemento, bairro:bairro, cidade:cidade},
+            data: {cep:cep, logradouro:logradouro, numeroCasa:numeroCasa, complemento:complemento, bairro:bairro, estado:estado, cidade:cidade},
 
             success: function(ultimoId)
             {
@@ -113,7 +116,7 @@ function salvaEnderecoResponsavel()
                 
             },
 
-            error: function()
+            /* error: function()
             {
                 //alert("Erro ao criar o endereço do responsável");
                 Swal.fire({
@@ -125,7 +128,15 @@ function salvaEnderecoResponsavel()
                         popup: 'animated tada'
                     }                      
                 })
+            } */
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                for (i in XMLHttpRequest) {
+                    if (i != "channel")
+                        document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+                }
             }
+
+            
         });
 
     }

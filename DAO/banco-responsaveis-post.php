@@ -34,6 +34,26 @@
 			buscarEExcluirResponsavelPeloAluno($id);
 			break;
 		
+		case 6:
+			$cpf = $_POST['cpf'];
+			buscarDadosResponsavel($cpf);
+			break;
+
+		case 7:
+            /* $enderecoResp = $_POST['enderecoResp'];
+
+            if ($enderecoResp == null || $enderecoResp == 'undefined')
+            {
+                $enderecoResp = 1;
+			} */
+			
+			isset($_SESSION['enderecoResp']) 
+			? $enderecoResp = $_SESSION['enderecoResp'] 
+			: $enderecoResp = 1;
+
+			buscaEnderecoResponsavel($enderecoResp);
+        break;
+		
 		default:
 			# code...
 			break;
@@ -139,7 +159,8 @@
 			$query = "	SELECT 	r.nome_responsavel, 
 								r.cpf_responsavel, 
 								b.id_responsavel_pelo_aluno,
-								b.parentesco_responsavel
+								b.parentesco_responsavel,
+								r.id_endereco_residencia
 						FROM responsavel_pelo_aluno b
 						JOIN responsavel r
 						ON r.cpf_responsavel = b.responsavel_cpf
@@ -160,7 +181,8 @@
 					'nome' => $linha['nome_responsavel'], 
 					'cpf' =>$linha['cpf_responsavel'], 
 					'idResponsavelPeloAluno' => $linha['id_responsavel_pelo_aluno'],
-					'parentescoResponsavel' => $linha['parentesco_responsavel']
+					'parentescoResponsavel' => $linha['parentesco_responsavel'],
+					'idEnderecoResp' => $linha['id_endereco_residencia']
 				);
 				// $responsaveis['nome'] = $linha['nome_responsavel'];
 				// $responsaveis['cpf'] = $linha['cpf_responsavel'];
@@ -265,3 +287,56 @@
 			// echo json_encode($e);
 		}
 	}
+
+	function buscarDadosResponsavel($cpf)
+	{
+		try
+		{
+			$query = 	"	SELECT 
+								rg_responsavel, 
+								telefone_pessoal_responsavel, 
+								telefone_adicional_responsavel 
+							FROM responsavel
+							WHERE cpf_responsavel = '".$cpf."'";
+
+	        $conexao = Conexao::pegarConexao();
+			$resultado = $conexao->query($query);
+			$lista = $resultado->fetchAll();
+			echo json_encode($lista);
+			// echo json_encode($lista);
+
+		}
+		catch (Exception $e)
+		{
+			echo json_encode($e);
+		}
+	}
+
+	function buscaEnderecoResponsavel($enderecoResp)
+    {
+        try
+        {
+            $query = "  SELECT 
+                            cep,
+                            logradouro,
+                            numero_casa,
+                            complemento,
+                            bairro,
+                            cidade, 
+                            estado
+                        FROM endereco_residencial
+                        WHERE id_endereco_residencia = ".$enderecoResp;
+                $conexao = Conexao::pegarConexao();
+                $resultado = $conexao->query($query);
+                $lista = $resultado->fetchAll();
+                echo json_encode($lista);
+        }
+
+        catch (Exception $e)
+        {
+            echo Erro::trataErro($e);
+
+            echo json_encode( (string) $e);
+            // echo "eita Jovem!";
+        }
+    }

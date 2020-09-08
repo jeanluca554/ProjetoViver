@@ -1,6 +1,7 @@
 $(function() {
     buscaCidades();       
     buscaCidadesAluno();       
+    buscaCidadesResponsavel();       
 });
 
 
@@ -76,6 +77,31 @@ function buscaCidadesAluno() {
             error: function (data) {
                 alert("Informações da requisição: \n" + data.getAllResponseHeaders());
                 $("#selectCidadeResidenciaAluno").html("<option>Houve um erro ao carregar as cidades</option>");
+            }
+
+        })
+    });
+}
+
+function buscaCidadesResponsavel() {
+    $("#selectEstadoResidenciaResponsavel").on("change", function () {
+        var codEstado = $("#selectEstadoResidenciaResponsavel").val();
+
+        $.ajax({
+            url: 'DAO/banco-cidades-post.php',
+            type: 'POST',
+            data: { funcao: 1, id: codEstado },
+            beforeSend: function () {
+                $("#selectCidadeResidenciaAluno").html("<option>Carregando...</option>");
+            },
+
+            success: function (data) {
+                $("#selectCidadeResidenciaResponsavel").html(data);
+                //$("#cidadeResidencia").html(data);
+            },
+            error: function (data) {
+                alert("Informações da requisição: \n" + data.getAllResponseHeaders());
+                $("#selectCidadeResidenciaResponsavel").html("<option>Houve um erro ao carregar as cidades</option>");
             }
 
         })

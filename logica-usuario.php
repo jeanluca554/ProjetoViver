@@ -9,8 +9,9 @@ function usuarioEstaLogado()
 function verificaUsuario() 
 {
 	if(!usuarioEstaLogado()) {
-		$_SESSION["danger"] = "Você não tem acesso a esta funcionalidade.";
-		header("Location: index.html");
+		$_SESSION["danger"] = "Você não tem acesso a esta funcionalidade. <a href='logout.php'>Clique aqui para fazer o login novamente</a>";
+		//header("Location: index.html");
+		
 		die();
 	}
 }

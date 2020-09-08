@@ -87,7 +87,9 @@
                     type="button" 
                     class="close fecharModalCadastroAluno" 
                     id="fecharMoldalAluno" 
-                    data-dismiss="modal">
+                    data-dismiss="modal"
+                    
+                >
                     <span>&times;</span>
                 </button>
             </div>
@@ -315,6 +317,7 @@
                                     data-toggle="modal" 
                                     data-target="#ResponsaveisModal" 
                                     id="btnPesquisaResponsaveis"
+                                    onclick="($('#ModalAlunoFormulario').modal('hide'))"
                                 >
                                     <img src="img/laranja-adicionar-25.png">Cadastrar Responsável
                                 </button>
@@ -395,11 +398,218 @@
 </div>
 <!-- Fim do modal Aluno Formulário -->
 
+<!-- Modal Cadastrar Responsável-->
+<div class="modal fade" id="ResponsaveisModal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
 
+        <div class="modal-content">
+
+            <div class="modal-header">              
+                <h5 class="modal-title">Cadastrar Responsável</h5>
+
+                <button type="button" class="close fecharModalCadastroResponsavel" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" id="dadosPessoaisResponsavel-tab" data-toggle="tab" href="#abaDadosPessoaisResponsavel" role="tab" aria-controls="DadosPessoais" aria-selected="true">Dados Pessoais</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link disabled" id="enderecoResponsavel-tab" data-toggle="tab" href="#" role="tab" aria-controls="Endereco" aria-selected="false">Endereço</a>
+                    </li>
+                    
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="abaDadosPessoaisResponsavel" role="tabpanel" aria-labelledby="dadosPessoaisResponsavel-tab">
+
+                        <div class="form-row mt-5">
+                            
+                            <div class="form-group col-md-9">
+                                <label for="nome">Nome Completo</label>
+                                <input type="text" name="nome" class="form-control" id="nomeResponsavel" placeholder="Nome Completo" required>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="cpf">CPF</label>
+                                <input type="text" name="cpf" class="form-control" id="cpf" placeholder="000.000.000-00" required>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label for="cpf">RG</label>
+                                <input type="text" name="rg" class="form-control" id="rgResponsavel" placeholder="RG" maxlength="13">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="telefone">Telefone Pessoal</label>
+                                <input type="text" name="telefone" class="form-control telefone" id="telefone1" placeholder="(00)00000-0000">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="telefone">Telefone Adicional</label>
+                                <input type="text" name="telefone" class="form-control telefone" id="telefone2" placeholder="(00)00000-0000">
+                            </div>
+
+                            <button 
+                                type="submit" 
+                                class="btn btn-success ml-auto mt-3" 
+                                id="botao-salvar-dados-pessoais-responsavel"
+                            >
+                                Salvar
+                            </button>
+
+                            <button 
+                                type="submit" 
+                                class="btn btn-success ml-auto mt-3" 
+                                id="botao-alterar-dados-pessoais-responsavel"
+                            >
+                                Alterar
+                            </button>
+
+                            <button 
+                                type="reset" 
+                                class="btn btn-danger mt-3 ml-2 fecharModalCadastroResponsavel"
+                                data-dismiss="modal"
+                            >
+                                Fechar
+                            </button>
+                        </div>                             
+                        
+                    </div>
+
+                    <div class="tab-pane fade divEndereco" id="abaEnderecoResponsavel" role="tabpanel" aria-labelledby="profile-tab">                       
+                        <div class="form-row mt-4">                            
+                            <div class="form-group col-md-2">
+                                <label for="cep">CEP</label>
+                                <input 
+                                    type="text" 
+                                    name="cep" 
+                                    class="form-control cep" 
+                                    id="cepResponsavel" 
+                                    placeholder="00000-000" 
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label for="logradouro">Logradouro</label>
+                                <input 
+                                    type="text" 
+                                    name="logradouro" 
+                                    class="form-control" 
+                                    id="logradouroResponsavel" 
+                                    placeholder="Rua / Avenida"
+                                >
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="numeroCasa">Número</label>
+                                <input 
+                                    type="number" 
+                                    name="numeroCasa" 
+                                    class="form-control" 
+                                    id="numeroCasaResponsavel" 
+                                    placeholder="Nº"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="complemento">Complemento</label>
+                                <input 
+                                    type="text" 
+                                    name="complemento" 
+                                    class="form-control" 
+                                    id="complementoResponsavel" 
+                                    placeholder="Complemento"
+                                >
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="bairro">Bairro</label>
+                                <input 
+                                    type="text" 
+                                    name="bairro" 
+                                    class="form-control" 
+                                    id="bairroResponsavel" 
+                                    placeholder="Bairro"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-row">                            
+                            <div class="form-group col-md-6" id="divEstadoResidencia">
+                                <label for="estadoResidencia">Estado</label>
+                                <select 
+                                    name="estadoResidencia" 
+                                    class="form-control" 
+                                    id="selectEstadoResidenciaResponsavel"
+                                >
+                                    <option value="">Selecione o Estado</option>
+                                    <?php EstadoDAO::carregaEstado();?>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6" id="divCidadeResidencia">
+                                <label for="cidadeResidencia">Cidade</label>
+                                <select 
+                                    name="cidadeResidencia" 
+                                    class="form-control" 
+                                    id="selectCidadeResidenciaResponsavel"
+                                >
+                                </select>
+                            </div>
+
+                            <button 
+                                type="submit" 
+                                class="btn btn-success ml-auto mt-3" 
+                                id="botao-salvar-endereco-responsavel"
+                            >
+                                Salvar
+                            </button>
+
+                            <button 
+                                type="submit" 
+                                class="btn btn-success ml-auto mt-3" 
+                                id="botao-alterar-endereco-responsavel"
+                            >
+                                Alterar
+                            </button>
+
+                            <button 
+                                type="reset" 
+                                class="btn btn-danger mt-3 ml-2 fecharModalCadastroResponsavel"
+                                data-dismiss="modal"
+                            >
+                                Fechar
+                            </button>
+
+                        </div> 
+
+                    </div>
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Fim do modal Cadastrar Responsável -->
 
 
 <script src="js/salvarAluno.js"></script>
-<script src="js/alterarAluno.js"></script>
+<!-- <script src="js/alterarAluno.js"></script> -->
 <script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"></script>
 <script src="datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="datepicker/js/bootstrap-datepicker.pt-BR.min.js" charset="UTF-8"></script> 
@@ -414,6 +624,10 @@
 <script src="js/dataTable.js"></script>
 <script src="js/limpaModalCadastroAluno.js"></script>
 <script src="js/excluirAluno.js"></script>
+<script src="js/formataCamposResponsavel.js"></script>
+<script src="js/limpaModalCadastroResponsavel.js"></script>
+<script src="js/salvarResponsavel.js"></script>
+<script src="js/modalResponsaveis.js"></script>
 
 <?php 
     //include("Modal/ModalAlunoFormulario.php");

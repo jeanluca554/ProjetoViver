@@ -150,22 +150,18 @@ CREATE TABLE camisas (
 INSERT INTO responsavel_pelo_aluno (responsavel_cpf, aluno_id)
 VALUES ('459.321.248-06', 17);
 
-delete FROM aluno where id_aluno = 8;
+delete FROM responsavel where cpf_responsavel = '300.315.858-92';
 SELECT * FROM responsavel;
 SELECT * FROM aluno order by nome_aluno;
-SELECT * from aluno where id_aluno = 124;
+SELECT * from aluno where id_aluno = 123;
 SELECT * FROM responsavel_pelo_aluno;
 SELECT 
-	nome_aluno, 
-	id_aluno, 
-	nascimento_aluno, 
-	sexo, 
-	nacionalidade, 
-	estado_nascimento, 
-	cidade_nascimento, 
-	pais_nascimento, 
-	id_endereco_residencia 
-FROM aluno ORDER BY nome_aluno;
+	nome_responsavel, 
+	rg_responsavel, 
+	telefone_pessoal_responsavel, 
+	telefone_adicional_responsavel 
+FROM responsavel
+WHERE cpf_responsavel = '300.315.858-92';
 
 
 SELECT * FROM endereco_residencial;
@@ -192,7 +188,7 @@ SELECT r.nome_responsavel, r.cpf_responsavel, b.id_responsavel_pelo_aluno
 FROM responsavel_pelo_aluno b
 JOIN responsavel r
 ON r.cpf_responsavel = b.responsavel_cpf
-WHERE b.aluno_id = 107;
+WHERE b.aluno_id = 123;
 
 ALTER TABLE aluno ADD resp_financeiro INT(11);
 
@@ -271,3 +267,24 @@ SELECT
         WHERE id_aluno = 119) as resp_didatico
 FROM aluno a
 WHERE id_aluno = 119;
+
+DELETE FROM aluno
+WHERE id_aluno = 124;
+
+SELECT 	id_responsavel_pelo_aluno
+FROM 	responsavel_pelo_aluno
+WHERE 	aluno_id = 124;
+
+DELETE FROM responsavel_pelo_aluno
+WHERE id_responsavel_pelo_aluno in (50, 51, 52);
+
+
+SELECT 	r.nome_responsavel, 
+		r.cpf_responsavel, 
+		b.id_responsavel_pelo_aluno,
+		b.parentesco_responsavel,
+		r.id_endereco_residencia
+FROM responsavel_pelo_aluno b
+JOIN responsavel r
+ON r.cpf_responsavel = b.responsavel_cpf
+WHERE b.aluno_id = 123;

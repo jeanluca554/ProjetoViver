@@ -168,7 +168,8 @@ function insereResponsaveisNaTabela2(response)
         var cpfResponsavel = value["cpf"];
         var IdResponsavelPeloAluno = value["idResponsavelPeloAluno"];
         var parentescoResponsavel = value["parentescoResponsavel"];
-        var linha = novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentescoResponsavel);
+        var idEnderecoResp = value["idEnderecoResp"];
+        var linha = novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentescoResponsavel, idEnderecoResp);
 
         corpoTabela.append(linha);
 
@@ -176,7 +177,7 @@ function insereResponsaveisNaTabela2(response)
      })
 }
 
-function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentescoResponsavel) 
+function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentescoResponsavel, idEnderecoResp) 
 {
     var linha = $("<tr>");
     var colunaResponsavel = $("<td>").text(responsavel).attr("class", "align-middle");
@@ -214,7 +215,15 @@ function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentes
     parentescoResponsavel === null ? selectParentesco.val(parentescoResponsavel = "0") : selectParentesco.val(parentescoResponsavel);
 
     //Criação da coluna Editar:
-    var colunaEditar = $("<td>").attr("align", "center");
+    var colunaEditar = $("<td>").attr({
+        'align': "center",
+        'data-nome': responsavel,
+        'data-cpf': cpf,
+        'data-enderecoResp': idEnderecoResp,
+        'data-toggle': "modal",
+        'data-target': "#ResponsaveisModal",
+        'onclick': "($('#ModalAlunoFormulario').modal('hide'))"
+    });
     var botaoEditar = $("<a>").addClass("btn btn-outline-info").attr("href", "#");
     var imagemEditar = $("<img>").attr("src", "img/editar.png");
     botaoEditar.append(imagemEditar);

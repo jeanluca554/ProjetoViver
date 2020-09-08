@@ -1,8 +1,6 @@
 $(function(){
-	$('.fecharModalCadastroAluno').click(limparCampos);
-    $('#btnExluirAluno').click(function () {
-        location.reload(true);
-    });
+    $('.fecharModalCadastroAluno').click(limparCampos);
+
 	$('#botao-salvar-endereco-responsavel').click(limparCampos);
 
     $('#ModalAlunoFormulario').on('hidden.bs.modal', function () {
@@ -28,6 +26,8 @@ $(function(){
         $('#responsaveisAluno-tab').attr({
             'aria-selected': "false"
         });
+
+        sessionStorage.removeItem('alunoID');
     });
 	
 });
@@ -53,9 +53,4 @@ function limparCampos()
     $('#bairroAluno').val('');
     $('#selectEstadoResidenciaAluno').attr('option value', 'Selecione o Estado');
     $('#selectCidadeResidenciaAluno').hide();
-
-    
-        
-
-    
 }

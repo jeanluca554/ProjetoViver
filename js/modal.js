@@ -4,6 +4,9 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
     var id = button.data('id')
     var idEnderecoResidencial = button.data('endereco');
 
+    sessionStorage.setItem('alunoID', id);
+
+
     idEnderecoResidencial == '' ? sessionStorage.setItem('idEnderecoAluno', 1) : sessionStorage.setItem('idEnderecoAluno', idEnderecoResidencial);
 
     if (typeof nome === "undefined")
