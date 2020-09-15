@@ -40,19 +40,22 @@
 			break;
 
 		case 7:
-            /* $enderecoResp = $_POST['enderecoResp'];
+			$enderecoResp = $_POST['enderecoResp'];
 
-            if ($enderecoResp == null || $enderecoResp == 'undefined')
+            if ($enderecoResp == null)
             {
                 $enderecoResp = 1;
-			} */
-			
-			isset($_SESSION['enderecoResp']) 
-			? $enderecoResp = $_SESSION['enderecoResp'] 
-			: $enderecoResp = 1;
+            }
 
 			buscaEnderecoResponsavel($enderecoResp);
-        break;
+		break;
+		
+		case 8:
+			$idAluno = $_POST['idAluno'];
+			$cpf = $_POST['cpf'];
+			$idRespPeloAluno = $_POST['idRespPeloAluno'];
+			buscarEExcluirResponsavelVinculado($idAluno, $cpf, $idRespPeloAluno);
+			break;
 		
 		default:
 			# code...
@@ -255,6 +258,59 @@
 			$stmt->execute();
 			$fetchAll = $stmt->fetchAll();
 
+			excluirResponsavelPeloAluno($fetchAll);
+
+			foreach ($fetchAll as $linha)
+			{
+				$idResponsavelPeloAluno = $linha['id_responsavel_pelo_aluno'];
+				try 
+				{	
+					$query = 	"	DELETE FROM responsavel_pelo_aluno
+									WHERE id_responsavel_pelo_aluno = :idResponsavel
+								";
+
+					$conexao = Conexao::pegarConexao();
+					$stmt = $conexao->prepare($query);
+					$stmt->bindValue(':idResponsavel', $idResponsavelPeloAluno);
+
+					$stmt->execute();
+				} 
+				catch (Exception $e)
+				{
+					$response['text'] = (string) $e;
+					// echo json_encode($e);
+				}
+			}		
+			// $response['message'] = "Parentesco atribuído com sucesso";
+			echo json_encode($fetchAll);
+
+		}
+
+		catch (Exception $e)
+		{
+			$response['text'] = (string) $e;
+			// echo json_encode($e);
+		}
+	}
+
+	function excluirResponsavelPeloAluno($id)
+	{
+		try
+		{	
+			$query = 	"	SELECT 	id_responsavel_pelo_aluno
+							FROM 	responsavel_pelo_aluno
+							WHERE 	aluno_id = :idAluno;
+						";
+
+						
+
+	        $conexao = Conexao::pegarConexao();
+			$stmt = $conexao->prepare($query);
+	        $stmt->bindValue(':idAluno', $id);
+
+			$stmt->execute();
+			$fetchAll = $stmt->fetchAll();
+
 			foreach ($fetchAll as $linha)
 			{
 				$idResponsavelPeloAluno = $linha['id_responsavel_pelo_aluno'];
@@ -339,4 +395,142 @@
             echo json_encode( (string) $e);
             // echo "eita Jovem!";
         }
-    }
+	}
+	
+	function buscarEExcluirResponsavelVinculado($idAluno, $cpfResp, $idRespPeloAluno)
+	{
+		$resultadoRespFinanceiro = verificaRespFinanceiroDidatico($idAluno, $cpfResp);
+
+		if ($resultadoRespFinanceiro == 1)
+		{
+			$response['mensagem'] = "O responsável está como responsável financeiro. Por isso não pode ser removido";
+			$response['resultado'] = "Erro";
+
+			echo json_encode($response);
+		}
+		else {
+			if ($resultadoRespFinanceiro == 2)
+			{
+				$response['mensagem'] = "O responsável está como responsável didático. Por isso não pode ser removido";
+				$response['resultado'] = "Erro";
+				echo json_encode($response);
+			}
+			else 
+			{
+				try 
+				{	
+					$query = 	"	DELETE FROM responsavel_pelo_aluno
+									WHERE id_responsavel_pelo_aluno = :idRespPeloAluno;
+								";
+
+					$conexao = Conexao::pegarConexao();
+					$stmt = $conexao->prepare($query);
+					$stmt->bindValue(':idRespPeloAluno', $idRespPeloAluno);
+
+					$stmt->execute();
+					$response['resultado'] = "Ok";
+					echo json_encode($response);
+				} 
+				catch (Exception $e)
+				{
+					$response['resultado'] = (string) $e;
+					$response['resultado'] = "Erro";
+					echo json_encode($response);
+				}
+				
+			}
+		}
+		
+		/* try
+		{	
+			$query = 	"	SELECT 	id_responsavel_pelo_aluno
+							FROM 	responsavel_pelo_aluno
+							WHERE 	aluno_id = :idAluno;
+						";
+
+						
+
+	        $conexao = Conexao::pegarConexao();
+			$stmt = $conexao->prepare($query);
+	        $stmt->bindValue(':idAluno', $id);
+
+			$stmt->execute();
+			$fetchAll = $stmt->fetchAll();
+
+			foreach ($fetchAll as $linha)
+			{
+				$idResponsavelPeloAluno = $linha['id_responsavel_pelo_aluno'];
+				try 
+				{	
+					$query = 	"	DELETE FROM responsavel_pelo_aluno
+									WHERE id_responsavel_pelo_aluno = :idResponsavel
+								";
+
+					$conexao = Conexao::pegarConexao();
+					$stmt = $conexao->prepare($query);
+					$stmt->bindValue(':idResponsavel', $idResponsavelPeloAluno);
+
+					$stmt->execute();
+				} 
+				catch (Exception $e)
+				{
+					$response['text'] = (string) $e;
+					// echo json_encode($e);
+				}
+			}		
+			// $response['message'] = "Parentesco atribuído com sucesso";
+			echo json_encode($fetchAll);
+
+		} 
+
+		catch (Exception $e)
+		{
+			$response['text'] = (string) $e;
+			// echo json_encode($e);
+		}*/
+	}
+
+	function verificaRespFinanceiroDidatico($idAluno, $cpfResp)
+	{
+		try
+		{	
+			$query = 	"	SELECT 	resp_financeiro, resp_didatico
+							FROM 	aluno
+							WHERE 	id_aluno = :idAluno;
+						";
+
+	        $conexao = Conexao::pegarConexao();
+			$stmt = $conexao->prepare($query);
+	        $stmt->bindValue(':idAluno', $idAluno);
+
+			$stmt->execute();
+			$fetchAll = $stmt->fetchAll();
+
+
+			foreach ($fetchAll as $cpf) 
+			{
+				if ($cpf['resp_financeiro'] == $cpfResp)
+				{
+					return 1;
+				}
+				else 
+				{
+					if ($cpf['resp_didatico'] == $cpfResp)
+					{
+						return 2;
+					}
+					else 
+					{
+						return 3;
+					}
+				}		
+			}
+		}
+		catch (Exception $e)
+		{
+			$response['text'] = (string) $e;
+			// echo json_encode($e);
+		}
+	}
+
+	

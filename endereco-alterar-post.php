@@ -1,6 +1,7 @@
 <?php
 	require_once 'global.php';
 	require_once 'DAO/EnderecoDAO.php';
+	
 	session_start();
 
 	$response = array();
@@ -17,8 +18,9 @@
 		$cidade = $_POST['cidade'];
 		
 		$enderecoDAO = new EnderecoDAO($id);
-
+		
 		$enderecoDAO->cep = $cep;
+		// $enderecoDAO->id = $id;
 		$enderecoDAO->logradouro = $logradouro;
 		$enderecoDAO->numero = $numero;
 		$enderecoDAO->complemento = $complemento;
@@ -29,10 +31,8 @@
 		$enderecoDAO->update();
 
 		$response['mensagem'] = 'ok';
-		// $response['teste'] = $teste;
+		$response['teste'] = $id;
 		echo json_encode($response);
-
-		
 	}
 
 	catch (Exception $e)
@@ -52,3 +52,8 @@
 		$dataCorrigida = implode('-', $dataInvertida); //transforma o array da data em uma string separada por '-'
 		return (string) $dataCorrigida;
 	}
+
+	function atualizar()
+		{
+			
+		}

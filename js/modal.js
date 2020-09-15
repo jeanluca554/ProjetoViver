@@ -3,16 +3,19 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
     var nome = button.data('nome')
     var id = button.data('id')
     var idEnderecoResidencial = button.data('endereco');
+    console.log(id);
 
     sessionStorage.setItem('alunoID', id);
 
-
     idEnderecoResidencial == '' ? sessionStorage.setItem('idEnderecoAluno', 1) : sessionStorage.setItem('idEnderecoAluno', idEnderecoResidencial);
 
-    if (typeof nome === "undefined")
+    if (typeof nome === 'undefined')
     {
         var modal = $(this)
         modal.find('.modal-title').text('Cadastrar Aluno ');
+
+        $('#enderecoAluno-tab').attr('class', 'nav-link disabled');
+        $('#responsaveisAluno-tab').attr('class', 'nav-link disabled');
 
         modal.find('#botao-salvar-aluno').show();
         modal.find('#botao-alterar-aluno').hide();
@@ -22,6 +25,12 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
         
         modal.find('#botao-salvar-resonsavel-do-aluno').show();
         modal.find('#botao-alterar-resonsavel-do-aluno').hide();
+
+        modal.find('#nomeAluno').val("");
+        modal.find('#dataNascimento').val("");
+        modal.find('#nacionalidade').val("0");
+        $("#divEstadoNascimento").hide();
+        $("#divCidadeNascimento").hide();
     }
 
     else
@@ -29,6 +38,9 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
         var modal = $(this)
         modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nome + '-' + id);
         sessionStorage.setItem('alunoID', id);
+
+        $('#enderecoAluno-tab').attr('class', 'nav-link');
+        $('#responsaveisAluno-tab').attr('class', 'nav-link');
 
         $.ajax({
             url: 'DAO/banco-alunos-post.php',
@@ -166,7 +178,6 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
                 })
             } */
         });
-
     }   
 
     function trataData(date) {

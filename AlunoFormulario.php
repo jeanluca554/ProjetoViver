@@ -26,7 +26,15 @@
 <div class="form-row align-items-end">
     <h1>Alunos Matriculados</h1>
     <div class="ml-auto">
-        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ModalAlunoFormulario"><img src="img/laranja-adicionar-25.png"> Cadastrar Aluno</button>
+        <button 
+            type="button" 
+            class="btn btn-outline-success" 
+            data-toggle="modal" 
+            data-target="#ModalAlunoFormulario"
+            id="bnt-cadastrar-novo-aluno"
+        >
+            <img src="img/laranja-adicionar-25.png"> Cadastrar Aluno
+        </button>
     </div>
 </div>
 <div class="row mt-4">
@@ -100,10 +108,10 @@
                         <a class="nav-link active" id="dadosPessoaisAluno-tab" data-toggle="tab" href="#abaDadosPessoaisAluno" role="tab" aria-controls="hom" aria-selected="true">Dados Pessoais</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="enderecoAluno-tab" data-toggle="tab" href="#abaEnderecoAluno" role="tab" aria-controls="enderecoAluno" aria-selected="false">Endereço</a>
+                        <a class="nav-link disabled" id="enderecoAluno-tab" data-toggle="tab" href="#abaEnderecoAluno" role="tab" aria-controls="enderecoAluno" aria-selected="false">Endereço</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="responsaveisAluno-tab" data-toggle="tab" href="#abaResponsaveisAluno" role="tab" aria-controls="profil" aria-selected="false">Responsáveis</a>
+                        <a class="nav-link disabled" id="responsaveisAluno-tab" data-toggle="tab" href="#abaResponsaveisAluno" role="tab" aria-controls="profil" aria-selected="false">Responsáveis</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contac" aria-selected="false">Matrícula</a>
@@ -609,11 +617,13 @@
 
 
 <script src="js/salvarAluno.js"></script>
+<script src="js/limpaModalCadastroAluno.js"></script>
+
 <!-- <script src="js/alterarAluno.js"></script> -->
 <script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"></script>
 <script src="datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="datepicker/js/bootstrap-datepicker.pt-BR.min.js" charset="UTF-8"></script> 
-<script src="js/DatepikerComum.js"></script>
+<!-- <script src="datepicker/js/bootstrap-datepicker.pt-BR.min.js" charset="UTF-8"></script>  -->
+<!-- <script src="js/DatepikerComum.js"></script> -->
 <script src="js/nacionalidadeAluno.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/pegaResponsaveis.js"></script>
@@ -622,12 +632,13 @@
 <script type="text/javascript" src="js/modal.js"></script>
 <script type="text/javascript" src="node_modules/DataTables/datatables.min.js"></script>
 <script src="js/dataTable.js"></script>
-<script src="js/limpaModalCadastroAluno.js"></script>
 <script src="js/excluirAluno.js"></script>
+<script src="js/excluirResponsavel.js"></script>
 <script src="js/formataCamposResponsavel.js"></script>
 <script src="js/limpaModalCadastroResponsavel.js"></script>
 <script src="js/salvarResponsavel.js"></script>
 <script src="js/modalResponsaveis.js"></script>
+<!-- <script src="js/alterarResponsavel.js"></script> -->
 
 <?php 
     //include("Modal/ModalAlunoFormulario.php");

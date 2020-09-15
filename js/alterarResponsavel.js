@@ -1,34 +1,29 @@
 $(function () {
-    $("#botao-alterar-aluno").click(alterarDadosAluno);
-    $("#botao-alterar-endereco-aluno").click(alterarEnderecoAluno);
+    $("#botao-alterar-dados-pessoais-responsavel").click(alterarDadosResponsavel);
+    $("#botao-alterar-endereco-responsavel").click(verificaIdEnderecoResponsavel);
     //$("#parentesco438.024.498-94").onchange="salvarResponsavelDoAluno(438.024.498-94)";
 });
 
-function alterarDadosAluno() {
-    var nome = $("#nomeAluno").val();
-    var dataNascimento = $("#dataNascimento").val();
-    var sexo = $("#sexo").val();
-    var nacionalidade = $("#nacionalidade").val();
-    var estado = $("#selectEstadoNascimento").val();
-    var cidade = $("#selectCidadeNascimento").val();
-    var pais = $("#paisOrigem").val();
-    var id = parseInt(sessionStorage.getItem('alunoID'));
-    console.log(id);
+function alterarDadosResponsavel() {
+    var nome = $("#nomeResponsavel").val();
+    var cpf = $("#cpf").val();
+    var rg = $("#rgResponsavel").val();
+    var telPessoal = $("#telefone1").val();
+    var telAdicional = $("#telefone2").val();
+    var id = sessionStorage.getItem('responsavelID');
 
     if (nome != '') {
         $.ajax({
-            url: 'aluno-alterar-post.php',
+            url: 'responsavel-alterar-post.php',
             method: 'post',
             dataType: 'json',
             data: {
-                id: id,
+                cpf: cpf,
                 nome: nome,
-                dataNascimento: dataNascimento,
-                sexo: sexo,
-                nacionalidade: nacionalidade,
-                estado: estado,
-                cidade: cidade,
-                pais: pais
+                rg: rg,
+                telPessoal: telPessoal,
+                telAdicional: telAdicional,
+                id: id                
             },
 
             success: function (response) {
@@ -57,45 +52,45 @@ function alterarDadosAluno() {
                 }
             },
 
-            /* error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 for (i in XMLHttpRequest) {
                     if (i != "channel")
                         document.write(i + " : " + XMLHttpRequest[i] + "<br>")
                 }
-            } */
-            error: function (response) {
+            }
+            /* error: function (response) {
                 Swal.fire({
                     type: 'warning',
                     title: 'mensagem',
-                    text: response['text'],
+                    text: 'Erro ao alterar dados',
                     animation: false,
                     customClass: {
                         popup: 'animated tada'
                     }
                 })
-            }
+            } */
         });
     }
 }
 
-function alterarEnderecoAluno() {
-    var cep = $("#cepAluno").val();
-    var logradouro = $("#logradouroAluno").val();
-    var numeroCasa = $("#numeroCasaAluno").val();
-    var complemento = $("#complementoAluno").val();
-    var bairro = $("#bairroAluno").val();
-    var estado = $("#selectEstadoResidenciaAluno").val();
-    var cidade = $("#selectCidadeResidenciaAluno").val();
-    var id = parseInt(sessionStorage.getItem('idEnderecoAluno'));
-    console.log(id);
+function alterarEnderecoResponsavel() 
+{
+    var cep = $("#cepResponsavel").val();
+    var logradouro = $("#logradouroResponsavel").val();
+    var numeroCasa = $("#numeroCasaResponsavel").val();
+    var complemento = $("#complementoResponsavel").val();
+    var bairro = $("#bairroResponsavel").val();
+    var estado = $("#selectEstadoResidenciaResponsavel").val();
+    var cidade = $("#selectEstadoResidenciaResponsavel").val();
+    var idEnderecoResp = sessionStorage.getItem('idEnderecoResp');
 
-    if (id != '') {
+    if (idEnderecoResp != '') {
         $.ajax({
             url: 'endereco-alterar-post.php',
             method: 'post',
             dataType: 'json',
             data: {
-                id: id,
+                id: idEnderecoResp,
                 cep: cep,
                 logradouro: logradouro,
                 numeroCasa: numeroCasa,
@@ -111,7 +106,7 @@ function alterarEnderecoAluno() {
                     Swal.fire({
                         type: 'success',
                         title: 'Concluído',
-                        text: 'Endereço do aluno alterado com sucesso!',
+                        text: 'Endereço do responsavel alterado com sucesso!',
                         animation: true,
                         customClass: {
                             popup: 'animated bounce'
@@ -131,17 +126,17 @@ function alterarEnderecoAluno() {
                 }
             },
 
-             /* error: function (XMLHttpRequest, textStatus, errorThrown) {
-                for (i in XMLHttpRequest) {
-                    if (i != "channel")
-                        document.write(i + " : " + XMLHttpRequest[i] + "<br>")
-                }
-            }  */
-           error: function (response) {
+            /* error: function (XMLHttpRequest, textStatus, errorThrown) {
+               for (i in XMLHttpRequest) {
+                   if (i != "channel")
+                       document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+               }
+           }  */
+            error: function (response) {
                 Swal.fire({
                     type: 'warning',
                     title: 'Algo errado aconteceu',
-                    text: response['Erro ao alterar o endereço do aluno'],
+                    text: response['Erro ao alterar o endereço do responsável'],
                     //text: response['text'],
                     animation: false,
                     customClass: {
@@ -151,4 +146,9 @@ function alterarEnderecoAluno() {
             }
         });
     }
+}
+
+function verificaIdEnderecoResponsavel() {
+    var id = parseInt(sessionStorage.getItem('idEnderecoResp'));
+    id == 1 ? salvaEnderecoAluno() : alterarEnderecoAluno();
 }

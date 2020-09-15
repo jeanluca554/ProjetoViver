@@ -84,5 +84,28 @@
 	        $stmt->bindValue(':cpf', $this->cpf);
 	        
 	        $stmt->execute();
-	    }
+		}
+		
+		public function update()
+		{
+			$query ="	UPDATE responsavel 
+						SET	nome_responsavel = :nome,
+							rg_responsavel = :rg, 
+							telefone_pessoal_responsavel = :telPessoal, 
+							telefone_adicional_responsavel = :telAdicional
+						WHERE cpf_responsavel = :cpf";
+					  	
+			$conexao = Conexao::pegarConexao();
+
+			$stmt = $conexao->prepare($query);
+
+			$stmt->bindValue(':cpf', $this->cpf);
+			$stmt->bindValue(':nome', $this->nome);
+			$stmt->bindValue(':rg', $this->rg);
+			$stmt->bindValue(':telPessoal', $this->telefone);
+			$stmt->bindValue(':telAdicional', $this->telefoneAdicional);
+			
+
+			$stmt->execute();
+		}
 	}

@@ -8,16 +8,37 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
 
     enderecoResp == '' ? sessionStorage.setItem('idEnderecoResp', 1) : sessionStorage.setItem('idEnderecoResp', enderecoResp);
 
-    if (typeof nome === "undefined")
+    if (typeof nome == "undefined")
     {
         var modal = $(this)
         modal.find('.modal-title').text('Cadastrar Responsável');
+        modal.find('#cpf').attr("disabled", false);
 
         modal.find('#botao-salvar-dados-pessoais-responsavel').show();
         modal.find('#botao-alterar-dados-pessoais-responsavel').hide();
 
         modal.find('#botao-salvar-endereco-responsavel').show();
         modal.find('#botao-alterar-endereco-responsavel').hide();
+
+
+        $('#nomeAluno').val('');
+        $('#dataNascimento').val('');
+        $('#sexo').val('Masculino');
+        $('#nacionalidade').val('0');
+        $('#selectEstadoNascimento').val('0');
+        $('#selectCidadeNascimento').val('0');
+        $("#divEstadoNascimento").hide();
+        $("#divCidadeNascimento").hide();
+        $("#divCidadeNascimento").hide();
+        $("#divPaisOrigem").hide();
+        $('#paisOrigem').val('');
+        $('#cepAluno').val('');
+        $('#logradouroAluno').val('');
+        $('#numeroCasaAluno').val('');
+        $('#complementoAluno').val('');
+        $('#bairroAluno').val('');
+        $('#selectEstadoResidenciaAluno').attr('option value', 'Selecione o Estado');
+        $('#selectCidadeResidenciaAluno').hide();
     }
 
     else
@@ -43,6 +64,7 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
 
                     modal.find('#nomeResponsavel').val(nome);
                     modal.find('#cpf').val(cpf);
+                    modal.find('#cpf').attr("disabled", true);
                     modal.find('#rgResponsavel').val(rgResp);
                     modal.find('#telefone1').val(telefonePessoal);
                     modal.find('#telefone2').val(telefoneAdicional);

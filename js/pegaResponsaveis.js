@@ -231,8 +231,15 @@ function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentes
 
     
     //Criação da coluna Remover:
+    var idAluno = sessionStorage.getItem('alunoID');
+
     var colunaRemover = $("<td>").attr("align", "center");
-    var botaoRemover = $("<a>").addClass("btn btn-outline-danger").attr("href", "#");
+    var botaoRemover = $("<button>")
+        .addClass("btn btn-outline-danger")
+        .attr({
+            'id': "btnExcluir"+idAluno, 
+            'onclick': "excluirResponsavel(" + idAluno + ", '" + cpf + "', " + IdResponsavelPeloAluno + ")"
+        });
     var imagemRemover = $("<img>").attr("src", "img/menos-25.png");
     botaoRemover.append(imagemRemover);
     colunaRemover.append(botaoRemover);

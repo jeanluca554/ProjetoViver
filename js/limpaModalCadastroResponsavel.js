@@ -50,6 +50,8 @@ function limparCampos()
         $('#dadosPessoaisAluno-tab').attr({
             'aria-selected': "false"
         });
+
+        button.data('nome') = "undefined";
     });
     
 }

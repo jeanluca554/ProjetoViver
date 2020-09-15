@@ -52,6 +52,28 @@ function salvaDadosAluno()
                             popup: 'animated bounce'
                         }                      
                     })
+
+                    $('#abaDadosPessoaisAluno').removeClass('tab-pane fade active show');
+                    $('#abaDadosPessoaisAluno').addClass('tab-pane fade');
+                    $('#enderecoAluno-tab').removeClass('active');
+                    $('#dadosPessoaisAluno-tab').addClass('nav-link');
+                    $('#dadosPessoaisAluno-tab').attr({
+                        'aria-selected': "false"
+                    });
+
+                    $('#abaEnderecoAluno').addClass('tab-pane fade active show');
+                    $('#abaEnderecoAluno').addClass('nav-link active');
+                    $('#enderecoAluno-tab').attr({
+                        'aria-selected': "true"
+                    });
+
+                    $('#abaResponsaveisAluno').removeClass('tab-pane fade active show');
+                    $('#abaResponsaveisAluno').addClass('tab-pane fade');
+                    $('#responsaveisAluno-tab').removeClass('active');
+                    $('#responsaveisAluno-tab').addClass('nav-link');
+                    $('#responsaveisAluno-tab').attr({
+                        'aria-selected': "false"
+                    });
                 }
                 else
                 {
@@ -241,7 +263,7 @@ function alterarEnderecoAluno() {
 
     if (id != '') {
         $.ajax({
-            url: 'aluno-endereco-alterar-post.php',
+            url: 'endereco-alterar-post.php',
             method: 'post',
             dataType: 'json',
             data: {
@@ -326,6 +348,28 @@ function vincularEnderecoAoAluno(idEndereco) {
                     popup: 'animated bounce'
                 }
             })
+
+            $('#abaDadosPessoaisAluno').removeClass('tab-pane fade active show');
+            $('#abaDadosPessoaisAluno').addClass('tab-pane fade');
+            $('#enderecoAluno-tab').removeClass('active');
+            $('#dadosPessoaisAluno-tab').addClass('nav-link');
+            $('#dadosPessoaisAluno-tab').attr({
+                'aria-selected': "false"
+            });
+
+            $('#abaEnderecoAluno').removeClass('tab-pane fade active show');
+            $('#abaEnderecoAluno').addClass('tab-pane fade');
+            $('#abaEnderecoAluno').removeClass('active');
+            $('#abaEnderecoAluno').addClass('nav-link');
+            $('#enderecoAluno-tab').attr({
+                'aria-selected': "false"
+            });
+
+            $('#abaResponsaveisAluno').addClass('tab-pane fade active show');
+            $('#responsaveisAluno-tab').addClass('nav-link active');
+            $('#responsaveisAluno-tab').attr({
+                'aria-selected': "true"
+            });
         },
 
         error: function (data) 
