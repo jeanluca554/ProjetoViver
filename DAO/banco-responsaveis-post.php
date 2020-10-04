@@ -3,10 +3,10 @@
 	require_once("config.php");
 	session_start();
 
-	// isset($_SESSION['alunoID']) ? $idAluno = $_SESSION['alunoID'] : $idAluno = 1;
+	isset($_SESSION['alunoID']) ? $idAluno = $_SESSION['alunoID'] : $idAluno = 1;
 	// $idAluno = isset($_SESSION['alunoID']);
 	//$idAluno = 123;
-	$idAluno = $_SESSION['alunoID'];
+	// $idAluno = $_SESSION['alunoID'];
 
 	$funcao = $_POST['funcao'];
 
@@ -40,7 +40,7 @@
 			break;
 
 		case 7:
-			$enderecoResp = $_POST['enderecoResp'];
+            $enderecoResp = $_POST['enderecoResp'];
 
             if ($enderecoResp == null)
             {
@@ -258,7 +258,7 @@
 			$stmt->execute();
 			$fetchAll = $stmt->fetchAll();
 
-			excluirResponsavelPeloAluno($fetchAll);
+			// excluirResponsavelPeloAluno($fetchAll);
 
 			foreach ($fetchAll as $linha)
 			{
@@ -278,6 +278,7 @@
 				catch (Exception $e)
 				{
 					$response['text'] = (string) $e;
+					$response['message'] = "erro no catch";
 					// echo json_encode($e);
 				}
 			}		
@@ -532,5 +533,3 @@
 			// echo json_encode($e);
 		}
 	}
-
-	

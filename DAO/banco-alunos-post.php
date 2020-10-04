@@ -109,10 +109,10 @@
 
         catch (Exception $e)
         {
-            echo Erro::trataErro($e);
+            //echo Erro::trataErro($e);
 
-            // echo json_encode( (string) $e);
-            echo "eita Jovem!";
+            echo json_encode( (string) $e);
+            //echo "eita Jovem!";
         }
     }
 
@@ -126,13 +126,18 @@
 			$stmt = $conexao->prepare($query);
 	        $stmt->bindValue(':id', $id);
 
-			$stmt->execute();
+            $stmt->execute();
+            $response['message'] = "Deu certo";
+            echo json_encode($response);
         }
 
         catch (Exception $e)
         {
             //$response['text'] = $id;
-            $response['text'] = (string) $e;
+            // $response['message'] = (string) $e;
+            $response['message'] = "Catch excluir aluno";
+            echo json_encode($response);
+            // $response['message'] = "Catch excluir aluno";
             // echo Erro::trataErro($e);
 
             // echo json_encode( (string) $e);

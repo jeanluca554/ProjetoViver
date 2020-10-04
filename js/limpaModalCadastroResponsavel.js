@@ -25,8 +25,9 @@ function limparCampos()
     $("#dadosPessoaisResponsavel-tab").addClass("nav-link");
     $('.nav-tabs li a[href="#abaDadosPessoaisResponsavel"]').tab('show');
 
-    $('#ResponsaveisModal').on('hidden.bs.modal', function () {
 
+    $('#ResponsaveisModal').on('hidden.bs.modal', function () {
+        
         $('#ModalAlunoFormulario').modal('show');
 
         $('#abaResponsaveisAluno').addClass('tab-pane fade active show');
@@ -50,8 +51,6 @@ function limparCampos()
         $('#dadosPessoaisAluno-tab').attr({
             'aria-selected': "false"
         });
-
-        button.data('nome') = "undefined";
     });
     
 }

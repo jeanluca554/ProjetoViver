@@ -1,52 +1,87 @@
-$('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
+$(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
+
     var button = $(event.relatedTarget) // Button that triggered the modal
     var nome = button.data('nome')
     var id = button.data('id')
     var idEnderecoResidencial = button.data('endereco');
-    console.log(id);
 
     sessionStorage.setItem('alunoID', id);
+    console.log(id)
+
+    sessionStorage.setItem('nomeModal', nome)
+    var modal = $(this)
+
+    var verificaEnderecoAluno = sessionStorage.getItem('idBtnEndereco');
+    console.log(verificaEnderecoAluno);
 
     idEnderecoResidencial == '' ? sessionStorage.setItem('idEnderecoAluno', 1) : sessionStorage.setItem('idEnderecoAluno', idEnderecoResidencial);
 
-    if (typeof nome === 'undefined')
-    {
+    modal.find('#dataNascimento').on("focus", function () {
+        var nomeBtnAlterar = sessionStorage.getItem('nomeBtnAlterar');
+        console.log("clicou Alterar " + nomeBtnAlterar);
+        if (nomeBtnAlterar == "undefined" || nomeBtnAlterar == null) {
+            modal.find('.modal-title').text('Cadastrar Aluno');
+            modal.find('#botao-salvar-aluno').show();
+            modal.find('#botao-alterar-aluno').hide();
+            //$('#enderecoAluno-tab').attr('class', 'nav-link disabled');
+            //$('#responsaveisAluno-tab').attr('class', 'nav-link disabled'); 
+        }
+        else {
+            modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nomeBtnAlterar);
+            modal.find('#botao-salvar-aluno').hide();
+            modal.find('#botao-alterar-aluno').show();
+
+            //$('#enderecoAluno-tab').attr('class', 'nav-link');
+            //$('#enderecoAluno-tab').attr('href', '#abaEnderecoAluno');
+
+            //$('#responsaveisAluno-tab').attr('class', 'nav-link');
+            //$('#responsaveisAluno-tab').attr('href', '#abaResponsaveisAluno');
+        }
+
+    })
+
+    //Variáveis setadas no arquivo js/formataCamposAluno.js
+    var nomeBtnAlterarSession = sessionStorage.getItem('nomeBtnAlterar');
+    console.log(nomeBtnAlterarSession);
+    var idBtnAlterarSession = sessionStorage.getItem('idBtnAlterar');
+    var enderecoBtnAlterarSession = sessionStorage.getItem('idBtnEndereco');
+    console.log(idBtnAlterarSession);
+
+
+    if ( nomeBtnAlterarSession == null) {
+        console.log(nome);
         var modal = $(this)
         modal.find('.modal-title').text('Cadastrar Aluno ');
-
-        $('#enderecoAluno-tab').attr('class', 'nav-link disabled');
-        $('#responsaveisAluno-tab').attr('class', 'nav-link disabled');
 
         modal.find('#botao-salvar-aluno').show();
         modal.find('#botao-alterar-aluno').hide();
 
         modal.find('#botao-salvar-endereco-aluno').show();
         modal.find('#botao-alterar-endereco-aluno').hide();
-        
+
         modal.find('#botao-salvar-resonsavel-do-aluno').show();
         modal.find('#botao-alterar-resonsavel-do-aluno').hide();
 
-        modal.find('#nomeAluno').val("");
-        modal.find('#dataNascimento').val("");
-        modal.find('#nacionalidade').val("0");
-        $("#divEstadoNascimento").hide();
-        $("#divCidadeNascimento").hide();
-    }
-
-    else
-    {
+        $('#enderecoAluno-tab').attr('class', 'nav-link disabled');
+        $('#responsaveisAluno-tab').attr('class', 'nav-link disabled');
+        //vez = 1;
+    } else {
+        console.log(nome);
         var modal = $(this)
-        modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nome + '-' + id);
+        modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nomeBtnAlterarSession + '-' + idBtnAlterarSession);
         sessionStorage.setItem('alunoID', id);
 
         $('#enderecoAluno-tab').attr('class', 'nav-link');
+        $('#enderecoAluno-tab').attr('href', '#abaEnderecoAluno');
+
         $('#responsaveisAluno-tab').attr('class', 'nav-link');
+        $('#responsaveisAluno-tab').attr('href', '#abaResponsaveisAluno');
 
         $.ajax({
             url: 'DAO/banco-alunos-post.php',
             dataType: 'json',
             method: 'post',
-            data: { idAluno: id, funcao: 1 },
+            data: { idAluno: idBtnAlterarSession, funcao: 1 },
 
             success: function (response) {
                 $.each(response, function (key, value) {
@@ -62,21 +97,27 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
                     var respDidatico = value["resp_didatico"];
                     sessionStorage.setItem('respDidatico', respDidatico);
 
-                    modal.find('#nomeAluno').val(nome);
+                    modal.find('#nomeAluno').val(nomeBtnAlterarSession);
                     modal.find('#dataNascimento').datepicker("setDate", dataNascimento);
 
                     //solução para o problema gerado ao clicar no campo datas que estava alterando o botão de alterar aluno.
-                    modal.find('#dataNascimento').click(function () {
+
+                    /* modal.find('#dataNascimento').on("blur", function () {
                         modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nome);
                         modal.find('#botao-salvar-aluno').hide();
                         modal.find('#botao-alterar-aluno').show();
                     })
+                    modal.find('#dataNascimento').on("click", function () {
+                        modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nome);
+                        modal.find('#botao-salvar-aluno').hide();
+                        modal.find('#botao-alterar-aluno').show();
+                    }) */
+
 
 
                     modal.find('#sexo').val(sexo);
                     modal.find('#nacionalidade').val(nacionalidade);
-                    if (nacionalidade == "Brasileiro")
-                    {
+                    if (nacionalidade == "Brasileiro") {
                         $("#divEstadoNascimento").show();
                         modal.find('#selectEstadoNascimento').val(estadoNascimento);
 
@@ -86,10 +127,8 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
 
                         $("#divPaisOrigem").hide();
                     }
-                    else 
-                    {
-                        if (nacionalidade == "Estrangeiro")
-                        {
+                    else {
+                        if (nacionalidade == "Estrangeiro") {
                             $("#divPaisOrigem").show();
                             modal.find('#paisOrigem').val(paisNascimento);
 
@@ -97,7 +136,7 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
                             $("#divCidadeNascimento").hide();
                         }
                     }
-                    
+
                     modal.find('#botao-salvar-aluno').hide();
                     modal.find('#botao-alterar-aluno').show();
 
@@ -132,7 +171,7 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
             url: 'DAO/banco-alunos-post.php',
             dataType: 'json',
             method: 'post',
-            data: { idEndereco: idEnderecoResidencial, funcao: 2 },
+            data: { idEndereco: enderecoBtnAlterarSession, funcao: 2 },
 
             success: function (response) {
                 $.each(response, function (key, value) {
@@ -178,7 +217,76 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
                 })
             } */
         });
-    }   
+        vez = 1;
+    }
+
+
+
+
+    /* var vez = 0;
+    modal.find('#dataNascimento').on("click", function () 
+    {
+        var nomeModal = sessionStorage.getItem('nomeModal');
+        console.log("click cadastrar")
+        console.log(nomeModal)
+        if (nomeModal == "undefined") {
+            modal.find('.modal-title').text('Cadastrar Aluno');
+            modal.find('#botao-salvar-aluno').toggle();
+            modal.find('#botao-alterar-aluno').toggle();
+        }
+        else
+        {
+            console.log("click alterar")
+            modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nome);
+            modal.find('#botao-salvar-aluno').hide();
+            modal.find('#botao-alterar-aluno').toggle();
+        }
+    }) */
+
+
+
+
+
+
+
+    /*if (nomeModal == "undefined")
+    {
+        var modal = $(this)
+        modal.find('.modal-title').text('Cadastrar Aluno ');
+
+        modal.find('#botao-salvar-aluno').show();
+        modal.find('#botao-alterar-aluno').hide();
+
+        modal.find('#botao-salvar-endereco-aluno').show();
+        modal.find('#botao-alterar-endereco-aluno').hide();
+        
+        modal.find('#botao-salvar-resonsavel-do-aluno').show();
+        modal.find('#botao-alterar-resonsavel-do-aluno').hide();
+
+        //solução para o problema gerado ao clicar no campo datas que estava alterando o botão de salvar aluno.
+        /* var tituloModal = modal.find('.modal-title').text();
+        console.log(tituloModal + "titulo modal");
+        if(tituloModal == "Cadastrar Aluno ")
+        {
+            console.log(tituloModal + "titulo modal");
+            modal.find('#dataNascimento').on("blur", function () {
+                modal.find('.modal-title').text('Cadastrar Aluno');
+                modal.find('#botao-salvar-aluno').show();
+                modal.find('#botao-alterar-aluno').hide();
+            })
+            modal.find('#dataNascimento').on("click", function () {
+                modal.find('.modal-title').text('Cadastrar Aluno');
+                modal.find('#botao-salvar-aluno').show();
+                modal.find('#botao-alterar-aluno').hide(); 
+            })
+        } 
+    }*/
+
+    function preencherCamposAluno(nome, id, idEnderecoResidencial) {
+
+
+    }
+
 
     function trataData(date) {
         dataArray = date.split("-");
@@ -186,4 +294,36 @@ $('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
         dataCorrigida = dataInvertida.join('/');
         return dataCorrigida;
     }
-})
+
+    function configurarModalCadastrar() {
+        console.log("Entrei no modal, Jovem");
+        var modal = $(this)
+        modal.find('.modal-title').text('Cadastrar Aluno ');
+
+        modal.find('#botao-salvar-aluno').show();
+        modal.find('#botao-alterar-aluno').hide();
+
+        modal.find('#botao-salvar-endereco-aluno').show();
+        modal.find('#botao-alterar-endereco-aluno').hide();
+
+        modal.find('#botao-salvar-resonsavel-do-aluno').show();
+        modal.find('#botao-alterar-resonsavel-do-aluno').hide();
+
+        //solução para o problema gerado ao clicar no campo datas que estava alterando o botão de salvar aluno.
+        var tituloModal = modal.find('.modal-title').text();
+        console.log(tituloModal + "titulo modal");
+        if (tituloModal == "Cadastrar Aluno ") {
+            console.log(tituloModal + "titulo modal");
+            modal.find('#dataNascimento').on("blur", function () {
+                modal.find('.modal-title').text('Cadastrar Aluno');
+                modal.find('#botao-salvar-aluno').show();
+                modal.find('#botao-alterar-aluno').hide();
+            })
+            modal.find('#dataNascimento').on("click", function () {
+                modal.find('.modal-title').text('Cadastrar Aluno');
+                modal.find('#botao-salvar-aluno').show();
+                modal.find('#botao-alterar-aluno').hide();
+            })
+        }
+    }
+});

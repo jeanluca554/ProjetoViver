@@ -54,8 +54,10 @@ function excluirResponsavel(idAluno, cpf, idRespPeloAluno)
                                 'Removido!',
                                 'O responsável foi desvinculado com sucesso',
                                 'success'
-                            )
-                            removerLinha(idAluno);
+                            ).then((result) => 
+                            {
+                                removerLinha(cpf);
+                            })
                         }
                     }
                 },
@@ -154,8 +156,10 @@ function excluirAluno(id)
 }
 
 function removerLinha(id) {
+    cpf = id;
     event.preventDefault();// evitar o evento padrão de jogar pro topo da tela ao excluir
-    var linha = $("#btnExcluir"+id).parent().parent();
+    var linha = $("#btnExcluir"+cpf).parent().parent();
+    console.log
 
     linha.fadeOut(1000);
     setTimeout(function () {

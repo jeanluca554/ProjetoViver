@@ -2,15 +2,15 @@ $(function() {
     buscaResponsaveis();
     // buscaResponsaveisVinculadosAoAluno();
     // $("#btnAdicionaResponsavel").click(insereResponsaveisNaTabela);
-    $("#btnAdicionaResponsavel").click(adicionaResponsaveis); 
-    $("#responsaveisAluno-tab").click(buscaResponsaveisVinculadosAoAluno);
+    $("#btnAdicionaResponsavel").on("click", adicionaResponsaveis); 
+    $("#responsaveisAluno-tab").on("click", buscaResponsaveisVinculadosAoAluno);
     //$("#btnAdicionaResponsavel").click(buscaResponsaveisVinculadosAoAluno); 
 });
 
 
 function buscaResponsaveis()
 {
-    $("#selecionaResponsavel").keyup(function(){
+    $("#selecionaResponsavel").on("keyup", function(){
         var responsavelDigitado = $(this).val();
         if(responsavelDigitado.length > 2){
             $.ajax({
@@ -213,13 +213,19 @@ function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentes
 
 
     parentescoResponsavel === null ? selectParentesco.val(parentescoResponsavel = "0") : selectParentesco.val(parentescoResponsavel);
+    
+    if (idEnderecoResp === null)
+    {
+        idEnderecoResp = 1
+    }
+    console.log(idEnderecoResp);
 
     //Criação da coluna Editar:
     var colunaEditar = $("<td>").attr({
         'align': "center",
         'data-nome': responsavel,
         'data-cpf': cpf,
-        'data-enderecoResp': idEnderecoResp,
+        'data-enderecoresp': idEnderecoResp,
         'data-toggle': "modal",
         'data-target': "#ResponsaveisModal",
         'onclick': "($('#ModalAlunoFormulario').modal('hide'))"
@@ -231,14 +237,18 @@ function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentes
 
     
     //Criação da coluna Remover:
+    cpfSemPonto = cpf.replace(".", "");
+    cpfSemPonto = cpfSemPonto.replace(".", "");
+    cpfSemTraco = cpfSemPonto.replace("-", "");
+
     var idAluno = sessionStorage.getItem('alunoID');
 
     var colunaRemover = $("<td>").attr("align", "center");
     var botaoRemover = $("<button>")
         .addClass("btn btn-outline-danger")
         .attr({
-            'id': "btnExcluir"+idAluno, 
-            'onclick': "excluirResponsavel(" + idAluno + ", '" + cpf + "', " + IdResponsavelPeloAluno + ")"
+            'id': "btnExcluir" + cpfSemTraco,
+            'onclick': "excluirResponsavel(" + idAluno + ", '" + cpfSemTraco + "', " + IdResponsavelPeloAluno + ")"
         });
     var imagemRemover = $("<img>").attr("src", "img/menos-25.png");
     botaoRemover.append(imagemRemover);
@@ -260,3 +270,8 @@ function insereResponsaveisNaTabela3(data)
     $("#selectCidadeResidencia").html(data);
     
 }
+
+$('#ResponsaveisModal').on('hidden.bs.modal', function () {
+
+    buscaResponsaveisVinculadosAoAluno();
+});

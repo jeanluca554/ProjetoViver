@@ -1,9 +1,11 @@
 $(function() {
-    $("#botao-salvar-dados-pessoais-responsavel").click(salvaDadosPessoais);
-    $("#botao-salvar-endereco-responsavel").click(salvaEnderecoResponsavel);
+    $("#botao-salvar-dados-pessoais-responsavel").on("click", salvaDadosPessoais);
+    $("#botao-salvar-endereco-responsavel").on("click", salvaEnderecoResponsavel);
 
-    $("#botao-alterar-dados-pessoais-responsavel").click(alterarDadosResponsavel);
-    $("#botao-alterar-endereco-responsavel").click(verificaIdEnderecoResponsavel);
+    $("#botao-alterar-dados-pessoais-responsavel").on("click", alterarDadosResponsavel);
+    $("#botao-alterar-endereco-responsavel").on('click', verificaIdEnderecoResponsavel);
+
+    $("#checkboxcopiaendereco").on("click", copiaEnderecoAluno);
 });
 
 function salvaDadosPessoais() 
@@ -27,7 +29,8 @@ function salvaDadosPessoais()
             {
                 if(ultimoId['code'] == 'ok')
                 {
-                    ultimoIdLimpo = cpf;
+                    // ultimoIdLimpo = cpf;
+                    sessionStorage.setItem('responsavelID', cpf);
                     //alert("Dados pessoais cadastrados com sucesso!");
                     Swal.fire({
                         type: 'success',
@@ -158,14 +161,15 @@ function salvaEnderecoResponsavel()
 
 function salvaResponsavelCompleto(idEndereco)
 {
-    var cpf = $("#cpf").val();
+    var cpfResp = sessionStorage.getItem('responsavelID');
+    console.log(cpfResp);
     var enderecoId = parseInt(idEndereco);
 
     $.ajax({
             url: 'responsavel-endereco-criar.php',
             method: 'post',
             dataType: 'json',
-            data: {ultimoId: cpf, enderecoId: enderecoId},
+            data: {ultimoId:cpfResp, enderecoId:enderecoId},
 
             success: function(data)
             {                
@@ -274,7 +278,7 @@ function alterarEnderecoResponsavel() {
     var bairro = $("#bairroResponsavel").val();
     var estado = $("#selectEstadoResidenciaResponsavel").val();
     var cidade = $("#selectCidadeResidenciaResponsavel").val();
-    var idEnderecoResp = sessionStorage.getItem('idEnderecoResp');
+    var idEnderecoResp = sessionStorage.getItem('enderecoResp');
 
     if (idEnderecoResp != '') {
         $.ajax({
@@ -302,12 +306,12 @@ function alterarEnderecoResponsavel() {
                         // text: response['teste'],
                         animation: true,
                         customClass: {
-                           popup: 'animated bounce'
-                       }
+                            popup: 'animated bounce'
+                        }
                     })
 
 
-            
+
                 }
                 else {
                     Swal.fire({
@@ -323,11 +327,11 @@ function alterarEnderecoResponsavel() {
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-               for (i in XMLHttpRequest) {
-                   if (i != "channel")
-                       document.write(i + " : " + XMLHttpRequest[i] + "<br>")
-               }
-           } 
+                for (i in XMLHttpRequest) {
+                    if (i != "channel")
+                        document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+                }
+            }
             /* error: function (response) {
                 Swal.fire({
                     type: 'warning',
@@ -345,7 +349,72 @@ function alterarEnderecoResponsavel() {
 }
 
 function verificaIdEnderecoResponsavel() {
-    var id = sessionStorage.getItem('idEnderecoResp');
+    var id = sessionStorage.getItem('enderecoResp');
     console.log(id);
     (id == 'undefined' || id == 1) ? salvaEnderecoResponsavel() : alterarEnderecoResponsavel();
+}
+
+function copiaEnderecoAluno() {
+    console.log("entrei no copia");
+    if ($("#checkboxcopiaendereco").is(':checked')) 
+    {
+        var enderecoBtnAlterarSession = sessionStorage.getItem('idBtnEndereco');
+        $.ajax({
+            url: 'DAO/banco-alunos-post.php',
+            dataType: 'json',
+            method: 'post',
+            data: { idEndereco: enderecoBtnAlterarSession, funcao: 2 },
+
+            success: function (response) {
+                $.each(response, function (key, value) {
+                    var cep = value["cep"];
+                    var logradouro = value["logradouro"];
+                    var numeroCasa = value["numero_casa"];
+                    var complemento = value["complemento"];
+                    var bairro = value["bairro"];
+                    var cidade = value["cidade"];
+                    var estado = value["estado"];
+
+                    $('#cepResponsavel').val(cep);
+                    $('#logradouroResponsavel').val(logradouro);
+                    $('#numeroCasaResponsavel').val(numeroCasa);
+                    $('#complementoResponsavel').val(complemento);
+                    $('#bairroResponsavel').val(bairro);
+                    $('#selectEstadoResidenciaResponsavel').val(estado);
+                    var option = $("<option>").attr("value", cidade).text(cidade);
+                    $('#selectCidadeResidenciaResponsavel').append(option);
+
+                })
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                for (i in XMLHttpRequest) {
+                    if (i != "channel")
+                        document.write(i + " : " + XMLHttpRequest[i] + "<br>")
+                }
+            }
+
+            /* error: function (response) {
+                console.log(response);
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Algo errado aconteceu',
+                    text: 'Erro ao buscar os dados do aluno eita' + response,
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
+            } */
+        });
+    } else {
+        $('#cepResponsavel').val("");
+        $('#logradouroResponsavel').val("");
+        $('#numeroCasaResponsavel').val("");
+        $('#complementoResponsavel').val("");
+        $('#bairroResponsavel').val("");
+        $('#selectEstadoResidenciaResponsavel').val("");
+        var option = $("<option>").attr("value", "").text("");
+        $('#selectCidadeResidenciaResponsavel').append(option);
+    }
 }

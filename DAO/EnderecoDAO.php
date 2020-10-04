@@ -9,7 +9,7 @@
 			if ($id_endereco)
 			{
 				$this->id = $id_endereco;				
-				//$this->carregar();
+				$this->carregar();
 			}
 		}
 

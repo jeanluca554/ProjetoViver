@@ -1,10 +1,11 @@
 $(function() {
-    $("#botao-salvar-aluno").click(salvaDadosAluno);
-    $("#botao-salvar-endereco-aluno").click(salvaEnderecoAluno);
-    $("#botao-alterar-resonsavel-do-aluno").click(salvarResponsavelFinanceiroDidatico);
+    $("#botao-salvar-aluno").on("click", salvaDadosAluno);
+    $("#botao-salvar-endereco-aluno").on("click", salvaEnderecoAluno);
+    $("#botao-salvar-resonsavel-do-aluno").on("click", salvarResponsavelFinanceiroDidatico);
 
-    $("#botao-alterar-aluno").click(alterarDadosAluno);
-    $("#botao-alterar-endereco-aluno").click(verificaIdEnderecoAluno);
+    $("#botao-alterar-aluno").on("click", alterarDadosAluno);
+    $("#botao-alterar-endereco-aluno").on("click", verificaIdEnderecoAluno);
+    $("#botao-alterar-resonsavel-do-aluno").on("click", salvarResponsavelFinanceiroDidatico);
     //$("#parentesco438.024.498-94").onchange="salvarResponsavelDoAluno(438.024.498-94)";
 });
 
@@ -52,28 +53,6 @@ function salvaDadosAluno()
                             popup: 'animated bounce'
                         }                      
                     })
-
-                    $('#abaDadosPessoaisAluno').removeClass('tab-pane fade active show');
-                    $('#abaDadosPessoaisAluno').addClass('tab-pane fade');
-                    $('#enderecoAluno-tab').removeClass('active');
-                    $('#dadosPessoaisAluno-tab').addClass('nav-link');
-                    $('#dadosPessoaisAluno-tab').attr({
-                        'aria-selected': "false"
-                    });
-
-                    $('#abaEnderecoAluno').addClass('tab-pane fade active show');
-                    $('#abaEnderecoAluno').addClass('nav-link active');
-                    $('#enderecoAluno-tab').attr({
-                        'aria-selected': "true"
-                    });
-
-                    $('#abaResponsaveisAluno').removeClass('tab-pane fade active show');
-                    $('#abaResponsaveisAluno').addClass('tab-pane fade');
-                    $('#responsaveisAluno-tab').removeClass('active');
-                    $('#responsaveisAluno-tab').addClass('nav-link');
-                    $('#responsaveisAluno-tab').attr({
-                        'aria-selected': "false"
-                    });
                 }
                 else
                 {
@@ -108,12 +87,13 @@ function salvaDadosAluno()
 function alterarDadosAluno() {
     var nome = $("#nomeAluno").val();
     var dataNascimento = $("#dataNascimento").val();
+    console.log(dataNascimento);
     var sexo = $("#sexo").val();
     var nacionalidade = $("#nacionalidade").val();
     var estado = $("#selectEstadoNascimento").val();
     var cidade = $("#selectCidadeNascimento").val();
     var pais = $("#paisOrigem").val();
-    var id = parseInt(sessionStorage.getItem('alunoID'));
+    var id = parseInt(sessionStorage.getItem('idBtnAlterar'));
     console.log(id);
 
     if (nome != '') {
@@ -263,7 +243,7 @@ function alterarEnderecoAluno() {
 
     if (id != '') {
         $.ajax({
-            url: 'endereco-alterar-post.php',
+            url: 'aluno-endereco-alterar-post.php',
             method: 'post',
             dataType: 'json',
             data: {
@@ -348,28 +328,6 @@ function vincularEnderecoAoAluno(idEndereco) {
                     popup: 'animated bounce'
                 }
             })
-
-            $('#abaDadosPessoaisAluno').removeClass('tab-pane fade active show');
-            $('#abaDadosPessoaisAluno').addClass('tab-pane fade');
-            $('#enderecoAluno-tab').removeClass('active');
-            $('#dadosPessoaisAluno-tab').addClass('nav-link');
-            $('#dadosPessoaisAluno-tab').attr({
-                'aria-selected': "false"
-            });
-
-            $('#abaEnderecoAluno').removeClass('tab-pane fade active show');
-            $('#abaEnderecoAluno').addClass('tab-pane fade');
-            $('#abaEnderecoAluno').removeClass('active');
-            $('#abaEnderecoAluno').addClass('nav-link');
-            $('#enderecoAluno-tab').attr({
-                'aria-selected': "false"
-            });
-
-            $('#abaResponsaveisAluno').addClass('tab-pane fade active show');
-            $('#responsaveisAluno-tab').addClass('nav-link active');
-            $('#responsaveisAluno-tab').attr({
-                'aria-selected': "true"
-            });
         },
 
         error: function (data) 

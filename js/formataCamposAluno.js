@@ -1,14 +1,34 @@
-$('#ModalAlunoFormulario').on('show.bs.modal', function (event) {
-    formatarCamposAluno();  
-})
+$(function() {    
+    formatarCamposAluno();   
+    $('#botao-salvar-aluno').on("click", habilitaAbaEnderecoAluno);
+    $('#botao-salvar-endereco-aluno').on("click", habilitaAbaResponsaveisAluno);
+});
 
 function formatarCamposAluno()
 {
     $('#dataNascimento').mask('00/00/0000');
 }
 
-function limparCampos() {
-    $('#enderecoResponsavel-tab').attr('class', 'nav-link');
-    $('#enderecoResponsavel-tab').attr('aria-selected', 'true');
-    $('#enderecoResponsavel-tab').attr('href', '#abaEnderecoResponsavel');
+function verificaAlterar(nome, id, idEndereco)
+{
+    if (nome != "")
+    {
+        var idEnderecoAluno = idEndereco;
+
+        sessionStorage.setItem('nomeBtnAlterar', nome);
+        sessionStorage.setItem('idBtnAlterar', id);
+        sessionStorage.setItem('idBtnEndereco', idEnderecoAluno);
+        console.log(idEnderecoAluno);
+    }
+}
+
+function habilitaAbaEnderecoAluno()
+{
+    $('#enderecoAluno-tab').attr('class', 'nav-link');
+    $('#enderecoAluno-tab').attr('href', '#abaEnderecoAluno');
+}
+
+function habilitaAbaResponsaveisAluno() {
+    $('#responsaveisAluno-tab').attr('class', 'nav-link');
+    $('#responsaveisAluno-tab').attr('href', '#abaResponsaveisAluno');
 }

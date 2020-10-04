@@ -6,9 +6,10 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
     var enderecoResp = button.data('enderecoresp');
     console.log(enderecoResp);
 
-    enderecoResp == '' ? sessionStorage.setItem('idEnderecoResp', 1) : sessionStorage.setItem('idEnderecoResp', enderecoResp);
+    sessionStorage.setItem('responsavelID', cpf);
+    enderecoResp == '' ? sessionStorage.setItem('enderecoResp', 1) : sessionStorage.setItem('enderecoResp', enderecoResp);
 
-    if (typeof nome == "undefined")
+    if (typeof nome == "undefined" || nome == "")
     {
         var modal = $(this)
         modal.find('.modal-title').text('Cadastrar Responsável');
@@ -19,7 +20,6 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
 
         modal.find('#botao-salvar-endereco-responsavel').show();
         modal.find('#botao-alterar-endereco-responsavel').hide();
-
 
         $('#nomeAluno').val('');
         $('#dataNascimento').val('');
@@ -37,7 +37,7 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
         $('#numeroCasaAluno').val('');
         $('#complementoAluno').val('');
         $('#bairroAluno').val('');
-        $('#selectEstadoResidenciaAluno').attr('option value', 'Selecione o Estado');
+        //$('#selectEstadoResidenciaAluno').attr('option value', 'Selecione o Estado');
         $('#selectCidadeResidenciaAluno').hide();
     }
 
@@ -57,7 +57,6 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
 
                 $.each(response, function (key, value) {
                     var rgResp = value["rg_responsavel"];
-                    console.log(rgResp);
 
                     var telefonePessoal = value["telefone_pessoal_responsavel"];
                     var telefoneAdicional = value["telefone_adicional_responsavel"];

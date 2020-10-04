@@ -1,7 +1,7 @@
 $(function() {    
     verificarCampoTelefone();
 	formatarCamposResponsavel();
-    verificarCpf();    
+    verificarCpf();
 });
 
 function formatarCamposResponsavel()
@@ -100,5 +100,10 @@ function verificarCpf()
             }           
         }
     });
+}
+
+function garanteSessionNomeAluno()
+{
+    sessionStorage.removeItem('nomeBtnAlterar');
 }
 

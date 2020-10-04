@@ -31,9 +31,9 @@
             class="btn btn-outline-success" 
             data-toggle="modal" 
             data-target="#ModalAlunoFormulario"
-            id="bnt-cadastrar-novo-aluno"
+            onclick="garanteSessionNomeAluno()"
         >
-            <img src="img/laranja-adicionar-25.png"> Cadastrar Aluno
+            <img src="img/laranja-adicionar-25.png">Cadastrar Aluno
         </button>
     </div>
 </div>
@@ -61,6 +61,7 @@
                                 data-nome="<?php echo $linha['nome_aluno'] ?>"
                                 data-id="<?php echo $linha['id_aluno'] ?>"
                                 data-endereco="<?php echo $linha['id_endereco_residencia'] ?>"
+                                onclick="verificaAlterar('<?php echo $linha['nome_aluno'] ?>', <?php echo $linha['id_aluno'] ?>, <?php echo $linha['id_endereco_residencia'] ?>)"
                             >
                                 <img src="img/editar.png">
                             </button>
@@ -88,8 +89,13 @@
 
         <div class="modal-content">
 
-            <div class="modal-header">              
-                <h5 class="modal-title">Cadastrar Aluno</h5>
+            <div class="modal-header">
+                <div id="tituloCadastrarAluno">              
+                    <h5 class="modal-title">Cadastrar Aluno</h5>
+                </div>
+                <!--<div id="tituloNomeAluno">              
+                    <h5 class="modal-title">Cadastrar Aluno</h5>
+                </div> -->
 
                 <button 
                     type="button" 
@@ -415,7 +421,11 @@
             <div class="modal-header">              
                 <h5 class="modal-title">Cadastrar Responsável</h5>
 
-                <button type="button" class="close fecharModalCadastroResponsavel" data-dismiss="modal">
+                <button 
+                    type="button" 
+                    class="close fecharModalCadastroResponsavel" 
+                    data-dismiss="modal"
+                >
                     <span>&times;</span>
                 </button>
             </div>
@@ -494,7 +504,16 @@
                         
                     </div>
 
-                    <div class="tab-pane fade divEndereco" id="abaEnderecoResponsavel" role="tabpanel" aria-labelledby="profile-tab">                       
+                    <div class="tab-pane fade divEndereco" id="abaEnderecoResponsavel" role="tabpanel" aria-labelledby="profile-tab">   
+                        <div class="form-check mt-4">
+                            <!--<div class="form-row mt-4 ml-auto"> -->
+                            <input 
+                                type="checkbox" 
+                                class="form-check-input col-md-1" 
+                                id="checkboxcopiaendereco"
+                            >
+                            <label class="form-check-label ml-2" for="exampleCheck1">Copiar endereço do Aluno</label>
+                        </div>
                         <div class="form-row mt-4">                            
                             <div class="form-group col-md-2">
                                 <label for="cep">CEP</label>
@@ -617,13 +636,11 @@
 
 
 <script src="js/salvarAluno.js"></script>
-<script src="js/limpaModalCadastroAluno.js"></script>
-
 <!-- <script src="js/alterarAluno.js"></script> -->
 <script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"></script>
 <script src="datepicker/js/bootstrap-datepicker.min.js"></script>
-<!-- <script src="datepicker/js/bootstrap-datepicker.pt-BR.min.js" charset="UTF-8"></script>  -->
-<!-- <script src="js/DatepikerComum.js"></script> -->
+<script src="datepicker/js/bootstrap-datepicker.pt-BR.min.js" charset="UTF-8"></script> 
+<script src="js/DatepikerComum.js"></script>
 <script src="js/nacionalidadeAluno.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/pegaResponsaveis.js"></script>
@@ -632,13 +649,14 @@
 <script type="text/javascript" src="js/modal.js"></script>
 <script type="text/javascript" src="node_modules/DataTables/datatables.min.js"></script>
 <script src="js/dataTable.js"></script>
+<script src="js/limpaModalCadastroAluno.js"></script>
 <script src="js/excluirAluno.js"></script>
 <script src="js/excluirResponsavel.js"></script>
 <script src="js/formataCamposResponsavel.js"></script>
 <script src="js/limpaModalCadastroResponsavel.js"></script>
 <script src="js/salvarResponsavel.js"></script>
 <script src="js/modalResponsaveis.js"></script>
-<!-- <script src="js/alterarResponsavel.js"></script> -->
+<!-- <script src="js/modalAbrirAlunoAoFecharResp.js"></script> -->
 
 <?php 
     //include("Modal/ModalAlunoFormulario.php");
