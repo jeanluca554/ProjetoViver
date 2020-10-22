@@ -391,7 +391,7 @@
                             <button 
                                 type="submit" 
                                 class="btn btn-success ml-auto mt-3" 
-                                id="botao-alterar-resonsavel-do-aluno"
+                                id="botao-alterar-responsavel-do-aluno"
                             >
                                 Alterar
                             </button>

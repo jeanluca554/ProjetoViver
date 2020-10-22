@@ -58,7 +58,7 @@ CREATE TABLE responsavel
 )	DEFAULT CHARSET = utf8;
 
 select * from responsavel;
-select * from endereco_residencial;
+select * from endereco_residencial where id_endereco_residencia = 156;
 select * from funcionario;
 SELECT * FROM aluno ORDER BY nome_aluno;
 select * from responsavel_pelo_aluno;
@@ -151,8 +151,10 @@ INSERT INTO responsavel_pelo_aluno (responsavel_cpf, aluno_id)
 VALUES ('459.321.248-06', 17);
 
 delete FROM responsavel where cpf_responsavel = '300.315.858-92';
-SELECT * FROM responsavel;
+SELECT * FROM responsavel where cpf_responsavel = '138.352.318-55';
 SELECT * FROM aluno order by nome_aluno;
+SELECT * FROM aluno;
+SELECT * FROM endereco_residencial;
 SELECT * from aluno where id_aluno = 123;
 SELECT * FROM responsavel_pelo_aluno;
 SELECT 
@@ -288,3 +290,48 @@ FROM responsavel_pelo_aluno b
 JOIN responsavel r
 ON r.cpf_responsavel = b.responsavel_cpf
 WHERE b.aluno_id = 123;
+
+
+SELECT 
+	rg_responsavel, 
+	telefone_pessoal_responsavel, 
+	telefone_adicional_responsavel 
+FROM responsavel
+WHERE cpf_responsavel = '300.315.858-92';
+
+SELECT 	resp_financeiro, resp_didatico
+FROM 	aluno
+WHERE 	id_aluno = 123;
+
+SELECT 	id_responsavel_pelo_aluno
+FROM 	responsavel_pelo_aluno
+WHERE 	aluno_id = 123 AND responsavel_cpf = '438.024.498-94';
+
+DELETE FROM responsavel_pelo_aluno
+WHERE id_responsavel_pelo_aluno = 71;
+
+UPDATE responsavel 
+SET	cpf_responsavel = '461.738.888-58',
+	nome_responsavel = 'Edna Maria da Silvass',
+	rg_responsavel = '53.711.286-8', 
+	telefone_pessoal_responsavel = '(12)99750-5622', 
+	telefone_adicional_responsavel = '(12)3664-5043' 
+WHERE cpf_responsavel = '138.352.318-55';
+					  	
+UPDATE responsavel 
+SET	id_endereco_residencia = 156
+WHERE cpf_responsavel = '138.351.428-36';	
+
+
+select * from responsavel where cpf_responsavel = '138.351.428-36';
+
+UPDATE endereco_residencial 
+SET	cep = '12460-000',
+	logradouro = 'rua Onze',
+	numero_casa = 211, 
+	complemento = 'casa', 
+	bairro = 'vila Paulista', 
+	estado = 19, 
+	cidade = 19 
+WHERE id_endereco_residencia = 156;
+

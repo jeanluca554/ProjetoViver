@@ -60,7 +60,7 @@ $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
         modal.find('#botao-alterar-endereco-aluno').hide();
 
         modal.find('#botao-salvar-resonsavel-do-aluno').show();
-        modal.find('#botao-alterar-resonsavel-do-aluno').hide();
+        modal.find('#botao-alterar-responsavel-do-aluno').hide();
 
         $('#enderecoAluno-tab').attr('class', 'nav-link disabled');
         $('#responsaveisAluno-tab').attr('class', 'nav-link disabled');
@@ -143,7 +143,7 @@ $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
 
 
                     modal.find('#botao-salvar-resonsavel-do-aluno').hide();
-                    modal.find('#botao-alterar-resonsavel-do-aluno').show();
+                    modal.find('#botao-alterar-responsavel-do-aluno').show();
                 })
             },
 
@@ -261,7 +261,7 @@ $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
         modal.find('#botao-alterar-endereco-aluno').hide();
         
         modal.find('#botao-salvar-resonsavel-do-aluno').show();
-        modal.find('#botao-alterar-resonsavel-do-aluno').hide();
+        modal.find('#botao-alterar-responsavel-do-aluno').hide();
 
         //solução para o problema gerado ao clicar no campo datas que estava alterando o botão de salvar aluno.
         /* var tituloModal = modal.find('.modal-title').text();

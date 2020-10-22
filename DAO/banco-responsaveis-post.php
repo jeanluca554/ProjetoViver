@@ -290,6 +290,7 @@
 		catch (Exception $e)
 		{
 			$response['text'] = (string) $e;
+			$response['message'] = "erro no catch de fora";
 			// echo json_encode($e);
 		}
 	}
@@ -434,7 +435,7 @@
 				} 
 				catch (Exception $e)
 				{
-					$response['resultado'] = (string) $e;
+					$response['mensagem'] = (string) $e;
 					$response['resultado'] = "Erro";
 					echo json_encode($response);
 				}
@@ -529,7 +530,8 @@
 		}
 		catch (Exception $e)
 		{
-			$response['text'] = (string) $e;
+			$response['mensagem'] = (string) $e;
+			$response['resultado'] = "Erro ao remover o responsável";
 			// echo json_encode($e);
 		}
 	}

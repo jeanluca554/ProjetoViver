@@ -52,33 +52,37 @@ function excluirResponsavel(idAluno, cpf, idRespPeloAluno)
                         {
                             swalWithBootstrapButtons.fire(
                                 'Removido!',
-                                'O responsável foi desvinculado com sucesso',
+                                'O responsável foi desvinculado com sucesso!',
                                 'success'
                             ).then((result) => 
                             {
-                                removerLinha(cpf);
+                                cpfSemPonto = cpf.replace(".", "");
+                                cpfSemPonto = cpfSemPonto.replace(".", "");
+                                cpfSemTraco = cpfSemPonto.replace("-", "");
+                                removerLinha(cpfSemTraco);
                             })
                         }
                     }
                 },
 
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                /* error: function (XMLHttpRequest, textStatus, errorThrown) {
                     for (i in XMLHttpRequest) {
                         if (i != "channel")
                             document.write(i + " : " + XMLHttpRequest[i] + "<br>")
                     }
-                }
-                /* error: function (response) {
+                } */
+                error: function (response) {
                     Swal.fire({
                         type: 'warning',
-                        title: 'mensagem',
-                        text: response['text'],
+                        title: response['resultado'],
+                        // text: response['mensagem'],
+                        text: "Erro",
                         animation: false,
                         customClass: {
                             popup: 'animated tada'
                         }
                     })
-                } */
+                }
             });
             
         } else if (
@@ -159,7 +163,6 @@ function removerLinha(id) {
     cpf = id;
     event.preventDefault();// evitar o evento padrão de jogar pro topo da tela ao excluir
     var linha = $("#btnExcluir"+cpf).parent().parent();
-    console.log
 
     linha.fadeOut(1000);
     setTimeout(function () {

@@ -1,11 +1,11 @@
 $(function() {
     $("#botao-salvar-aluno").on("click", salvaDadosAluno);
     $("#botao-salvar-endereco-aluno").on("click", salvaEnderecoAluno);
-    $("#botao-salvar-resonsavel-do-aluno").on("click", salvarResponsavelFinanceiroDidatico);
+    $("#botao-salvar-responsavel-do-aluno").on("click", salvarResponsavelFinanceiroDidatico);
 
     $("#botao-alterar-aluno").on("click", alterarDadosAluno);
     $("#botao-alterar-endereco-aluno").on("click", verificaIdEnderecoAluno);
-    $("#botao-alterar-resonsavel-do-aluno").on("click", salvarResponsavelFinanceiroDidatico);
+    $("#botao-alterar-responsavel-do-aluno").on("click", salvarResponsavelFinanceiroDidatico);
     //$("#parentesco438.024.498-94").onchange="salvarResponsavelDoAluno(438.024.498-94)";
 });
 

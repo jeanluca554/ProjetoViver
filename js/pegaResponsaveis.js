@@ -241,14 +241,14 @@ function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentes
     cpfSemPonto = cpfSemPonto.replace(".", "");
     cpfSemTraco = cpfSemPonto.replace("-", "");
 
-    var idAluno = sessionStorage.getItem('alunoID');
+    var idAluno = sessionStorage.getItem('idBtnAlterar');
 
     var colunaRemover = $("<td>").attr("align", "center");
     var botaoRemover = $("<button>")
         .addClass("btn btn-outline-danger")
         .attr({
             'id': "btnExcluir" + cpfSemTraco,
-            'onclick': "excluirResponsavel(" + idAluno + ", '" + cpfSemTraco + "', " + IdResponsavelPeloAluno + ")"
+            'onclick': "excluirResponsavel(" + idAluno + ", '" + cpf + "', " + IdResponsavelPeloAluno + ")"
         });
     var imagemRemover = $("<img>").attr("src", "img/menos-25.png");
     botaoRemover.append(imagemRemover);

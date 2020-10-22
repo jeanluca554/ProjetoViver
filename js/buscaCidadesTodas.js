@@ -1,5 +1,5 @@
 $(function() {    
-    $("#cidadeResidencia").keyup(function(){
+    $("#cidadeResidencia").onkeyup(function(){
     	var cidadeDigitada = $(this).val();
     	if(cidadeDigitada != ''){
     		$.ajax({

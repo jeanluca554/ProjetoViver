@@ -91,7 +91,7 @@ function alterarEnderecoAluno() {
 
     if (id != '') {
         $.ajax({
-            url: 'aluno-endereco-alterar-post.php',
+            url: 'endereco-alterar-post.php',
             method: 'post',
             dataType: 'json',
             data: {
