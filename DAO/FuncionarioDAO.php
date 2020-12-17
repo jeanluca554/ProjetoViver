@@ -27,7 +27,7 @@
 
 		public function create()
 		{
-			$query = "INSERT INTO funcionario (nome_funcionario, email_funcionario, cpf_funcionario, rg_funcionario, telefone_funcionario, numeroAgencia_funcionario, numeroContaBancaria_funcionario, salario_funcionario, cargo_funcionario) VALUES (:nome_funcionario, :email_funcionario, :cpf_funcionario, :rg_funcionario, :telefone_funcionario, :numeroAgencia_funcionario, :numeroContaBancaria_funcionario, :salario_funcionario, :cargo_funcionario)";
+			$query = "INSERT INTO funcionario (nome_funcionario, email_funcionario, senha_funcionario, cpf_funcionario, rg_funcionario, telefone_funcionario, numeroAgencia_funcionario, numeroContaBancaria_funcionario, salario_funcionario, cargo_funcionario) VALUES (:nome_funcionario, :email_funcionario, :senha_funcionario, :cpf_funcionario, :rg_funcionario, :telefone_funcionario, :numeroAgencia_funcionario, :numeroContaBancaria_funcionario, :salario_funcionario, :cargo_funcionario)";
 
 			$conexao = Conexao::pegarConexao();
 
@@ -35,6 +35,7 @@
 
 			$stmt->bindValue(':nome_funcionario', $this->nome);
 			$stmt->bindValue(':email_funcionario', $this->email_funcionario);
+			$stmt->bindValue(':senha_funcionario', $this->senha_funcionario);
 			$stmt->bindValue(':cpf_funcionario', $this->cpf);
 			$stmt->bindValue(':rg_funcionario', $this->rg);
 			$stmt->bindValue(':telefone_funcionario', $this->telefone);
@@ -45,6 +46,48 @@
 
 			$stmt->execute();
 		}
+
+		public function createLogin()
+		{
+			$query = 	"INSERT INTO login 
+					  	(
+					      	email, 
+					      	senha,
+					      	situacao,
+							cargo
+					    ) 
+					    VALUES 
+					    (
+					    	:email, 
+					    	:senha, 
+					    	:situacao,
+							:cargo
+					    )";
+
+			$conexao = Conexao::pegarConexao();
+
+			$stmt = $conexao->prepare($query);
+
+			$stmt->bindValue(':email', $this->email_funcionario);
+			$stmt->bindValue(':senha', $this->senha_funcionario);
+			$stmt->bindValue(':cargo', $this->cargo_funcionario);
+			$stmt->bindValue(':situacao', 1);
+
+			$stmt->execute();
+			$ultimo = $conexao->lastInsertId();
+			return $ultimo;
+		}
+
+		public function vinculaLoginAoFuncionario($idLogin)
+	    {
+	        $query = "UPDATE funcionario SET id_login = :idLogin WHERE cpf_funcionario = :cpf";
+	        $conexao = Conexao::pegarConexao();
+	        $stmt = $conexao->prepare($query);
+	        $stmt->bindValue(':idLogin', $idLogin);
+	        $stmt->bindValue(':cpf', $this->cpf);
+	        
+	        $stmt->execute();
+	    }
 
 		public static function read()
 	    {

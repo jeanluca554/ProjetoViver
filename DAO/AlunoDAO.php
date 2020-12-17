@@ -53,6 +53,8 @@
 			return $ultimo;
 		}
 
+		
+
 		public function update()
 		{
 			$query ="	UPDATE aluno 

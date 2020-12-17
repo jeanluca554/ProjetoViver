@@ -13,11 +13,10 @@ INSERT INTO `usuarios` (`id`, `email`, `senha`) VALUES
 
 CREATE TABLE funcionario
 (
-	id_funcionario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	cpf_funcionario VARCHAR(14) NOT NULL PRIMARY KEY,
     nome_funcionario VARCHAR(255) NOT NULL,
     email_funcionario VARCHAR(255) NOT NULL,
-    senha_funcionario VARCHAR(255),
-    cpf_funcionario VARCHAR(14), 
+    senha_funcionario VARCHAR(255), 
     rg_funcionario VARCHAR(13),
     telefone_funcionario VARCHAR(15),
     numeroAgencia_funcionario VARCHAR(10),
@@ -153,7 +152,7 @@ VALUES ('459.321.248-06', 17);
 delete FROM responsavel where cpf_responsavel = '300.315.858-92';
 SELECT * FROM responsavel where cpf_responsavel = '138.352.318-55';
 SELECT * FROM aluno order by nome_aluno;
-SELECT * FROM aluno;
+SELECT * FROM usuarios;
 SELECT * FROM endereco_residencial;
 SELECT * from aluno where id_aluno = 123;
 SELECT * FROM responsavel_pelo_aluno;
@@ -335,3 +334,66 @@ SET	cep = '12460-000',
 	cidade = 19 
 WHERE id_endereco_residencia = 156;
 
+CREATE TABLE login
+(
+	id_login INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    senha VARCHAR(255),
+    situacao int
+)DEFAULT CHARSET = utf8;
+
+describe login;
+describe funcionario;
+
+select * from funcionario;
+select * from login;
+drop table login;
+
+delete from funcionario where cpf_funcionario = '438.024.498-94';
+
+INSERT INTO login (email, senha) VALUES ('sjeanluca@gmail.com.BR', 'e10adc3949ba59abbe56e057f20f883e');
+
+ALTER TABLE aluno ADD COLUMN id_login INT(11);
+
+ALTER TABLE aluno 
+ADD FOREIGN KEY (id_login) 
+REFERENCES login(id_login);
+
+ALTER TABLE funcionario ADD COLUMN id_login INT(11);
+
+ALTER TABLE funcionario 
+ADD FOREIGN KEY (id_login) 
+REFERENCES login(id_login);
+
+select id_funcionario from funcionario where cpf_funcionario = '438.024.498-94' and id_login is null;
+
+ALTER TABLE login
+MODIFY COLUMN situacao INT
+DEFAULT 1;
+
+UPDATE login 
+SET	situacao = 1
+WHERE email = 'sjeanluca@gmail.com';
+
+UPDATE login 
+SET	senha = 'e10adc3949ba59abbe56e057f20f883e'
+WHERE id_login = 1;
+
+SET SQL_SAFE_UPDATES = 0; # para fazer o update da linha de cima
+SET SQL_SAFE_UPDATES = 1; # para voltar a configuração ao normal
+
+UPDATE funcionario 
+SET	id_login = 1
+WHERE id_funcionario = 1;
+
+SELECT * FROM responsavel_pelo_aluno r
+JOIN login l
+ON r.cpf_responsavel = b.responsavel_cpf
+WHERE b.aluno_id = 123;
+
+ALTER TABLE funcionario ADD COLUMN id_login INT(11);
+
+ALTER TABLE funcionario ADD CONSTRAINT id_login
+FOREIGN KEY(id_login) REFERENCES login (id_login);	
+
+ALTER TABLE login ADD COLUMN cargo VARCHAR(50);

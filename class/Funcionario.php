@@ -2,13 +2,32 @@
 	class Funcionario extends Pessoa
 	{
 		private $email_funcionario;
+		private $senha_funcionario;
 		private $cargo_funcionario;
 		private $numeroAgencia_funcionario;
 		private $numeroContaBancaria_funcio;
 		private $salario_funcionario;
 		private $filhos;
 
-		
+		public function getEmail_funcionario()
+		{
+			return $this->$email_funcionario;
+		}
+
+		public function setEmail_funcionario($email)
+		{
+			$this->email_funcionario = $email;
+		}
+
+		public function getSenha_funcionario()
+		{
+			return $this->$senha_funcionario;
+		}
+
+		public function setSenha_funcionario($senha)
+		{
+			$this->senha_funcionario = $senha;
+		}
 
 		public function getCargo_funcionario()
 		{

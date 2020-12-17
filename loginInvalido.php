@@ -17,7 +17,7 @@
           <div class="col-12 anglo-img">
             <img src="img/logo.png">
           </div>
-          <h2>Por favor, tente novamente</h2>
+          <h2>Tente novamente </h2>
           <div class="mensagem">
             <div class="principal">
                 
@@ -36,7 +36,10 @@
             
             <div class="botao">
             <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i>Login</button>
-            </div>
+			</div>
+			<div class="col-12 forgot">
+				<a href="#">Para o primeiro acesso clique aqui.</a>
+			</div>
             <div class="col-12 forgot">
                 <a href="#">Esqueceu a Senha?</a>
             </div>

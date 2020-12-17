@@ -10,7 +10,7 @@ if($usuario == null)
 	header("Location: loginInvalido.php");
 } else {
 	$_SESSION["success"] = "Usuário logado com sucesso.";
-	logaUsuario($usuario["email"]);
+	logaUsuario($usuario["email"], $usuario["cargo"]);
 	header("Location: index.php");
 }
 die();?>
