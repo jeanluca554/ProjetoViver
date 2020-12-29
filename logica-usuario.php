@@ -25,9 +25,15 @@ function usuarioLogado()
 	return $_SESSION["usuario_logado"];
 }
 
-function logaUsuario($email) 
+function cargoUsuarioLogado() 
+{
+	return $_SESSION["usuario_cargo"];
+}
+
+function logaUsuario($email, $cargo) 
 {
 	$_SESSION["usuario_logado"] = $email;
+	$_SESSION["usuario_cargo"] = $cargo;
 }
 
 function logout() 
@@ -36,23 +42,39 @@ function logout()
 	session_start();
 }
 
-function confirmaCpf($cpf)
-{
-	$_SESSION["cpf_verificado"] = $cpf;
-}
+// function confirmaCpf($cpf)
+// {
+// 	$_SESSION["cpf_verificado"] = $cpf;
+// }
 
-function verificaCpf() 
+// function verificaCpf() 
+// {
+// 	if(!cpfEstaVerificado()) 
+// 	{
+// 		$_SESSION["danger"] = "Você não tem acesso a esta funcionalidade. <a href='logout.php'>Clique aqui para fazer o login novamente</a>";
+// 		//header("Location: index.html");
+		
+// 		die();
+// 	}
+	
+// }
+
+// function cpfEstaVerificado() 
+// {
+// 	return isset($_SESSION["cpf_verificado"]);
+// }
+
+function secretarioEstaLogado() 
 {
-	if(!cpfEstaVerificado()) 
-	{
+	$cargo = cargoUsuarioLogado();
+	if($cargo != "Secretário") {
 		$_SESSION["danger"] = "Você não tem acesso a esta funcionalidade. <a href='logout.php'>Clique aqui para fazer o login novamente</a>";
 		//header("Location: index.html");
 		
 		die();
 	}
-}
-
-function cpfEstaVerificado() 
-{
-	return isset($_SESSION["cpf_verificado"]);
+	else
+	{
+		return isset($_SESSION["usuario_cargo"]);
+	}
 }

@@ -91,7 +91,7 @@
 
 		public static function read()
 	    {
-	        $query = "SELECT id_funcionario, nome_funcionario, cargo_funcionario FROM funcionario ORDER BY nome_funcionario";
+	        $query = "SELECT cpf_funcionario, nome_funcionario, cargo_funcionario FROM funcionario ORDER BY nome_funcionario";
 	        $conexao = Conexao::pegarConexao();
 	        $resultado = $conexao->query($query);
 	        $lista = $resultado->fetchAll();

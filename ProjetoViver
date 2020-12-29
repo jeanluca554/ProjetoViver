@@ -397,3 +397,13 @@ ALTER TABLE funcionario ADD CONSTRAINT id_login
 FOREIGN KEY(id_login) REFERENCES login (id_login);	
 
 ALTER TABLE login ADD COLUMN cargo VARCHAR(50);
+
+UPDATE login SET cargo = 'Ensino Fundamental 2 / Médio' WHERE id_login = 3;
+
+CREATE TABLE disciplina 
+(
+	id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+)DEFAULT CHARSET = utf8;
+
+select nome from disciplina order by id;

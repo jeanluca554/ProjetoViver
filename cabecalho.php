@@ -8,6 +8,39 @@
 
     error_reporting(E_ALL ^ E_NOTICE);
     require_once("mostra-alerta.php");
+    require_once("logica-usuario.php");
+    $cargoUsuario = cargoUsuarioLogado();
+    $verifica = substr($cargoUsuario, 0, 6);
+
+    if ($verifica == "Ensino")
+    {
+        $cargoUsuario = 'Professor';
+        //echo $cargoUsuario;
+    }
+    
+
+    switch ($cargoUsuario) {
+        case 'Diretor':
+            $nivel = 1;
+            break;
+
+        case 'Coordenador':
+            $nivel = 2;
+            break;
+
+        case 'Secretário':
+            $nivel = 3;
+            break;
+        
+        case 'Professor':
+            $nivel = 4;
+            break;
+        
+        default:
+            # code...
+            break;
+    }
+
     
 ?>
 <!doctype html>
@@ -37,6 +70,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSite">
                     <ul class="navbar-nav mr-auto">
+                        <?php
+                        if ($nivel != 4){?>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Cadastrar</a>
                             <div class="dropdown-menu">
@@ -44,6 +80,10 @@
                                 <a class="dropdown-item" href="AlunoFormulario.php">Aluno</a>
                             </div>
                         </li>
+
+                        <?php
+                        }   
+                        ?>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="#">Boletins</a>
@@ -56,14 +96,20 @@
                                 <a class="dropdown-item" href="teste.php">Contas a Receber</a>
                             </div>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Pedagógico</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="DisciplinasFormulario.php">Disciplinas</a>
+                                <a class="dropdown-item" href="#">Matrizes Curriculares</a>
+                            </div>
+                        </li>  
                        
                         <li class="nav-item">
                             <a class="nav-link" href="#">Relatórios</a>
                         </li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contatos</a>
-                        </li>  
+                        
                     </ul>
                     
                     <ul class="navbar-nav ml-auto">

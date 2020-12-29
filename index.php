@@ -10,9 +10,11 @@ verificaUsuario();
 if(usuarioEstaLogado()) 
 {
 	?>
-		<p class="text-success">Você está logado como <?= usuarioLogado() ?>. <a href="logout.php">Deslogar</a></p>
+		<p class="text-success">Você está logado como <?= cargoUsuarioLogado() ?>. <a href="logout.php">Deslogar</a></p>
 	<?php
 } 
 ?>
+	<script src="js/sweetalert.js"></script>
+
 
 <?php include("rodape.php"); ?>
