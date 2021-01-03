@@ -7,7 +7,7 @@
 
     try 
     {
-        $listaDisciplinas = DisciplinaDao::listarDisciplinas();
+        $listaDisciplinas = DisciplinaDAO::listarDisciplinas();
     } 
     catch(Exception $e) 
     {
@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="node_modules/DataTables/datatables.min.css"/>
 <link href="datepicker/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
-<div class="form-row align-items-end">
+<div class="form-row align-items-center">
     <h1>Disciplinas Cadastradas</h1>
     <div class="ml-auto">
         <button 
@@ -40,9 +40,9 @@
         <table class="table table-hover table-bordered table-striped" id="tabelaDisciplinas">
             <thead class="thead-dark" align="center">
                 <tr>
-                    <th class="col-6">Nome</th>
-                    <th >Editar</th>
-                    <th>Excluir</th>
+                    <th>Nome</th>
+                    <th width="90">Editar</th>
+                    <th width="90">Excluir</th>
                 </tr>
             </thead>
             <tbody>

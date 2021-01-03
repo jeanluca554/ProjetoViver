@@ -101,7 +101,7 @@
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Pedagógico</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="DisciplinasFormulario.php">Disciplinas</a>
-                                <a class="dropdown-item" href="#">Matrizes Curriculares</a>
+                                <a class="dropdown-item" href="MatrizCurricularFormulario.php">Matrizes Curriculares</a>
                             </div>
                         </li>  
                        

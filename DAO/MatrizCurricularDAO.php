@@ -2,40 +2,44 @@
 	require_once 'global.php';
 	require_once 'Conexao.php';
 
-	class DisciplinaDAO extends Disciplina
+	class MatrizCurricularDAO extends MatrizCurricular
 	{
-		public function __construct($id_disciplina = false)
+		public function __construct($id_matriz = false)
 		{
-			if ($id_disciplina)
+			if ($id_matriz)
 			{
-				$this->id = $id_disciplina;				
+				$this->id = $id_matriz;				
 				//$this->carregar();
 			}
 		}
 
 		public function create()
 		{
-			$query = 	"INSERT INTO disciplina 
+			$query = 	"INSERT INTO matriz_curricular 
 						(
-							nome
+							nome_matriz
 						) 
 						VALUES 
 						(
-							:nome_disciplina
+							:nome_matriz
 						)";
 
 			$conexao = Conexao::pegarConexao();
 
 			$stmt = $conexao->prepare($query);
 
-			$stmt->bindValue(':nome_disciplina', $this->nome);
+			$stmt->bindValue(':nome_matriz', $this->nome);
 
 			$stmt->execute();
 			$ultimo = $conexao->lastInsertId();
 			return $ultimo;
 		}
 
-		
+		public function apresentaNome()
+		{
+			$nome = $this->nome;
+			return $nome;
+		}
 
 		public function update()
 		{

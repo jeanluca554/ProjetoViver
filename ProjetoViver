@@ -406,4 +406,22 @@ CREATE TABLE disciplina
     nome VARCHAR(255) NOT NULL
 )DEFAULT CHARSET = utf8;
 
-select nome from disciplina order by id;
+select nome, id from disciplina order by nome;
+
+CREATE TABLE matriz_curricular 
+(
+	id_matriz INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome_matriz VARCHAR(255) NOT NULL
+)DEFAULT CHARSET = utf8;
+
+CREATE TABLE disciplinas_da_matriz
+(
+	id_disciplinas_da_matriz INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_matriz INT(11) NOT NULL,
+    id_disciplina INT(11) NOT NULL,
+    FOREIGN KEY (id_matriz) REFERENCES matriz_curricular (id_matriz),
+    FOREIGN KEY (id_disciplina) REFERENCES disciplina (id)
+)DEFAULT CHARSET = utf8;
+
+
+select * from disciplinas_da_matriz;
