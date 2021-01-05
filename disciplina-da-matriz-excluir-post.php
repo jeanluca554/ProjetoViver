@@ -6,14 +6,19 @@
 
 	try
 	{
-		$id = $_POST['id'];
+		$idDisciplina = $_POST['idDisciplina'];
+		$idMatriz = $_POST['idMatriz'];
 		
-		$disciplinaDAO = new DisciplinaDAO($id);
+		$query ="	DELETE FROM disciplinas_da_matriz
+					WHERE id_disciplina = $idDisciplina AND id_matriz = $idMatriz";
+					  	
+			$conexao = Conexao::pegarConexao();
 
-		$teste = $disciplinaDAO->delete();
+			$stmt = $conexao->prepare($query);
+
+			$stmt->execute();
 
 		$response['mensagem'] = 'ok';
-		$response['text'] = $teste;
 		echo json_encode($response);
 	}
 

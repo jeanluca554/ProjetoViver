@@ -408,6 +408,8 @@ CREATE TABLE disciplina
 
 select nome, id from disciplina order by nome;
 
+delete from disciplina where id = 7;
+
 CREATE TABLE matriz_curricular 
 (
 	id_matriz INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -423,5 +425,17 @@ CREATE TABLE disciplinas_da_matriz
     FOREIGN KEY (id_disciplina) REFERENCES disciplina (id)
 )DEFAULT CHARSET = utf8;
 
-
 select * from disciplinas_da_matriz;
+
+SELECT 	d.nome, 
+		d.id
+FROM disciplina d
+JOIN disciplinas_da_matriz m
+ON d.id = m.id_disciplina
+WHERE m.id_matriz = 1;
+
+DELETE FROM disciplinas_da_matriz
+WHERE id_disciplina = 7 AND id_matriz = 1;
+
+DELETE FROM matriz_curricular
+WHERE id_matriz = 1;

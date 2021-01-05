@@ -1,6 +1,7 @@
 <?php
-	require_once 'global.php';
-	require_once 'DAO/Conexao.php';
+	
+	require_once("Conexao.php");
+	require_once("config.php");
 
 	$response = array();	
 
@@ -42,7 +43,7 @@
 	{
 		//Erro::trataErro($e);
 		$response['mensagem'] = 'erro';
-		$response['title'] = "Ops... Erro matriz-disciplinas-criar-post";
+		$response['title'] = "Ops... Erro banco-matriz-disciplinas-criar-post";
 		$response['text'] = (string) $e;
 		echo json_encode($response);
 	}

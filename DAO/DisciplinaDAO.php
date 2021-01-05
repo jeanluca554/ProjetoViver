@@ -63,6 +63,36 @@
 			return $lista;
 		}
 
+		public static function listarDisciplinasPelaMatriz($idMatriz)
+	    {
+			$materias = array();
+			$query = "	SELECT 	d.nome, 
+								d.id
+						FROM disciplina d
+						JOIN disciplinas_da_matriz m
+						ON d.id = m.id_disciplina
+						WHERE m.id_matriz = $idMatriz";
+
+			$conexao = Conexao::pegarConexao();
+			$stmt = $conexao->prepare($query);
+			$stmt->execute();
+			$fetchAll = $stmt->fetchAll();
+			
+			$i = 0;
+
+			foreach ($fetchAll as $linha)
+			{
+				$materias[$i] = array(
+					'nome' => $linha['nome'], 
+					'id' =>$linha['id']
+				);
+				// $responsaveis['nome'] = $linha['nome_responsavel'];
+				// $responsaveis['cpf'] = $linha['cpf_responsavel'];
+				$i++;
+			}
+				echo json_encode($materias);
+		}
+
 		public static function listarDisciplinasEcho()
 	    {
 	        $query = "	SELECT nome, id

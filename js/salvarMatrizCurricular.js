@@ -2,7 +2,9 @@ $(function() {
     $("#btnAdicionaDisciplina").on("click", adicionaNome);
     $("#btnMostrarDisciplina").on("click", apresentaNome);
     $("#cadastrar-matriz-curricular").on("click", limpaSes);
-    $("#botao-salvar-resonsavel-do-aluno").on("click", salvaMatrizCurricular);
+    $("#botao-salvar-matriz-curricular").on("click", salvaMatrizCurricular);
+    $("#botao-alterar-matriz-curricular").on("click", alteraMatrizCurricular);
+    $("#btnAdicionaDisciplina2").on("click", salvaUmaDisciplinaDaMatriz);
 });
 
 function adicionaNome() 
@@ -15,7 +17,7 @@ function adicionaNome()
     var disciplinaNome = $("#selectDisciplina option:selected").text();
     if(disciplinasSession == null)
     {
-        console.log('Estava vazio, então o primeiro foi adicionado');
+        // console.log('Estava vazio, então o primeiro foi adicionado');
         var disciplinas = [];
         disciplinas.push(disciplinaNume)
         sessionStorage.setItem('disciplinas', disciplinas);
@@ -38,8 +40,8 @@ function adicionaNome()
         }
         if(existe == 0)
         {
-            console.log('Não temos um igual e ');
-            console.log('Não estava vazio, então adicionamos mais um');
+            // console.log('Não temos um igual e ');
+            // console.log('Não estava vazio, então adicionamos mais um');
             var materiasSession = [];
             materiasSession.push(disciplinasSession);
 
@@ -66,90 +68,8 @@ function adicionaNome()
                     popup: 'animated tada'
                 }
             })
-        }
-        
-        
+        }  
     }
-
-    /* var matrizNome = $("#nomeMatriz").val()
-    var matriz = {
-        "nome": matrizNome
-    }
-
-    var disciplinaNume = $("#selectDisciplina").val();
-    var disciplinaNome = $("#selectDisciplina option:selected").text();
-
-    if(!disciplinas)
-    {
-        var disciplinas = [];
-        disciplinas.push(disciplinaNume);
-
-        console.log(disciplinas);
-    } */
-
-    
-
-    
-    
-    /* $("#nomeMatriz").val();
-    console.log(nome);
-        
-    if (nome != '')
-    { 
-        $.ajax({
-            url: 'matriz-listar-post.php',
-            method: 'post',
-            dataType: 'json',
-            data:{
-                nome:nome 
-            },
-
-            success: function(response)
-            {
-                if (response['mensagem'] == 'ok') 
-                {
-                    console.log(response['id']);
-                    console.log(response);
-                    
-                    Swal.fire({
-                        type: 'success',
-                        title: 'Concluído',
-                        text: 'Disciplina cadastrada com sucesso!',
-                        animation: true,
-                        customClass: {
-                            popup: 'animated bounce'
-                        }                      
-                    })
-                    $('#nomeDisciplina').val("");
-                }
-                else {
-                    Swal.fire({
-                        type: 'warning',
-                        title: response['title'],
-                        text: response['text'],
-                        animation: false,
-                        customClass: {
-                            popup: 'animated tada'
-                        }
-                    })
-                }
-            },
-
-            error: function(ultimoId)
-            {
-                console.log(ultimoId);
-                Swal.fire({
-                    type: 'warning',
-                    title: 'Erro ao Listar a Matriz',
-                    text: ultimoId,
-                    animation: false,
-                    customClass: {
-                        popup: 'animated tada'
-                    }
-                })
-            }
-        });
-    } */    
 }
 
 function apresentaNome()
@@ -173,8 +93,7 @@ function salvaMatrizCurricular()
 {
     var nome = $("#nomeMatriz").val();
     var idDisciplinas = sessionStorage.getItem('disciplinas');
-    //var tamId = idDisciplinas.length();
-    console.log(idDisciplinas);
+    // console.log(idDisciplinas);
         
     if (idDisciplinas != null) 
     {
@@ -193,7 +112,7 @@ function salvaMatrizCurricular()
                     if (ultimoId['mensagem'] == 'ok') 
                     {
                         //console.log("Matriz curricular criada com sucesso. Último ID: " + ultimoId['ultimoID']);                        
-                        salvaDisciplinasDaMatriz(ultimoId['ultimoID'])
+                        salvaTodasDisciplinasDaMatriz(ultimoId['ultimoID'])
                         
                         $('#nomeMatriz').val("");
                     }
@@ -250,7 +169,7 @@ function salvaMatrizCurricular()
     }   
 }
 
-function salvaDisciplinasDaMatriz(ultimoId) {
+function salvaTodasDisciplinasDaMatriz(ultimoId) {
     var idDisciplinas = sessionStorage.getItem('disciplinas');
     var ultimoID = ultimoId;
 
@@ -259,7 +178,7 @@ function salvaDisciplinasDaMatriz(ultimoId) {
         if (idDisciplinas[i] != ",")
         {
             $.ajax({
-                url: 'matriz-disciplinas-criar-post.php',
+                url: 'DAO/banco-matriz-disciplinas-criar-post.php',
                 method: 'post',
                 dataType: 'json',
                 data: {
@@ -270,7 +189,7 @@ function salvaDisciplinasDaMatriz(ultimoId) {
                 success: function (ultimoId) {
                     if (ultimoId['mensagem'] == 'ok') 
                     {
-                        apresentaMensagemSucesso();                        
+                        apresentaMensagemSucesso("cadastrada");                        
                     }
                     else {
                         Swal.fire({
@@ -284,13 +203,13 @@ function salvaDisciplinasDaMatriz(ultimoId) {
                         })
                     }
                 },
-                error: function (jqXHR, status, error) {
+                /* error: function (jqXHR, status, error) {
                     //alert('Ocorreu durante a execução do filtro. Tente novamente mais tarde!');
                     console.log(status, error, jqXHR);
 
-                }
+                } */
 
-                /* error: function (ultimoId) {
+                error: function (ultimoId) {
                     console.log(ultimoId)
                     Swal.fire({
                         type: 'warning',
@@ -301,7 +220,7 @@ function salvaDisciplinasDaMatriz(ultimoId) {
                             popup: 'animated tada'
                         }
                     })
-                } */
+                }
             });
         }
     }
@@ -343,56 +262,163 @@ function novaLinha(materia, numero)
     linha.append(colunaRemover);
 
     return linha;
-
 }
 
-function criaArray()
-{
-
-}
-
-function removerLinha(id) {
-    var disciplinas1 = [];
-    var disciplinas2 = [];
-
-    var disciplinasSession = sessionStorage.getItem('disciplinas');
-    console.log("id: " + id);
-    console.log("antes: " + disciplinasSession);
-    for (var i = 0; i < disciplinasSession.length; i++) {
-        if (disciplinasSession[i] == id || disciplinasSession[i] == ",") {
-            disciplinas1.push(disciplinasSession[i])
-        }
-        else {
-            disciplinas2.push(disciplinasSession[i])
-        }
-    }
-    console.log("depois1: " + disciplinas1);
-    console.log("depois2: " + disciplinas2);
-
-    
-
-    //sessionStorage.setItem('disciplinas', disciplinasSession);
 
 
-    event.preventDefault();// evitar o evento padrão de jogar pro topo da tela ao excluir
-    var linha = $("#btnExcluir" + id).parent().parent();
-
-    linha.fadeOut(1000);
-    setTimeout(function () {
-        linha.remove();
-    }, 1000);
-}
-
-function apresentaMensagemSucesso()
+function apresentaMensagemSucesso(texto)
 {
     //console.log("Disciplina criada com sucesso. Último ID: " + ultimoId['ultimoID']);
     Swal.fire({
         type: 'success',
         title: 'Concluído',
-        text: 'Matriz Curricular cadastrada com sucesso!',
+        text: 'Matriz Curricular ' + texto + ' com sucesso!',
         animation: true,
         customClass: {
             popup: 'animated bounce'
         }
     })
+}
+
+function alteraMatrizCurricular() {
+    var nome = $("#nomeMatriz").val();
+    var idMatriz = sessionStorage.getItem('idMatriz');
+    // console.log(idDisciplinas);
+
+    if (nome != '') {
+        $.ajax({
+            url: 'matriz-curricular-alterar-post.php',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                nome: nome, 
+                idMatriz: idMatriz
+            },
+
+            success: function (response) {
+                if (response['mensagem'] == 'ok') {
+                    //console.log("Matriz curricular criada com sucesso. Último ID: " + response['ultimoID']);                        
+                    apresentaMensagemSucesso("alterada");
+                }
+                else {
+                    Swal.fire({
+                        type: 'warning',
+                        title: response['title'],
+                        text: response['text'],
+                        animation: false,
+                        customClass: {
+                            popup: 'animated tada'
+                        }
+                    })
+                }
+            },
+
+            error: function (ultimoId) {
+                console.log(ultimoId);
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Erro ao alterar a Matriz Curricular',
+                    text: ultimoId,
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
+            }
+        });
+    }
+    else {
+        Swal.fire({
+            type: 'warning',
+            title: 'Ops..',
+            text: 'Para salvar você deve digitar um nome para a Matriz Curricular',
+            animation: false,
+            customClass: {
+                popup: 'animated tada'
+            }
+        })
+    }
+}
+
+function salvaUmaDisciplinaDaMatriz() 
+{
+    var idMatriz = sessionStorage.getItem('idMatriz');
+    var disciplinaNume = $("#selectDisciplina").val();
+    var disciplinaNome = $("#selectDisciplina option:selected").text();
+
+    var disciplinasSession = sessionStorage.getItem('disciplinas');
+
+    var existe = 0;
+    for (var i = 0; i < disciplinasSession.length; i++) {
+        if (disciplinasSession[i] == disciplinaNume) {
+            existe = 1;
+            break;
+        }
+    }
+    if (existe == 0) 
+    {
+        $.ajax({
+            url: 'DAO/banco-matriz-disciplinas-criar-post.php',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                idDisciplina: disciplinaNume,
+                idMatriz: idMatriz
+            },
+
+            success: function (ultimoId) {
+                if (ultimoId['mensagem'] == 'ok') 
+                {
+                    var materiasSession = [];
+                    materiasSession.push(disciplinasSession);
+
+                    materiasSession.push(disciplinaNume);
+                    sessionStorage.setItem('disciplinas', materiasSession);
+
+                    insereMateriasNaTabela(disciplinaNome, disciplinaNume)
+                }
+                else {
+                    Swal.fire({
+                        type: 'warning',
+                        title: ultimoId['title'],
+                        text: ultimoId['text'],
+                        animation: false,
+                        customClass: {
+                            popup: 'animated tada'
+                        }
+                    })
+                }
+            },
+            /* error: function (jqXHR, status, error) {
+                //alert('Ocorreu durante a execução do filtro. Tente novamente mais tarde!');
+                console.log(status, error, jqXHR);
+
+            } */
+
+            error: function (ultimoId) {
+                console.log(ultimoId)
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Oops..',
+                    text: 'Erro ao salvar as Disciplinas Da Matriz',
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
+            }
+        });
+        
+    }
+    else {
+        Swal.fire({
+            type: 'warning',
+            title: 'Ops..',
+            text: 'Essa matéria já existe na tabela!',
+            animation: false,
+            customClass: {
+                popup: 'animated tada'
+            }
+        })
+    }  
 }

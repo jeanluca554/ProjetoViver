@@ -1,19 +1,21 @@
 <?php
 	require_once 'global.php';
-	require_once 'DAO/DisciplinaDAO.php';
+	require_once 'DAO/MatrizCurricularDAO.php';
 
 	$response = array();	
 
 	try
 	{
-		$id = $_POST['id'];
+		$nome = $_POST['nome'];
+		$idMatriz = $_POST['idMatriz'];
 		
-		$disciplinaDAO = new DisciplinaDAO($id);
+		$matrizCurricularDAO = new MatrizCurricularDAO($idMatriz);
 
-		$teste = $disciplinaDAO->delete();
+		$matrizCurricularDAO->nome = $nome;
+
+		$matrizCurricularDAO->update();
 
 		$response['mensagem'] = 'ok';
-		$response['text'] = $teste;
 		echo json_encode($response);
 	}
 

@@ -1,6 +1,6 @@
 <?php
 	require_once 'global.php';
-	require_once 'DAO/DisciplinaDAO.php';
+	require_once 'DAO/MatrizCurricularDAO.php';
 
 	$response = array();	
 
@@ -8,12 +8,12 @@
 	{
 		$id = $_POST['id'];
 		
-		$disciplinaDAO = new DisciplinaDAO($id);
+		$matrizDAO = new MatrizCurricularDAO($id);
 
-		$teste = $disciplinaDAO->delete();
+		$matrizDAO->delete();
 
 		$response['mensagem'] = 'ok';
-		$response['text'] = $teste;
+		$response['text'] = "Matriz curricular revovida com sucesso!";
 		echo json_encode($response);
 	}
 

@@ -1,6 +1,6 @@
 <?php
 	require_once 'global.php';
-	require_once 'DAO/DisciplinaDAO.php';
+	require_once 'DAO/MatrizCurricularDAO.php';
 
 	$response = array();	
 
@@ -8,9 +8,9 @@
 	{
 		$id = $_POST['id'];
 		
-		$disciplinaDAO = new DisciplinaDAO($id);
+		$matrizDAO = new MatrizCurricularDAO($id);
 
-		$teste = $disciplinaDAO->delete();
+		$teste = $matrizDAO->deletaDisciplinasDaMatriz();
 
 		$response['mensagem'] = 'ok';
 		$response['text'] = $teste;

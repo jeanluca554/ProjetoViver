@@ -27,7 +27,7 @@
 			$this->salario_funcionario = $linha['salario_funcionario'];
 		}
 
-		public static function listar()
+		/* public static function listar()
 	    {
 	        $query = "SELECT r.nome, preco, descricao, categoria_id, c.nome as categoria_nome
 	                  FROM produtos p
@@ -37,7 +37,7 @@
 	        $resultado = $conexao->query($query);
 	        $lista = $resultado->fetchAll();
 	        return $lista;
-	    }
+	    } */
 
 		public function create()
 		{

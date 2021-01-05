@@ -35,17 +35,17 @@
 			return $ultimo;
 		}
 
-		public function apresentaNome()
+		/* public function apresentaNome()
 		{
 			$nome = $this->nome;
 			return $nome;
-		}
+		} */
 
 		public function update()
 		{
-			$query ="	UPDATE disciplina 
-						SET	nome = :nome
-						WHERE id = :id ";
+			$query ="	UPDATE matriz_curricular
+						SET	nome_matriz = :nome
+						WHERE id_matriz = :id ";
 					  	
 			$conexao = Conexao::pegarConexao();
 
@@ -57,10 +57,10 @@
 			$stmt->execute();
 		}
 		
-		public static function listarDisciplinas()
+		public static function listarMatrizes()
 	    {
-	        $query = "	SELECT nome, id
-				 		FROM disciplina ORDER BY nome";
+	        $query = "	SELECT nome_matriz, id_matriz
+				 		FROM matriz_curricular ORDER BY nome_matriz";
 	        $conexao = Conexao::pegarConexao();
 	        $resultado = $conexao->query($query);
 	        $lista = $resultado->fetchAll();
@@ -100,10 +100,13 @@
 			}
 		}
 
-		public function delete()
+		public function deletaDisciplinasDaMatriz()
 		{
-			$query ="	DELETE FROM disciplina 
-						WHERE id = :idDisciplina ";
+			$query ="	SELECT 	d.id
+						FROM disciplina d
+						JOIN disciplinas_da_matriz m
+						ON d.id = m.id_disciplina
+						WHERE m.id_matriz = :idDisciplina";
 					  	
 			$conexao = Conexao::pegarConexao();
 
@@ -112,5 +115,54 @@
 			$stmt->bindValue(':idDisciplina', $this->id);
 
 			$stmt->execute();
+			$fetchAll = $stmt->fetchAll();
+
+			$tamanho = count($fetchAll);
+			$tem = $tamanho;
+			$naoTem = "Não tem matérias";
+
+			if ($tamanho > 0)
+			{
+				foreach ($fetchAll as $linha)
+				{
+					$idDisciplina = $linha['id'];
+					try 
+					{	
+						$query = 	"	DELETE FROM disciplinas_da_matriz
+										WHERE id_disciplina = :idDisciplina AND id_matriz = :idMatriz";
+
+						$conexao = Conexao::pegarConexao();
+						$stmt = $conexao->prepare($query);
+						$stmt->bindValue(':idDisciplina', $idDisciplina);
+						$stmt->bindValue(':idMatriz', $this->id);
+
+						$stmt->execute();
+					} 
+					catch (Exception $e)
+					{
+						$response['text'] = (string) $e;
+						$response['message'] = "erro no catch";
+						// echo json_encode($e);
+					}
+				}
+				return $tem;
+			}
+			else {
+				return $naoTem;
+			}
+		}
+
+		public function delete()
+		{
+			$query = 	"	DELETE FROM matriz_curricular
+							WHERE id_matriz = :idMatriz";
+
+			$conexao = Conexao::pegarConexao();
+			$stmt = $conexao->prepare($query);
+			$stmt->bindValue(':idMatriz', $this->id);
+
+			$stmt->execute();
 		}
 	}
+
+	
