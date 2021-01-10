@@ -2,8 +2,9 @@
 	class MatrizCurricular
 	{
         private $id;
-        private $nome;
-        private $disciplinas;
+		private $nome;
+		private $tipoEnsino;
+		private $disciplinas;
 
 		public function getId()
 		{
@@ -23,6 +24,16 @@
 		public function setNome($nome)
 		{
 			$this->nome = $nome;
+		}
+		
+		public function getTipoEnsino()
+		{
+			return $this->tipoEnsino;
+		}
+
+		public function setTipoEnsino($tipoEnsino)
+		{
+			$this->tipoEnsino = $tipoEnsino;
         }
                
          public function getDisciplinas()

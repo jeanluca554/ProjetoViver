@@ -2,36 +2,51 @@
 	require_once 'global.php';
 	require_once 'Conexao.php';
 
-	class MatrizCurricularDAO extends MatrizCurricular
+	class TurmaDAO extends Turma
 	{
-		public function __construct($id_matriz = false)
+		public function __construct($id_turma = false)
 		{
-			if ($id_matriz)
+			if ($id_turma)
 			{
-				$this->id = $id_matriz;				
+				$this->id = $id_turma;				
 				//$this->carregar();
 			}
 		}
 
 		public function create()
 		{
-			$query = 	"INSERT INTO matriz_curricular 
+			$query = 	"INSERT INTO turma 
 						(
-							nome_matriz,
-							tipo_ensino
+							nome_turma,
+							sigla,
+							ano,
+							turno,
+							capacidade,
+							tipo_ensino_turma,
+							num_ensino_turma
 						) 
 						VALUES 
 						(
-							:nome_matriz,
-							:tipo_ensino
+							:nome_turma,
+							:sigla,
+							:ano,
+							:turno,
+							:capacidade,
+							:tipo_ensino,
+							:num_ensino
 						)";
 
 			$conexao = Conexao::pegarConexao();
 
 			$stmt = $conexao->prepare($query);
 
-			$stmt->bindValue(':nome_matriz', $this->nome);
+			$stmt->bindValue(':nome_turma', $this->nome);
+			$stmt->bindValue(':sigla', $this->sigla);
+			$stmt->bindValue(':ano', $this->ano);
+			$stmt->bindValue(':turno', $this->turno);
+			$stmt->bindValue(':capacidade', $this->capacidade);
 			$stmt->bindValue(':tipo_ensino', $this->tipoEnsino);
+			$stmt->bindValue(':num_ensino', $this->numTipoEnsino);
 
 			$stmt->execute();
 			$ultimo = $conexao->lastInsertId();
@@ -46,25 +61,46 @@
 
 		public function update()
 		{
-			$query ="	UPDATE matriz_curricular
-						SET	nome_matriz = :nome, tipo_ensino = :tipo
-						WHERE id_matriz = :id ";
+			$query ="	UPDATE turma
+						SET	nome_turma = :nome_turma,
+							sigla = :sigla,
+							ano = :ano,
+							turno = :turno,
+							capacidade = :capacidade,
+							tipo_ensino_turma = :tipo_ensino,
+							num_ensino_turma = :num_ensino
+						WHERE id_turma = :id ";
 					  	
 			$conexao = Conexao::pegarConexao();
 
 			$stmt = $conexao->prepare($query);
 
-			$stmt->bindValue(':nome', $this->nome);
-			$stmt->bindValue(':tipo', $this->tipoEnsino);
 			$stmt->bindValue(':id', $this->id);
+			$stmt->bindValue(':nome_turma', $this->nome);
+			$stmt->bindValue(':sigla', $this->sigla);
+			$stmt->bindValue(':ano', $this->ano);
+			$stmt->bindValue(':turno', $this->turno);
+			$stmt->bindValue(':capacidade', $this->capacidade);
+			$stmt->bindValue(':tipo_ensino', $this->tipoEnsino);
+			$stmt->bindValue(':num_ensino', $this->numTipoEnsino);
 
 			$stmt->execute();
 		}
 		
-		public static function listarMatrizes()
+		public static function listarTurmas()
 	    {
-	        $query = "	SELECT nome_matriz, id_matriz, tipo_ensino
-				 		FROM matriz_curricular ORDER BY nome_matriz";
+	        $query = "	SELECT 
+								nome_turma,
+								id_turma,
+								sigla,
+								ano,
+								turno,
+								capacidade,
+								tipo_ensino_turma,
+								num_ensino_turma,
+								situacao,
+								alunos_ativos
+				 		FROM turma ORDER BY nome_turma";
 	        $conexao = Conexao::pegarConexao();
 	        $resultado = $conexao->query($query);
 	        $lista = $resultado->fetchAll();
@@ -201,12 +237,12 @@
 
 		public function delete()
 		{
-			$query = 	"	DELETE FROM matriz_curricular
-							WHERE id_matriz = :idMatriz";
+			$query = 	"	DELETE FROM turma
+							WHERE id_turma = :idTurma";
 
 			$conexao = Conexao::pegarConexao();
 			$stmt = $conexao->prepare($query);
-			$stmt->bindValue(':idMatriz', $this->id);
+			$stmt->bindValue(':idTurma', $this->id);
 
 			$stmt->execute();
 		}

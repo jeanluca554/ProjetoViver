@@ -37,7 +37,7 @@
 <!-- Tabela Disciplinas -->
 <div class="row mt-4 justify-content-center">
     <div class="col-md-8">
-        <table class="table table-hover table-bordered table-striped" id="tabelaDisciplinas">
+        <table class="table table-hover table-bordered table-striped tabelaPTBR" id="tabelaDisciplinas">
             <thead class="thead-dark" align="center">
                 <tr>
                     <th>Nome</th>
@@ -132,7 +132,7 @@
 <script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script type="text/javascript" src="node_modules/DataTables/datatables.min.js"></script>
-<script src="js/disciplinaDataTable.js"></script>
+<script src="js/dataTable.js"></script>
 
 <script src="js/formataFormularioDisciplinas.js"></script>
 <script src="js/salvarDisciplina.js"></script>

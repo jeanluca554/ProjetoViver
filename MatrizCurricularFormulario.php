@@ -39,7 +39,7 @@
 <!-- Tabela Matrizes Curriculares -->
 <div class="row mt-4 justify-content-center">
     <div class="col-md-8">
-        <table class="table table-hover table-bordered table-striped" id="tabelaMatrizes">
+        <table class="table table-hover table-bordered table-striped tabelaPTBR" id="tabelaMatrizes">
             <thead class="thead-dark" align="center">
                 <tr>
                     <th>Nome</th>
@@ -60,7 +60,8 @@
                                 data-target="#ModalMatrizCurricular" 
                                 data-nomeDisciplina="<?php echo $linha['nome_matriz'] ?>"
                                 data-idDisciplina="<?php echo $linha['id_matriz'] ?>"
-                                onclick="setAlterarMatriz('<?php echo $linha['nome_matriz'] ?>', <?php echo $linha['id_matriz'] ?>)"
+                                data-tipoEnsino="<?php echo $linha['tipo_ensino'] ?>"
+                                onclick="setAlterarMatriz('<?php echo $linha['nome_matriz'] ?>', <?php echo $linha['id_matriz'] ?>, <?php echo $linha['tipo_ensino'] ?>)"
                             >
                                 <img src="img/editar.png">
                             </button>
@@ -107,17 +108,30 @@
             </div>
 
             <div class="modal-body">
-                <div class="form-group mt-4">
-                    <label for="nome">Nome da Matriz Curricular</label>
-                    <input 
-                        type="text" 
-                        name="nome" 
-                        class="form-control" 
-                        id="nomeMatriz" 
-                        placeholder="Nome da Matriz Curricular" 
-                        required
-                    >
-                    <input hidden id="idMatriz" data-id="">
+                <div class="form-row align-items-end mt-4">
+                    <div class="col-7">
+                    
+                        <label for="nome">Nome da Matriz Curricular</label>
+                        <input 
+                            type="text" 
+                            name="nome" 
+                            class="form-control" 
+                            id="nomeMatriz" 
+                            placeholder="Nome da Matriz Curricular" 
+                            required
+                        >
+                        <input hidden id="idMatriz" data-id="">
+                    </div>
+
+                    <div class="col-5">
+                        <label for="tipoEnsino">Tipo Ensino</label>
+                        <select name="tipoEnsino" class="form-control" id="tipoEnsino">    
+                        <option value="0">Selecione...</option>
+                            <option value="1">Educação Infantil</option>
+                            <option value="2">Ensino Fundamental</option>            
+                            <option value="3">Ensino Médio</option>            
+                        </select>        
+                    </div>
                 </div>
             <div class="form-row align-items-end mt-5">
 
@@ -202,7 +216,7 @@
 
                 <button 
                     type="reset" 
-                    class="btn btn-danger ml-2 mt-3 fecharModalCadastroAluno" data-dismiss="modal" 
+                    class="btn btn-danger ml-2 mt-3 fecharModalCadastroMatrizCurricular" data-dismiss="modal" 
                     id="closeButton"
                 >
                     Fechar
@@ -218,7 +232,7 @@
 <script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script type="text/javascript" src="node_modules/DataTables/datatables.min.js"></script>
-<script src="js/matrizDataTable.js"></script>
+<script src="js/dataTable.js"></script>
 
 <script src="js/formataMatrizCurricular.js"></script>
 <script src="js/salvarMatrizCurricular.js"></script>

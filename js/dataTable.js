@@ -3,7 +3,7 @@ $(function() {
 });
 
 function configuraDataTable() {
-    $('#tabelaDeFuncionarios').DataTable({
+    $('.tabelaPTBR').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por página",
             "zeroRecords": "Nada encontrado - desculpe",

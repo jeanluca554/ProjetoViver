@@ -23,7 +23,7 @@
 <h2>Calcular Salário de Funcionário</h2>
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-hover" id="tabelaDeFuncionarios">
+        <table class="table table-hover tabelaPTBR" id="tabelaDeFuncionarios">
             <thead class="thead-dark" align="center">
                 <tr>
                     <th>Nome</th>

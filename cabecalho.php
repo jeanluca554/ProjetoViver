@@ -102,6 +102,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="DisciplinasFormulario.php">Disciplinas</a>
                                 <a class="dropdown-item" href="MatrizCurricularFormulario.php">Matrizes Curriculares</a>
+                                <a class="dropdown-item" href="TurmasFormulario.php">Turmas</a>
                             </div>
                         </li>  
                        

@@ -1,6 +1,8 @@
 $(function() {    
     $('#cadastrar-matriz-curricular').on("click", setCadastrarMatriz);
-    $('.').on("click", recarregarPagina);
+    // $('.').on("click", recarregarPagina);
+    $('.fecharModalCadastroMatrizCurricular').on("click", limparCampos);
+    $('#botao-salvar-endereco-responsavel').on("click", limparCampos);
     // $('#bnt-editar-disciplina').on("click", setAlterarDisciplinas);
 });
 
@@ -22,7 +24,7 @@ function setCadastrarMatriz()
 
 }
 
-function setAlterarMatriz(nome, id)
+function setAlterarMatriz(nome, id, tipoEnsino)
 {
     $('#botao-salvar-matriz-curricular').hide();
     $('#botao-alterar-matriz-curricular').show();
@@ -36,6 +38,7 @@ function setAlterarMatriz(nome, id)
     sessionStorage.setItem('removeLinha', 1);
 
     $('#nomeMatriz').val(nome);
+    $('#tipoEnsino').val(tipoEnsino);
     $('#idMatriz').attr('data-id', id);
 
     $(".tabelaMaterias > tbody").empty();
@@ -113,4 +116,9 @@ function novaLinhaTabelaMaterias(materia, numero, idMatriz) {
     linha.append(colunaRemover);
 
     return linha;
+}
+
+function limparCampos()
+{
+    $("#tipoEnsino").val(0);
 }

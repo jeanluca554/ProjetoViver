@@ -93,7 +93,7 @@ function excluirMatriz(id)
         ) {
             swalWithBootstrapButtons.fire(
                 'Cancelado',
-                'A disciplina não foi excluída',
+                'A matriz curricular não foi excluída',
                 'error'
             )
         }

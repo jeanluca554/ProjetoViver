@@ -7,11 +7,13 @@
 	try
 	{
 		$nome = $_POST['nome'];
+		$tipoEnsino = $_POST['tipoEnsino'];
 		$idMatriz = $_POST['idMatriz'];
 		
 		$matrizCurricularDAO = new MatrizCurricularDAO($idMatriz);
 
 		$matrizCurricularDAO->nome = $nome;
+		$matrizCurricularDAO->tipoEnsino = $tipoEnsino;
 
 		$matrizCurricularDAO->update();
 

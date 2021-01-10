@@ -416,6 +416,10 @@ CREATE TABLE matriz_curricular
     nome_matriz VARCHAR(255) NOT NULL
 )DEFAULT CHARSET = utf8;
 
+ALTER TABLE matriz_curricular ADD COLUMN tipo_ensino INT(1) NOT NULL;
+
+select * FROM matriz_curricular;
+
 CREATE TABLE disciplinas_da_matriz
 (
 	id_disciplinas_da_matriz INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -428,14 +432,66 @@ CREATE TABLE disciplinas_da_matriz
 select * from disciplinas_da_matriz;
 
 SELECT 	d.nome, 
-		d.id
+		d.id,
+        m.id_matriz as idMatriz
 FROM disciplina d
 JOIN disciplinas_da_matriz m
 ON d.id = m.id_disciplina
-WHERE m.id_matriz = 1;
+WHERE m.id_matriz = 5;
 
 DELETE FROM disciplinas_da_matriz
-WHERE id_disciplina = 7 AND id_matriz = 1;
+WHERE id_disciplina = 6 AND id_matriz = 1;
+
+SELECT 	d.id
+FROM disciplina d
+JOIN disciplinas_da_matriz m
+ON d.id = m.id_disciplina
+WHERE m.id_matriz = 11;
 
 DELETE FROM matriz_curricular
 WHERE id_matriz = 1;
+
+drop table turma;
+
+CREATE TABLE turma
+(
+	id_turma INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome_turma VARCHAR(100) NOT NULL,
+    sigla VARCHAR(1) NOT NULL,
+    ano INT NOT NULL,
+    turno VARCHAR(20) NOT NULL,
+    capacidade INT NOT NULL,
+    tipo_ensino_turma VARCHAR(50),
+    num_ensino_turma INT NOT NULL,
+    situacao BIT DEFAULT 1 NOT NULL
+)DEFAULT CHARSET = utf8;
+
+ALTER TABLE turma ADD COLUMN num_ensino_turma INT NOT NULL;
+
+describe turma;
+
+INSERT INTO turma 
+(
+	nome_turma,
+	sigla,
+	ano,
+    turno,
+	capacidade,
+	tipo_ensino_turma,
+    situacao
+) 
+VALUES 
+(
+	'1 Ano',
+	'C',
+	2021,
+	'Manha',
+	30,
+	'Ensino Medio',
+    0
+);
+
+select * from turma;
+
+DELETE FROM turma
+WHERE id_turma = 4;

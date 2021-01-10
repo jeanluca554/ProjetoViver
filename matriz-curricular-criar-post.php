@@ -7,10 +7,12 @@
 	try
 	{
 		$nome = $_POST['nome'];
+		$tipoEnsino = $_POST['tipoEnsino'];
 		
 		$matrizCurricularDAO = new MatrizCurricularDAO();
 
 		$matrizCurricularDAO->nome = $nome;
+		$matrizCurricularDAO->tipoEnsino = $tipoEnsino;
 
 		$ultimoID = $matrizCurricularDAO->create();
 

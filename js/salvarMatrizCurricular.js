@@ -92,6 +92,7 @@ function limpaSes()
 function salvaMatrizCurricular() 
 {
     var nome = $("#nomeMatriz").val();
+    var tipoEnsino = $("#tipoEnsino").val();
     var idDisciplinas = sessionStorage.getItem('disciplinas');
     // console.log(idDisciplinas);
         
@@ -104,7 +105,8 @@ function salvaMatrizCurricular()
                 method: 'post',
                 dataType: 'json',
                 data:{
-                    nome: nome
+                    nome: nome,
+                    tipoEnsino: tipoEnsino
                 },
 
                 success: function(ultimoId)
@@ -115,6 +117,7 @@ function salvaMatrizCurricular()
                         salvaTodasDisciplinasDaMatriz(ultimoId['ultimoID'])
                         
                         $('#nomeMatriz').val("");
+                        $('#tipoEnsino').val("0");
                     }
                     else {
                         Swal.fire({
@@ -269,19 +272,39 @@ function novaLinha(materia, numero)
 function apresentaMensagemSucesso(texto)
 {
     //console.log("Disciplina criada com sucesso. Último ID: " + ultimoId['ultimoID']);
-    Swal.fire({
-        type: 'success',
-        title: 'Concluído',
-        text: 'Matriz Curricular ' + texto + ' com sucesso!',
-        animation: true,
-        customClass: {
-            popup: 'animated bounce'
-        }
-    })
+
+    if (texto == "alterada")
+    {
+        Swal.fire({
+            type: 'success',
+            title: 'Concluído',
+            text: 'Matriz Curricular ' + texto + ' com sucesso!',
+            animation: true,
+            customClass: {
+                popup: 'animated bounce'
+            }
+        }).then(function () {
+            location.reload();
+        });
+    }
+    else
+    {
+        Swal.fire({
+            type: 'success',
+            title: 'Concluído',
+            text: 'Matriz Curricular ' + texto + ' com sucesso!',
+            animation: true,
+            customClass: {
+                popup: 'animated bounce'
+            }
+        })
+    }
+    
 }
 
 function alteraMatrizCurricular() {
     var nome = $("#nomeMatriz").val();
+    var tipoEnsino = $("#tipoEnsino").val();
     var idMatriz = sessionStorage.getItem('idMatriz');
     // console.log(idDisciplinas);
 
@@ -291,7 +314,8 @@ function alteraMatrizCurricular() {
             method: 'post',
             dataType: 'json',
             data: {
-                nome: nome, 
+                nome: nome,
+                tipoEnsino: tipoEnsino, 
                 idMatriz: idMatriz
             },
 
