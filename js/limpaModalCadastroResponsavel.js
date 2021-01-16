@@ -1,7 +1,7 @@
 $(function(){
 	$('.fecharModalCadastroResponsavel').on("click", limparCampos);
     $('#botao-salvar-endereco-responsavel').on("click", limparCampos);
-	
+    // $('.fecharModalNovaMatricula').on("click", limparCamposMatricula);
 });
 
 function limparCampos()
@@ -36,6 +36,45 @@ function limparCampos()
             'aria-selected': "true"
         });
 
+        // $('#abaEnderecoAluno').removeClass('tab-pane fade active show');
+        // $('#abaEnderecoAluno').addClass('tab-pane fade');
+        // $('#enderecoAluno-tab').removeClass('active');
+        // $('#enderecoAluno-tab').addClass('nav-link');
+        // $('#enderecoAluno-tab').attr({
+        //     'aria-selected': "false"
+        // });
+
+        // $('#abaDadosPessoaisAluno').removeClass('tab-pane fade active show');
+        // $('#abaDadosPessoaisAluno').addClass('tab-pane fade');
+        // $('#dadosPessoaisAluno-tab').removeClass('active');
+        // $('#dadosPessoaisAluno-tab').addClass('nav-link');
+        // $('#dadosPessoaisAluno-tab').attr({
+        //     'aria-selected': "false"
+        // });
+    });
+    
+}
+function limparCamposMatricula() {
+    
+    $('#NovaMatriculaModal').on('hidden.bs.modal', function () {
+        
+
+        $('#ModalAlunoFormulario').modal('show');
+
+        $('#abaMatricularAluno').addClass('tab-pane fade active show');
+        $('#matricularAluno-tab').addClass('nav-link active');
+        $('#matricularAluno-tab').attr({
+            'aria-selected': "true"
+        });
+
+        $('#abaResponsaveisAluno').removeClass('tab-pane fade active show');
+        $('#abaResponsaveisAluno').addClass('tab-pane fade');
+        $('#responsaveisAluno-tab').removeClass('active');
+        $('#responsaveisAluno-tab').addClass('nav-link');
+        $('#responsaveisAluno-tab').attr({
+            'aria-selected': "false"
+        });
+
         $('#abaEnderecoAluno').removeClass('tab-pane fade active show');
         $('#abaEnderecoAluno').addClass('tab-pane fade');
         $('#enderecoAluno-tab').removeClass('active');
@@ -51,6 +90,11 @@ function limparCampos()
         $('#dadosPessoaisAluno-tab').attr({
             'aria-selected': "false"
         });
+
+        // esses comandos não funcionam, mas deveriam
+        $('#tipoEnsinoMatricula').attr('option value', 0);
+        $('#selectTurmasMatricula').attr('option value', '');
+        $('#selectTurmasMatricula').attr('disabled', true);
     });
-    
+
 }

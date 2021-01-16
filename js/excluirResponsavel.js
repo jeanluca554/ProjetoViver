@@ -60,6 +60,12 @@ function excluirResponsavel(idAluno, cpf, idRespPeloAluno)
                                 cpfSemPonto = cpfSemPonto.replace(".", "");
                                 cpfSemTraco = cpfSemPonto.replace("-", "");
                                 removerLinha(cpfSemTraco);
+
+                                //remove do select ao excluir o responsável
+                                var optSelectFinanceiro = "#selectResponsavelFinanceiro option[value='" + cpf + "']";
+                                var optSelectDidatico = "#selectResponsavelDidatico option[value='" + cpf + "']";
+                                $(optSelectFinanceiro).remove();
+                                $(optSelectDidatico).remove();
                             })
                         }
                     }

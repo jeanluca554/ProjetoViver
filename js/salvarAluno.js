@@ -435,6 +435,8 @@ function salvarResponsavelFinanceiroDidatico() {
                         popup: 'animated bounce'
                     }
                 })
+                $('#matricularAluno-tab').attr('class', 'nav-link');
+                $('#matricularAluno-tab').attr('href', '#abaMatricularAluno');
             },
 
             error: function (ultimoId) {

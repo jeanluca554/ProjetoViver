@@ -5,6 +5,7 @@
     require_once("DAO/EstadoDao.php");
     require_once("DAO/PaisDAO.php");
     require_once("DAO/ResponsavelDAO.php");
+    require_once("DAO/TurmaDAO.php");
 
     verificaUsuario();
 ?>
@@ -24,22 +25,23 @@
 <link href="datepicker/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
 <div class="form-row align-items-end">
-    <h1>Alunos Matriculados</h1>
+    <h1>Alunos Cadastrados</h1>
     <div class="ml-auto">
         <button 
+            id="btn-cadastrar-aluno"
             type="button" 
             class="btn btn-outline-success" 
             data-toggle="modal" 
             data-target="#ModalAlunoFormulario"
             onclick="garanteSessionNomeAluno()"
         >
-            <img src="img/laranja-adicionar-25.png">Cadastrar Aluno
+            <img src="img/laranja-adicionar-25.png" class="mr-1">Cadastrar Aluno
         </button>
     </div>
 </div>
 <div class="row mt-4">
     <div class="col-md-12">
-        <table class="table table-hover table-bordered" id="tabelaDeFuncionarios">
+        <table class="table table-hover table-bordered tabelaPTBR" id="tabelaDeFuncionarios">
             <thead class="thead-dark" align="center">
                 <tr>
                     <th>Nome</th>
@@ -111,16 +113,52 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item pessoaisAluno">
-                        <a class="nav-link active" id="dadosPessoaisAluno-tab" data-toggle="tab" href="#abaDadosPessoaisAluno" role="tab" aria-controls="hom" aria-selected="true">Dados Pessoais</a>
+                        <a  class="nav-link active" 
+                            id="dadosPessoaisAluno-tab" 
+                            data-toggle="tab" 
+                            href="#abaDadosPessoaisAluno" 
+                            role="tab" 
+                            aria-controls="hom" 
+                            aria-selected="true"
+                        >
+                            Dados Pessoais
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" id="enderecoAluno-tab" data-toggle="tab" href="#abaEnderecoAluno" role="tab" aria-controls="enderecoAluno" aria-selected="false">Endereço</a>
+                        <a  class="nav-link disabled" 
+                            id="enderecoAluno-tab" 
+                            data-toggle="tab" 
+                            href="#abaEnderecoAluno" 
+                            role="tab" 
+                            aria-controls="enderecoAluno" 
+                            aria-selected="false"
+                        >
+                            Endereço
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" id="responsaveisAluno-tab" data-toggle="tab" href="#abaResponsaveisAluno" role="tab" aria-controls="profil" aria-selected="false">Responsáveis</a>
+                        <a  class="nav-link disabled" 
+                        id="responsaveisAluno-tab" 
+                        data-toggle="tab" 
+                        href="#abaResponsaveisAluno" 
+                        role="tab" 
+                        aria-controls="profil" 
+                        aria-selected="false"
+                    >
+                        Responsáveis
+                    </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contac" aria-selected="false">Matrícula</a>
+                        <a  class="nav-link disabled" 
+                            id="matricularAluno-tab" 
+                            data-toggle="tab" 
+                            href="#abaMatricularAluno" 
+                            role="tab" 
+                            aria-controls="contac" 
+                            aria-selected="false"
+                        >
+                            Matrícula
+                        </a>
                     </li>
                 </ul>
 
@@ -136,7 +174,7 @@
                             <input type="text" name="nome" class="form-control" id="nomeAluno" placeholder="Nome Completo" required>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6 nascimentoAluno">
+                            <div class="form-group col-md-6">
                                 <label for="DataNascimento">Data de Nascimento</label>
                                 <div class="input-group date">
                                     <span class="input-group-btn">
@@ -383,7 +421,7 @@
                             <button 
                                 type="submit" 
                                 class="btn btn-success ml-auto mt-3" 
-                                id="botao-salvar-resonsavel-do-aluno"
+                                id="botao-salvar-responsavel-do-aluno"
                             >
                                 Salvar
                             </button>
@@ -402,7 +440,56 @@
                                 id="closeButton"
                             >
                                 Fechar
-                        </button>  
+                            </button>  
+                        </div>  
+                    </div>
+
+                    <div 
+                        class="tab-pane fade" 
+                        id="abaMatricularAluno" 
+                        role="tabpanel" 
+                        aria-labelledby="profile-tab"
+                    >
+                        <div class="form-row align-items-end mt-5">
+                            <div class="ml-auto">
+                                <button 
+                                    type="button" 
+                                    class="btn btn-outline-success" 
+                                    data-toggle="modal" 
+                                    data-target="#NovaMatriculaModal" 
+                                    id="btnNovaMatricula"
+                                    onclick="($('#ModalAlunoFormulario').modal('hide'))"
+                                >
+                                    <img src="img/laranja-adicionar-25.png" class="mr-1">Nova Matricula
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 table-responsive mt-4">
+                        <table class="table table-hover table-bordered table-striped tabelaPTBR" id="tabelaMatriculas">
+                                <thead class="thead-dark" align="center">
+                                    <tr>
+                                        <th class="align-middle">Ano Letivo</th>
+                                        <th class="align-middle">Tipo de Ensino</th>
+                                        <th class="align-middle">Turma</th>
+                                        <th class="align-middle">Data Início da Matrícula</th>
+                                        <th class="align-middle">Data Fim da Matrícula</th>
+                                        <th class="align-middle">Nr da chamada</th>
+                                        <th class="align-middle">Situação</th>
+                                        <th class="align-middle">Rendimento</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class='form-row col-md-12 ml-auto'>
+                            <button 
+                                type="reset" 
+                                class="btn btn-danger ml-auto mt-3 fecharModalCadastroAluno" data-dismiss="modal" 
+                                id="closeButton"
+                            >
+                                Fechar
+                            </button>  
                         </div>  
                     </div>
                 </div>
@@ -634,13 +721,110 @@
 </div>
 <!-- Fim do modal Cadastrar Responsável -->
 
+<!-- Modal Nova Matrícula-->
+<div class="modal fade" id="NovaMatriculaModal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">              
+                <h5 class="modal-title">Matricular </h5>
+                <button 
+                    type="button" 
+                    class="close fecharModalNovaMatricula" 
+                    data-dismiss="modal"
+                >
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-row mt-3 d-flex justify-content-center">
+                    <div class="form-group col-md-10">
+                        <label for="nome">Ano Letivo</label>
+                        <input 
+                            type="year" 
+                            name="anoLetivo" 
+                            class="form-control anoLetivo" 
+                            id="anoLetivoMatricula" 
+                            required
+                        >
+                    </div>
+                </div>
+                <div class="form-row d-flex justify-content-center">
+                    <div class="form-group col-md-10">
+                        <label for="tipoEnsino">Tipo Ensino</label>
+                        <select name="tipoEnsino" class="form-control" id="tipoEnsinoMatricula">    
+                        <option value="0">Selecione...</option>
+                            <option value="1">Educação Infantil</option>
+                            <option value="2">Ensino Fundamental</option>            
+                            <option value="3">Ensino Médio</option>            
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row d-flex justify-content-center">
+                    <div class="form-group col-md-10">
+                        <label for="tipoEnsino">Turmas</label>
+                        <select 
+                            name="tipoEnsino" 
+                            class="form-control" 
+                            id="selectTurmasMatricula" 
+                            disabled
+                        >    
+                                       
+                        </select>
+                    </div>
+                                    
+                </div>
+                <div class="form-row d-flex justify-content-center">
+                     
+                    <div class="form-group col-md-10 nascimentoAluno">
+                        <label for="DataMatricula">Data de Matricula</label>
+                        <div class="input-group date">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="button" disabled><img src="img/laranja-hoje-25.png"></button>
+                            </span>
+                            <input type="text" class="form-control" id="dataMatricula" name="dataMatricula">
+                        </div>
+                    </div>                   
+                </div>
+                <div class="form-row">
+                    <button 
+                        type="submit" 
+                        class="btn btn-success ml-auto mt-3" 
+                        id="botao-salvar-matricula"
+                    >
+                        Matricular
+                    </button>
+
+                    <button 
+                        type="submit" 
+                        class="btn btn-success ml-auto mt-3" 
+                        id="botao-alterar-matricula"
+                    >
+                        Matricular
+                    </button>
+
+                    <button 
+                        type="reset" 
+                        class="btn btn-danger mt-3 ml-2 fecharModalNovaMatricula"
+                        data-dismiss="modal"
+                    >
+                        Fechar
+                    </button>
+                <div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fim do modal Nova Matrícula -->
+
 
 <script src="js/salvarAluno.js"></script>
 <!-- <script src="js/alterarAluno.js"></script> -->
 <script type="text/javascript" src="node_modules/bootstrap/js/jquery.mask.min.js"></script>
 <script src="datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="datepicker/js/bootstrap-datepicker.pt-BR.min.js" charset="UTF-8"></script> 
-<script src="js/DatepikerComum.js"></script>
+<!-- <script src="js/DatepickerGeral.js"></script> -->
+<script src="js/DatepikerAno.js"></script>
 <script src="js/nacionalidadeAluno.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/pegaResponsaveis.js"></script>
@@ -656,6 +840,8 @@
 <script src="js/limpaModalCadastroResponsavel.js"></script>
 <script src="js/salvarResponsavel.js"></script>
 <script src="js/modalResponsaveis.js"></script>
+<script src="js/salvarMatricula.js"></script>
+<script src="js/fechaModalCadastroMatricula.js"></script>
 <!-- <script src="js/modalAbrirAlunoAoFecharResp.js"></script> -->
 
 <?php 

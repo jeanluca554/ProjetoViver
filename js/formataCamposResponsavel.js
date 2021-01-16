@@ -105,5 +105,7 @@ function verificarCpf()
 function garanteSessionNomeAluno()
 {
     sessionStorage.removeItem('nomeBtnAlterar');
+    sessionStorage.removeItem('idBtnEndereco');
+    sessionStorage.removeItem('idBtnAlterar');
 }
 

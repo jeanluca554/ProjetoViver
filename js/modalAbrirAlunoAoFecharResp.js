@@ -44,7 +44,7 @@ $('#ResponsaveisModal').on('hidden.bs.modal', function () {
             modal.find('#botao-salvar-endereco-aluno').show();
             modal.find('#botao-alterar-endereco-aluno').hide();
 
-            modal.find('#botao-salvar-resonsavel-do-aluno').show();
+            modal.find('#botao-salvar-responsavel-do-aluno').show();
             modal.find('#botao-alterar-resonsavel-do-aluno').hide();
             vez = 1;
         } else {
@@ -118,7 +118,7 @@ $('#ResponsaveisModal').on('hidden.bs.modal', function () {
 
 
 
-                        modal.find('#botao-salvar-resonsavel-do-aluno').hide();
+                        modal.find('#botao-salvar-responsavel-do-aluno').hide();
                         modal.find('#botao-alterar-resonsavel-do-aluno').show();
                     })
                 },
@@ -236,7 +236,7 @@ $('#ResponsaveisModal').on('hidden.bs.modal', function () {
             modal.find('#botao-salvar-endereco-aluno').show();
             modal.find('#botao-alterar-endereco-aluno').hide();
             
-            modal.find('#botao-salvar-resonsavel-do-aluno').show();
+            modal.find('#botao-salvar-responsavel-do-aluno').show();
             modal.find('#botao-alterar-resonsavel-do-aluno').hide();
 
             //solução para o problema gerado ao clicar no campo datas que estava alterando o botão de salvar aluno.
@@ -282,7 +282,7 @@ $('#ResponsaveisModal').on('hidden.bs.modal', function () {
             modal.find('#botao-salvar-endereco-aluno').show();
             modal.find('#botao-alterar-endereco-aluno').hide();
 
-            modal.find('#botao-salvar-resonsavel-do-aluno').show();
+            modal.find('#botao-salvar-responsavel-do-aluno').show();
             modal.find('#botao-alterar-resonsavel-do-aluno').hide();
 
             //solução para o problema gerado ao clicar no campo datas que estava alterando o botão de salvar aluno.

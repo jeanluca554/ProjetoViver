@@ -27,8 +27,7 @@ $(function(){
             'aria-selected': "false"
         });
 
-        sessionStorage.removeItem('alunoID');
-        sessionStorage.setItem('nomeModal', "undefined");
+        
         // sessionStorage.setItem('nomeBtnAlterar', "undefined");
 
         $('#nomeAluno').val('');
@@ -60,5 +59,7 @@ function limparCampos()
 
 function recarregarPagina()
 {
+    
+    sessionStorage.setItem('nomeModal', "undefined");
     location.reload();
 }

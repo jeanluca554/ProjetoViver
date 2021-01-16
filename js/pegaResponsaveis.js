@@ -97,7 +97,10 @@ function buscaResponsaveisVinculadosAoAluno()
             $(".tabelaParentesco > tbody").empty();
             $("#selectResponsavelFinanceiro").empty();
             $("#selectResponsavelDidatico").empty();
-            insereSelectResponsavelFinanceiro(response);
+
+            var selectFinanceiroAtual = $("#selectResponsavelFinanceiro").val();
+
+            insereSelectResponsavelFinanceiro(response, selectFinanceiroAtual);
             insereSelectResponsavelDidatico(response);
             insereResponsaveisNaTabela2(response);          
         },
@@ -130,8 +133,9 @@ function buscaResponsaveisVinculadosAoAluno()
     }); */
 }
 
-function insereSelectResponsavelFinanceiro(response)
+function insereSelectResponsavelFinanceiro(response, selectAtual)
 {
+    var optSeletAtual = "#selectResponsavelFinanceiro option[value = " + selectAtual +"]"
     $.each(response, function (key, value) {
         var responsavel = value['nome'];
         var cpfResponsavel = value["cpf"];
@@ -143,6 +147,7 @@ function insereSelectResponsavelFinanceiro(response)
     var respFinanceiro = sessionStorage.getItem('respFinanceiro');
     //console.log(respFinanceiro);
     $("#selectResponsavelFinanceiro").val(respFinanceiro);
+    $(optSeletAtual).attr('selected', 'selected');
 }
 
 function insereSelectResponsavelDidatico(response)
@@ -241,7 +246,18 @@ function novaLinha(responsavel, cpfResponsavel, IdResponsavelPeloAluno, parentes
     cpfSemPonto = cpfSemPonto.replace(".", "");
     cpfSemTraco = cpfSemPonto.replace("-", "");
 
-    var idAluno = sessionStorage.getItem('idBtnAlterar');
+    var idAlunoTemp = sessionStorage.getItem('alunoID');
+    
+    //pega o id correto do aluno se for no criar ou alterar
+    if (idAlunoTemp == "undefined" || idAlunoTemp == null)
+    {
+        var idAluno = sessionStorage.getItem('idBtnAlterar');
+    }
+    else
+    {
+        var idAluno = sessionStorage.getItem('alunoID');
+    }
+    
 
     var colunaRemover = $("<td>").attr("align", "center");
     var botaoRemover = $("<button>")

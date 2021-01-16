@@ -1,6 +1,6 @@
 $(function () {
-    $("#botao-alterar-aluno").click(alterarDadosAluno);
-    $("#botao-alterar-endereco-aluno").click(alterarEnderecoAluno);
+    $("#botao-alterar-aluno").on("click", alterarDadosAluno);
+    $("#botao-alterar-endereco-aluno").on("click", alterarEnderecoAluno);
     //$("#parentesco438.024.498-94").onchange="salvarResponsavelDoAluno(438.024.498-94)";
 });
 

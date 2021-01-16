@@ -16,12 +16,12 @@
 		
 		$turmaDAO = new TurmaDAO();
 
-		$turmaDAO->nome = $nome;
+		$turmaDAO->nome = trim($nome);
 		$turmaDAO->sigla = $sigla;
 		$turmaDAO->ano = $ano;
 		$turmaDAO->turno = $turno;
 		$turmaDAO->capacidade = $capacidade;
-		$turmaDAO->tipoEnsino = $tipoEnsino;
+		$turmaDAO->tipoEnsino = trim($tipoEnsino);
 		$turmaDAO->numTipoEnsino = $numTipoEnsino;
 
 		$ultimoID = $turmaDAO->create();

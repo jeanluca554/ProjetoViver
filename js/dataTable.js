@@ -6,7 +6,7 @@ function configuraDataTable() {
     $('.tabelaPTBR').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por página",
-            "zeroRecords": "Nada encontrado - desculpe",
+            "zeroRecords": "Nada encontrado - desculpe.",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "Nenhum registro disponível",
             "search":         "Buscar:",
@@ -17,7 +17,7 @@ function configuraDataTable() {
                 "previous":   "Anterior"
             },
             "infoFiltered": "(filtrar de _MAX_ registro no total)"
-        } 
+        }
     });
 }
 

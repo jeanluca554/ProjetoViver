@@ -1,11 +1,6 @@
 $(function() {
-    /* buscaResponsaveis(); */
     selecionaDisciplina();
-    // buscaResponsaveisVinculadosAoAluno();
-    // $("#btnAdicionaResponsavel").click(insereResponsaveisNaTabela);
-    //$("#btnAdicionaResponsavel").on("click", adicionaResponsaveis); 
-    //$("#responsaveisAluno-tab").on("click", buscaResponsaveisVinculadosAoAluno);
-    //$("#btnAdicionaResponsavel").click(buscaResponsaveisVinculadosAoAluno); 
+    
 });
 
 function selecionaDisciplina()

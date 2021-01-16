@@ -2,51 +2,44 @@
 	require_once 'global.php';
 	require_once 'Conexao.php';
 
-	class TurmaDAO extends Turma
+	class MatriculaDAO extends Matricula
 	{
-		public function __construct($id_turma = false)
+		public function __construct($id_matricula = false)
 		{
-			if ($id_turma)
+			if ($id_matricula)
 			{
-				$this->id = $id_turma;				
+				$this->id = $id_matricula;				
 				//$this->carregar();
 			}
 		}
 
-		public function create()
+		public function create($idAluno)
 		{
-			$query = 	"INSERT INTO turma 
+			$alunoId = $idAluno;
+			$query = 	"INSERT INTO matricula 
 						(
-							nome_turma,
-							sigla,
-							ano,
-							turno,
-							capacidade,
+							id_turma,
+							id_aluno,
 							tipo_ensino_turma,
-							num_ensino_turma
+							data_matricula
 						) 
 						VALUES 
 						(
-							:nome_turma,
-							:sigla,
-							:ano,
-							:turno,
-							:capacidade,
-							:tipo_ensino,
-							:num_ensino
+							:id_turma,
+							:id_aluno,
+							:tipo_ensino_turma,
+							:data_matricula
 						)";
 
 			$conexao = Conexao::pegarConexao();
 
 			$stmt = $conexao->prepare($query);
 
-			$stmt->bindValue(':nome_turma', $this->nome);
-			$stmt->bindValue(':sigla', $this->sigla);
-			$stmt->bindValue(':ano', $this->ano);
-			$stmt->bindValue(':turno', $this->turno);
-			$stmt->bindValue(':capacidade', $this->capacidade);
-			$stmt->bindValue(':tipo_ensino', $this->tipoEnsino);
-			$stmt->bindValue(':num_ensino', $this->numTipoEnsino);
+			$stmt->bindValue(':id_turma', $this->turma);
+			$stmt->bindValue(':id_aluno', $alunoId);
+			$stmt->bindValue(':tipo_ensino_turma', $this->tipoEnsino);
+			$stmt->bindValue(':data_matricula', $this->dataMatricula);
+			
 
 			$stmt->execute();
 			$ultimo = $conexao->lastInsertId();

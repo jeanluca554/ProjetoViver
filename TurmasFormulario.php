@@ -148,7 +148,7 @@
                         <input 
                             type="year" 
                             name="anoLetivo" 
-                            class="form-control" 
+                            class="form-control anoLetivo" 
                             id="anoLetivo" 
                             required
                         >

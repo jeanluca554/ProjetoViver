@@ -1,5 +1,10 @@
 $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
 
+    var liberarAbas = sessionStorage.getItem('liberaAbas');
+
+    liberarAbas == 1 ? liberaAbasModalAluno() : console.log("ainda não clicou em matricular");
+    console.log(liberarAbas);
+    
     var button = $(event.relatedTarget) // Button that triggered the modal
     var nome = button.data('nome')
     var id = button.data('id')
@@ -59,7 +64,7 @@ $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
         modal.find('#botao-salvar-endereco-aluno').show();
         modal.find('#botao-alterar-endereco-aluno').hide();
 
-        modal.find('#botao-salvar-resonsavel-do-aluno').show();
+        modal.find('#botao-salvar-responsavel-do-aluno').show();
         modal.find('#botao-alterar-responsavel-do-aluno').hide();
 
         $('#enderecoAluno-tab').attr('class', 'nav-link disabled');
@@ -71,11 +76,7 @@ $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
         modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nomeBtnAlterarSession + '-' + idBtnAlterarSession);
         sessionStorage.setItem('alunoID', id);
 
-        $('#enderecoAluno-tab').attr('class', 'nav-link');
-        $('#enderecoAluno-tab').attr('href', '#abaEnderecoAluno');
-
-        $('#responsaveisAluno-tab').attr('class', 'nav-link');
-        $('#responsaveisAluno-tab').attr('href', '#abaResponsaveisAluno');
+        liberaAbasModalAluno();
 
         $.ajax({
             url: 'DAO/banco-alunos-post.php',
@@ -142,7 +143,7 @@ $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
 
 
 
-                    modal.find('#botao-salvar-resonsavel-do-aluno').hide();
+                    modal.find('#botao-salvar-responsavel-do-aluno').hide();
                     modal.find('#botao-alterar-responsavel-do-aluno').show();
                 })
             },
@@ -260,7 +261,7 @@ $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
         modal.find('#botao-salvar-endereco-aluno').show();
         modal.find('#botao-alterar-endereco-aluno').hide();
         
-        modal.find('#botao-salvar-resonsavel-do-aluno').show();
+        modal.find('#botao-salvar-responsavel-do-aluno').show();
         modal.find('#botao-alterar-responsavel-do-aluno').hide();
 
         //solução para o problema gerado ao clicar no campo datas que estava alterando o botão de salvar aluno.
@@ -306,7 +307,7 @@ $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
         modal.find('#botao-salvar-endereco-aluno').show();
         modal.find('#botao-alterar-endereco-aluno').hide();
 
-        modal.find('#botao-salvar-resonsavel-do-aluno').show();
+        modal.find('#botao-salvar-responsavel-do-aluno').show();
         modal.find('#botao-alterar-resonsavel-do-aluno').hide();
 
         //solução para o problema gerado ao clicar no campo datas que estava alterando o botão de salvar aluno.
@@ -327,3 +328,16 @@ $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
         }
     }
 });
+
+
+function liberaAbasModalAluno()
+{
+    $('#enderecoAluno-tab').attr('class', 'nav-link');
+    $('#enderecoAluno-tab').attr('href', '#abaEnderecoAluno');
+
+    $('#responsaveisAluno-tab').attr('class', 'nav-link');
+    $('#responsaveisAluno-tab').attr('href', '#abaResponsaveisAluno');
+
+    $('#matricularAluno-tab').attr('class', 'nav-link');
+    $('#matricularAluno-tab').attr('href', '#abaMatricularAluno');
+}

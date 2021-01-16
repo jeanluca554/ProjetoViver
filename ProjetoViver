@@ -59,7 +59,7 @@ CREATE TABLE responsavel
 select * from responsavel;
 select * from endereco_residencial where id_endereco_residencia = 156;
 select * from funcionario;
-SELECT * FROM aluno ORDER BY nome_aluno;
+SELECT * FROM aluno where id_aluno = 140;
 select * from responsavel_pelo_aluno;
 
 delete from responsavel where cpf_responsavel = '459.321.248-06';
@@ -458,7 +458,7 @@ CREATE TABLE turma
 	id_turma INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nome_turma VARCHAR(100) NOT NULL,
     sigla VARCHAR(1) NOT NULL,
-    ano INT NOT NULL,
+    ano YEAR NOT NULL,
     turno VARCHAR(20) NOT NULL,
     capacidade INT NOT NULL,
     tipo_ensino_turma VARCHAR(50),
@@ -466,7 +466,10 @@ CREATE TABLE turma
     situacao BIT DEFAULT 1 NOT NULL
 )DEFAULT CHARSET = utf8;
 
-ALTER TABLE turma ADD COLUMN num_ensino_turma INT NOT NULL;
+update turma set ano = '2021';
+UPDATE responsavel SET id_endereco_residencia = 17 WHERE id = 1;
+ALTER TABLE turma 
+ADD COLUMN ano YEAR NOT NULL;
 
 describe turma;
 
@@ -478,20 +481,43 @@ INSERT INTO turma
     turno,
 	capacidade,
 	tipo_ensino_turma,
-    situacao
+    num_ensino_turma
 ) 
 VALUES 
 (
-	'1 Ano',
-	'C',
+	'7 Ano',
+	'D',
 	2021,
 	'Manha',
 	30,
-	'Ensino Medio',
-    0
+	'Ensino Fundamental',
+    31
 );
 
 select * from turma;
 
 DELETE FROM turma
 WHERE id_turma = 4;
+
+SELECT 	nome_turma,
+		id_turma,
+		sigla,
+		ano,
+		turno,
+		capacidade,
+		tipo_ensino_turma,
+		num_ensino_turma,
+		situacao,
+		alunos_ativos
+FROM turma
+WHERE ano = 2021 AND situacao = 1 and tipo_ensino_turma = 'Ensino Médio'
+ORDER BY nome_turma;
+
+CREATE TABLE matricula
+(
+	id_matricula INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    tipo_ensino_turma INT,
+    nascimento_aluno DATE,
+    num_ensino_turma INT NOT NULL,
+    situacao BIT DEFAULT 1 NOT NULL
+)DEFAULT CHARSET = utf8;
