@@ -368,7 +368,7 @@
                                     class="btn btn-outline-success" 
                                     data-toggle="modal" 
                                     data-target="#ResponsaveisModal" 
-                                    id="btnPesquisaResponsaveis"
+                                    id="btnCadastrarResponsaveis"
                                     onclick="($('#ModalAlunoFormulario').modal('hide'))"
                                 >
                                     <img src="img/laranja-adicionar-25.png">Cadastrar Responsável
@@ -466,7 +466,7 @@
                         </div>
 
                         <div class="col-md-12 table-responsive mt-4">
-                        <table class="table table-hover table-bordered table-striped tabelaPTBR" id="tabelaMatriculas">
+                        <table class="table table-hover table-bordered table-striped tabelaMatriculas tabelaPTBR" id="tabelaMatriculas">
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th class="align-middle">Ano Letivo</th>
@@ -474,9 +474,9 @@
                                         <th class="align-middle">Turma</th>
                                         <th class="align-middle">Data Início da Matrícula</th>
                                         <th class="align-middle">Data Fim da Matrícula</th>
-                                        <th class="align-middle">Nr da chamada</th>
                                         <th class="align-middle">Situação</th>
-                                        <th class="align-middle">Rendimento</th>
+                                        <th class="align-middle">Alterar</th>
+                                        <th class="align-middle">Remover</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -827,10 +827,10 @@
 <script src="js/DatepikerAno.js"></script>
 <script src="js/nacionalidadeAluno.js"></script>
 <script src="js/popper.min.js"></script>
+<!-- <script src="js/setModalAluno.js"></script> -->
 <script src="js/pegaResponsaveis.js"></script>
 <script src="js/pegaCidades.js"></script>
 <script src="js/formataCamposAluno.js"></script>
-<script type="text/javascript" src="js/modal.js"></script>
 <script type="text/javascript" src="node_modules/DataTables/datatables.min.js"></script>
 <script src="js/dataTable.js"></script>
 <script src="js/limpaModalCadastroAluno.js"></script>
@@ -842,7 +842,8 @@
 <script src="js/modalResponsaveis.js"></script>
 <script src="js/salvarMatricula.js"></script>
 <script src="js/fechaModalCadastroMatricula.js"></script>
-<!-- <script src="js/modalAbrirAlunoAoFecharResp.js"></script> -->
+<script src="js/formataCamposMatricula.js"></script>
+<script src="js/pegaMatriculas.js"></script>
 
 <?php 
     //include("Modal/ModalAlunoFormulario.php");

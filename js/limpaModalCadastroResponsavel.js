@@ -31,53 +31,17 @@ function limparCampos()
         $('#ModalAlunoFormulario').modal('show');
 
         $('#abaResponsaveisAluno').addClass('tab-pane fade active show');
-        $('#responsaveisAluno-tab').addClass('nav-link active');
-        $('#responsaveisAluno-tab').attr({
-            'aria-selected': "true"
-        });
-
-        // $('#abaEnderecoAluno').removeClass('tab-pane fade active show');
-        // $('#abaEnderecoAluno').addClass('tab-pane fade');
-        // $('#enderecoAluno-tab').removeClass('active');
-        // $('#enderecoAluno-tab').addClass('nav-link');
-        // $('#enderecoAluno-tab').attr({
-        //     'aria-selected': "false"
-        // });
-
-        // $('#abaDadosPessoaisAluno').removeClass('tab-pane fade active show');
-        // $('#abaDadosPessoaisAluno').addClass('tab-pane fade');
-        // $('#dadosPessoaisAluno-tab').removeClass('active');
-        // $('#dadosPessoaisAluno-tab').addClass('nav-link');
-        // $('#dadosPessoaisAluno-tab').attr({
-        //     'aria-selected': "false"
-        // });
-    });
-    
-}
-function limparCamposMatricula() {
-    
-    $('#NovaMatriculaModal').on('hidden.bs.modal', function () {
-        
-
-        $('#ModalAlunoFormulario').modal('show');
-
-        $('#abaMatricularAluno').addClass('tab-pane fade active show');
-        $('#matricularAluno-tab').addClass('nav-link active');
-        $('#matricularAluno-tab').attr({
-            'aria-selected': "true"
-        });
-
-        $('#abaResponsaveisAluno').removeClass('tab-pane fade active show');
-        $('#abaResponsaveisAluno').addClass('tab-pane fade');
-        $('#responsaveisAluno-tab').removeClass('active');
+        $('#responsaveisAluno-tab').removeClass('nav-link disabled');
         $('#responsaveisAluno-tab').addClass('nav-link');
+        $('#responsaveisAluno-tab').attr('href', '#abaResponsaveisAluno');
         $('#responsaveisAluno-tab').attr({
-            'aria-selected': "false"
+            'aria-selected': "true"
         });
 
-        $('#abaEnderecoAluno').removeClass('tab-pane fade active show');
+        console.log("fechei o modal cadastro REsnpinsavel")
         $('#abaEnderecoAluno').addClass('tab-pane fade');
-        $('#enderecoAluno-tab').removeClass('active');
+        $('#enderecoAluno-tab').attr('href', '#abaEnderecoAluno');
+        $('#enderecoAluno-tab').removeClass('nav-link disabled');
         $('#enderecoAluno-tab').addClass('nav-link');
         $('#enderecoAluno-tab').attr({
             'aria-selected': "false"
@@ -85,16 +49,32 @@ function limparCamposMatricula() {
 
         $('#abaDadosPessoaisAluno').removeClass('tab-pane fade active show');
         $('#abaDadosPessoaisAluno').addClass('tab-pane fade');
+        $('#dadosPessoaisAluno-tab').attr('href', '#abaDadosPessoaisAluno');
         $('#dadosPessoaisAluno-tab').removeClass('active');
         $('#dadosPessoaisAluno-tab').addClass('nav-link');
         $('#dadosPessoaisAluno-tab').attr({
             'aria-selected': "false"
         });
+        
 
-        // esses comandos não funcionam, mas deveriam
-        $('#tipoEnsinoMatricula').attr('option value', 0);
-        $('#selectTurmasMatricula').attr('option value', '');
-        $('#selectTurmasMatricula').attr('disabled', true);
+        //Verifica se a aba Matricula já foi liberada
+        var abaMatricula = sessionStorage.getItem('abaMatricula');
+
+        if (abaMatricula == 0)
+        {
+            $('#abaMatricularAluno').removeClass('tab-pane fade active show');
+            $('#abaMatricularAluno').addClass('tab-pane fade');
+            $('#matricularAluno-tab').removeClass('active');
+            $('#matricularAluno-tab').addClass('nav-link disabled');
+            $('#matricularAluno-tab').attr({
+                'aria-selected': "false"
+            });
+        }
+        else
+        {
+            $('#matricularAluno-tab').attr('class', 'nav-link');
+            $('#matricularAluno-tab').attr('href', '#abaMatricularAluno');
+        }
     });
-
+    
 }

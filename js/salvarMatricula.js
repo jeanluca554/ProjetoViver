@@ -1,6 +1,5 @@
 $(function() {
     $("#botao-salvar-matricula").on("click", salvaMatricula);
-    // $("#botao-alterar-turma").on("click", alterarTurma);
 });
 
 function salvaMatricula() 
@@ -20,7 +19,9 @@ function salvaMatricula()
     console.log(turmaText, turmaVal) 
     console.log(dataMatricula) 
 
-    turmaTextVerificada = turmaText.indexOf("Não existem")
+    var capacidadeTurma = turmaText.indexOf("não há vagas");
+
+    var turmaTextVerificada = turmaText.indexOf("Não existem turmas");
 
     console.log(idAluno);
     
@@ -28,56 +29,63 @@ function salvaMatricula()
     {
         if (turmaTextVerificada <= -1)// verifica se existe turma válida
         {
-            $.ajax({
-                url: 'matricula-criar-post.php',
-                method: 'post',
-                dataType: 'json',
-                data:{
-                    tipoEnsinoVal: tipoEnsinoMatriculaVal,
-                    turmaVal: turmaVal,
-                    dataMatricula: dataMatricula,
-                    idAluno: idAluno
-                },
+            if (capacidadeTurma <= -1)// verifica se existe turma válida
+            {
+                $.ajax({
+                    url: 'matricula-criar-post.php',
+                    method: 'post',
+                    dataType: 'json',
+                    data:{
+                        tipoEnsinoVal: tipoEnsinoMatriculaVal,
+                        turmaVal: turmaVal,
+                        dataMatricula: dataMatricula,
+                        idAluno: idAluno
+                    },
 
-                success: function(ultimoId)
-                {
-                    if (ultimoId['mensagem'] == 'ok')
+                    success: function(ultimoId)
                     {
-                        console.log("matricula criada com sucesso. Último ID: " + ultimoId['ultimoID']);
-                        apresentaMensagemSucesso("realizada"); 
+                        if (ultimoId['mensagem'] == 'ok')
+                        {
+                            console.log("matricula criada com sucesso. Último ID: " + ultimoId['ultimoID']);
+                            apresentaMensagemSucesso("realizada"); 
 
-                        $("#tipoEnsinoTurma").val(0);
-                        $("#siglaTurma").val("");
-                        $("#turno").val(0);
-                        $("#capacidadeFisica").val("");
-                    }
-                    else {
+                            $("#tipoEnsinoTurma").val(0);
+                            $("#siglaTurma").val("");
+                            $("#turno").val(0);
+                            $("#capacidadeFisica").val("");
+                        }
+                        else {
+                            Swal.fire({
+                                type: 'warning',
+                                title: ultimoId['title'],
+                                text: ultimoId['text'],
+                                animation: false,
+                                customClass: {
+                                    popup: 'animated tada'
+                                }
+                            })
+                        }
+                    },
+
+                    error: function(response)
+                    {
+                        console.log(response);
                         Swal.fire({
                             type: 'warning',
-                            title: ultimoId['title'],
-                            text: ultimoId['text'],
+                            title: response['title'],
+                            text: response['text'],
                             animation: false,
                             customClass: {
                                 popup: 'animated tada'
                             }
                         })
                     }
-                },
-
-                error: function(response)
-                {
-                    console.log(response);
-                    Swal.fire({
-                        type: 'warning',
-                        title: response['title'],
-                        text: response['text'],
-                        animation: false,
-                        customClass: {
-                            popup: 'animated tada'
-                        }
-                    })
-                }
-            });
+                });
+            } 
+            else 
+            {
+                mensagemErro('Para matricular o aluno você deve selecionar uma <b>turma com vagas disponíveis</b>')
+            }
         } 
         else 
         {
@@ -102,94 +110,6 @@ function mensagemErro(mensagem)
         }
     })
 }
-
-function alterarTurma() {
-    var idTurma = $("#idTurma").val();
-    var tipoEnsino = $("#tipoEnsinoTurma option:selected").text();
-    var numTipoEnsino = $("#tipoEnsinoTurma").val();
-    var sigla = $("#siglaTurma").val();
-    var anoLetivo = $("#anoLetivo").val();
-    var turno = $("#turno").val();
-    var capacidade = $("#capacidadeFisica").val();
-
-    var dadosTurma = tipoEnsino.split("-");
-    var nomeTurma = dadosTurma[0];
-    var tipoEnsinoTurma = dadosTurma[1];
-
-    if (tipoEnsino != 'Selecione...') {
-        if (sigla != "") {
-            if (anoLetivo != "") {
-                if (turno != 0) {
-                    if (capacidade != "") {
-                        $.ajax({
-                            url: 'turma-alterar-post.php',
-                            method: 'post',
-                            dataType: 'json',
-                            data: {
-                                idTurma: idTurma,
-                                nomeTurma: nomeTurma,
-                                sigla: sigla,
-                                anoLetivo: anoLetivo,
-                                turno: turno,
-                                capacidade: capacidade,
-                                tipoEnsinoTurma: tipoEnsinoTurma,
-                                numTipoEnsino: numTipoEnsino
-                            },
-
-                            success: function (ultimoId) {
-                                if (ultimoId['mensagem'] == 'ok') {
-                                    apresentaMensagemSucesso("alterada");
-
-                                    
-                                }
-                                else {
-                                    Swal.fire({
-                                        type: 'warning',
-                                        title: ultimoId['title'],
-                                        text: ultimoId['text'],
-                                        animation: false,
-                                        customClass: {
-                                            popup: 'animated tada'
-                                        }
-                                    })
-                                }
-                            },
-
-                            error: function (response) {
-                                console.log(response);
-                                Swal.fire({
-                                    type: 'warning',
-                                    title: response['title'],
-                                    text: response['text'],
-                                    animation: false,
-                                    customClass: {
-                                        popup: 'animated tada'
-                                    }
-                                })
-                            }
-                        });
-                    }
-                    else {
-                        mensagemErro('Para salvar você deve informar a <b>capacidade da sala</b>')
-                    }
-                }
-                else {
-                    mensagemErro('Para salvar você deve selecionar o <b>turno</b>')
-                }
-            }
-            else {
-                mensagemErro('Para salvar você deve informar o <b>Ano Letivo</b>')
-            }
-        }
-        else {
-            mensagemErro('Para salvar você deve digitar uma <b>Sigla</b')
-        }
-    }
-    else {
-        mensagemErro('Para salvar você deve selecionar o <b>tipo de ensino</b>')
-    }
-}
-
 
 function apresentaMensagemSucesso(texto)
 {
@@ -221,8 +141,6 @@ function apresentaMensagemSucesso(texto)
             }
         }).then(function () {
             $('#NovaMatriculaModal').modal('hide');
-            limparCamposMatricula();
         });
     }
-    
 }

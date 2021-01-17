@@ -114,7 +114,9 @@
 								nome_turma,
 								id_turma,
 								sigla,
-								turno
+								turno, 
+								capacidade,
+								alunos_ativos
 				 		FROM turma
 						WHERE ano = $ano AND situacao = 1 AND tipo_ensino_turma = '$tipo'
 						ORDER BY nome_turma";

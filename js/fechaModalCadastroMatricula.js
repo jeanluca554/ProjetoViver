@@ -3,8 +3,6 @@ $(function(){
 	
 });
 
-
-
 function abrirModalAluno() {
 
     $('#NovaMatriculaModal').on('hidden.bs.modal', function () 
@@ -14,18 +12,15 @@ function abrirModalAluno() {
         console.log('fechei o modal matricula');
         $('#ModalAlunoFormulario').modal('show');
 
+        $('#dadosPessoaisAluno-tab').attr('href', '#abaDadosPessoaisAluno');
+        $('#abaDadosPessoaisAluno').removeClass('tab-pane fade active show');
+        $('#abaDadosPessoaisAluno').addClass('tab-pane fade');
+        $('#dadosPessoaisAluno-tab').removeClass('active');
+        $('#dadosPessoaisAluno-tab').addClass('nav-link');
+        $('#dadosPessoaisAluno-tab').attr({
+            'aria-selected': "false"
+        });
         
     });
 
-}
-
-function liberaAbasModalAluno() {
-    $('#enderecoAluno-tab').attr('class', 'nav-link');
-    $('#enderecoAluno-tab').attr('href', '#abaEnderecoAluno');
-
-    $('#responsaveisAluno-tab').attr('class', 'nav-link');
-    $('#responsaveisAluno-tab').attr('href', '#abaResponsaveisAluno');
-
-    $('#matricularAluno-tab').attr('class', 'nav-link');
-    $('#matricularAluno-tab').attr('href', '#abaMatricularAluno');
 }

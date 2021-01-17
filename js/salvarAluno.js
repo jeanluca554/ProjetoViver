@@ -93,7 +93,7 @@ function alterarDadosAluno() {
     var estado = $("#selectEstadoNascimento").val();
     var cidade = $("#selectCidadeNascimento").val();
     var pais = $("#paisOrigem").val();
-    var id = parseInt(sessionStorage.getItem('idBtnAlterar'));
+    var id = parseInt(sessionStorage.getItem('alunoID'));
     console.log(id);
 
     if (nome != '') {
@@ -178,7 +178,7 @@ function salvaEnderecoAluno() {
             success: function (ultimoId) {
                 if (ultimoId['code'] == 'ok') {
                     ultimoIdEndereco = ultimoId['message'];
-                    console.log(ultimoIdEndereco + "ultimo id do endereco");
+                    console.log(ultimoIdEndereco + " é ultimo id do endereco");
                     vincularEnderecoAoAluno(ultimoIdEndereco)
                 }
                 else {
@@ -437,6 +437,7 @@ function salvarResponsavelFinanceiroDidatico() {
                 })
                 $('#matricularAluno-tab').attr('class', 'nav-link');
                 $('#matricularAluno-tab').attr('href', '#abaMatricularAluno');
+                sessionStorage.setItem('abaMatricula', 1);
             },
 
             error: function (ultimoId) {

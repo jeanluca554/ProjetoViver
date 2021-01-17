@@ -59,7 +59,7 @@ function limparCampos()
 
 function recarregarPagina()
 {
-    
+    sessionStorage.setItem('modalCadastroAlunoFoiAberto', 0)
     sessionStorage.setItem('nomeModal', "undefined");
     location.reload();
 }

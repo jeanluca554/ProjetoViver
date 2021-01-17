@@ -80,25 +80,45 @@
 			$stmt->execute();
 		}
 		
-		public static function listarTurmas()
+		public static function listarMatriculasDoAluno($idAluno)
 	    {
-	        $query = "	SELECT 
-								nome_turma,
-								id_turma,
-								sigla,
-								ano,
-								turno,
-								capacidade,
-								tipo_ensino_turma,
-								num_ensino_turma,
-								situacao,
-								alunos_ativos
-				 		FROM turma
-						ORDER BY nome_turma";
+			$matriculas = array();
+			$query = "	SELECT 	t.ano,
+								t.tipo_ensino_turma,
+								t.nome_turma,
+								t.sigla,
+								m.id_matricula,
+								m.data_matricula,
+								m.data_fim_matricula,
+								m.situacao
+						FROM matricula m
+						INNER JOIN turma t
+						ON m.id_turma = t.id_turma
+						WHERE m.id_aluno = $idAluno";
+
 	        $conexao = Conexao::pegarConexao();
-	        $resultado = $conexao->query($query);
-	        $lista = $resultado->fetchAll();
-			return $lista;
+	        $stmt = $conexao->query($query);
+	        $stmt->execute();
+			$fetchAll = $stmt->fetchAll();
+			
+			$i = 0;
+
+			foreach ($fetchAll as $linha)
+			{
+				$matriculas[$i] = array(
+					'id_matricula' => $linha['id_matricula'],
+					'ano' => $linha['ano'],
+					'tipo_ensino_turma' => $linha['tipo_ensino_turma'],
+					'nome_turma' => $linha['nome_turma'],
+					'sigla' => $linha['sigla'],
+					'data_matricula' => $linha['data_matricula'],
+					'data_fim_matricula' => $linha['data_fim_matricula'],
+					'situacao' => $linha['situacao']
+				);
+				
+				$i++;
+			}
+				return $matriculas;
 		}
 
 		public static function listarTurmasMatricula($ano, $tipo)

@@ -1,21 +1,20 @@
 <?php
 	require_once 'global.php';
-	require_once 'DAO/TurmaDAO.php';
+	require_once 'DAO/MatriculaDAO.php';
 
 	$response = array();	
 
 	try
 	{
-		$ano = $_POST['ano'];
-		$tipo = $_POST['tipo'];
+		$idAluno = $_POST['idAluno'];
 
-		$turmaDAO = new TurmaDAO();
+		$matriculaDAO = new MatriculaDAO();
 
-		$turmas = $turmaDAO->listarTurmasMatricula($ano, $tipo);
+		$matriculas = $matriculaDAO->listarMatriculasDoAluno($idAluno);
 
 		$response['mensagem'] = 'ok';
-		$response['turmas'] = $turmas;
-		echo json_encode($turmas);
+		$response['matriculas'] = $matriculas;
+		echo json_encode($response);
 	}
 
 	catch (Exception $e)

@@ -59,7 +59,7 @@ CREATE TABLE responsavel
 select * from responsavel;
 select * from endereco_residencial where id_endereco_residencia = 156;
 select * from funcionario;
-SELECT * FROM aluno where id_aluno = 140;
+SELECT * FROM aluno where id_aluno = 134;
 select * from responsavel_pelo_aluno;
 
 delete from responsavel where cpf_responsavel = '459.321.248-06';
@@ -494,7 +494,7 @@ VALUES
     31
 );
 
-select * from turma;
+update turma set alunos_ativos = 15 where id_turma = 2;
 
 DELETE FROM turma
 WHERE id_turma = 4;
@@ -516,8 +516,30 @@ ORDER BY nome_turma;
 CREATE TABLE matricula
 (
 	id_matricula INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    tipo_ensino_turma INT,
-    nascimento_aluno DATE,
-    num_ensino_turma INT NOT NULL,
-    situacao BIT DEFAULT 1 NOT NULL
+    id_turma INT NOT NULL,
+    id_aluno INT NOT NULL,
+    tipo_ensino_turma TINYINT,
+    data_matricula DATE NOT NULL,
+    data_fim_matricula DATE,
+    situacao VARCHAR(15) DEFAULT 'Ativo',
+    FOREIGN KEY (id_turma) REFERENCES turma (id_turma),
+    FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno)
 )DEFAULT CHARSET = utf8;
+
+drop table matricula;
+
+select * from matricula;
+select * from turma;
+
+SELECT 	t.ano,
+		t.tipo_ensino_turma,
+        t.nome_turma,
+        t.sigla,
+        m.id_matricula,
+        m.data_matricula,
+        m.data_fim_matricula,
+        m.situacao
+FROM matricula m
+INNER JOIN turma t
+ON r.cpf_responsavel = b.responsavel_cpf
+WHERE b.aluno_id = ".$idDoAluno;
