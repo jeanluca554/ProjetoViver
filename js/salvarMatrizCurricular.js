@@ -163,7 +163,7 @@ function salvaMatrizCurricular()
         Swal.fire({
             type: 'warning',
             title: 'Ops..',
-            text: 'Para salvar você deve isnerir uma matéria na Matriz Curricular',
+            text: 'Para salvar você deve inserir uma matéria na Matriz Curricular',
             animation: false,
             customClass: {
                 popup: 'animated tada'

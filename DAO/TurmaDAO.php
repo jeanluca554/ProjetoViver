@@ -86,6 +86,34 @@
 
 			$stmt->execute();
 		}
+
+		public function alteraQtdAlunoAtivo($acao)
+		{
+			/*if ($acao == "+")
+			{
+				$query ="	UPDATE turma
+							SET	alunos_ativos = alunos_ativos + 1
+							WHERE id_turma = :id ";
+			}
+			else
+			{
+				$query ="	UPDATE turma
+							SET	alunos_ativos = alunos_ativos - 1
+							WHERE id_turma = :id ";
+			}*/
+			
+			$query ="	UPDATE turma
+						SET	alunos_ativos = alunos_ativos $acao 1
+						WHERE id_turma = :id ";
+					  	
+			$conexao = Conexao::pegarConexao();
+
+			$stmt = $conexao->prepare($query);
+
+			$stmt->bindValue(':id', $this->id);
+
+			$stmt->execute();
+		}
 		
 		public static function listarTurmas()
 	    {
@@ -117,6 +145,44 @@
 								turno, 
 								capacidade,
 								alunos_ativos
+				 		FROM turma
+						WHERE ano = $ano AND situacao = 1 AND tipo_ensino_turma = '$tipo'
+						ORDER BY nome_turma";
+	        $conexao = Conexao::pegarConexao();
+	        $resultado = $conexao->query($query);
+	        $lista = $resultado->fetchAll();
+			return $lista;
+		}
+
+		public static function listarTurmasAssociarProf($ano, $tipo)
+	    {
+	        $query = "	SELECT 
+								ano,
+								nome_turma,
+								id_turma,
+								sigla,
+								turno, 
+								tipo_ensino_turma,
+								num_ensino_turma
+				 		FROM turma
+						WHERE ano = $ano AND situacao = 1 AND tipo_ensino_turma = '$tipo'
+						ORDER BY nome_turma";
+	        $conexao = Conexao::pegarConexao();
+	        $resultado = $conexao->query($query);
+	        $lista = $resultado->fetchAll();
+			return $lista;
+		}
+
+		public static function listarProfessoresAssociados($idTurma)
+	    {
+	        $query = "	SELECT 
+								ano,
+								nome_turma,
+								id_turma,
+								sigla,
+								turno, 
+								tipo_ensino_turma,
+								num_ensino_turma
 				 		FROM turma
 						WHERE ano = $ano AND situacao = 1 AND tipo_ensino_turma = '$tipo'
 						ORDER BY nome_turma";

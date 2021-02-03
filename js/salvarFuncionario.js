@@ -15,6 +15,13 @@ function salvaDadosFuncionario()
     var salario = $("#salario").val();
     var cargo = $("#cargo").val();
 
+    
+
+    
+    
+
+    
+
     $.ajax({
         url: 'funcionario-criar-post.php',
         dataType: 'json',
@@ -45,47 +52,63 @@ function salvaDadosFuncionario()
                 }
             })
             
-            $.ajax({
-                url: 'envia-email-confirmacao.php',
-                dataType: 'json',
-                method: 'post',
-                data: { email: email, senha: senha},
+            cargos = ["Cozinheiro", "Faxineiro", "Serviços Gerais", "Orientador Pedagógico", "Inspetor de alunos", "Nutricionista"];
 
-                success: function (response) {
-                    console.log(response);
+            var resultado = 0;
 
-                },
-
-                // error: function (request, status, error) {
-                //     console.log(request.responseText);
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'E-mail enviado!',
-                        text: 'Por favor, verifique sua caixa de entrada e siga as instruções. Caso não encontre verifique no lixo eletrônico',
-                        showClass: {
-                            popup: 'animated tada'
-                            // backdrop: 'animated tada'
-                        }
-                    })
-                    location.reload();
+            $.each(cargos, function (key, value) {
+                if (value == cargo) {
+                    resultado = 1;
                 }
+            })
 
-                /* error: function (response) {
-                    console.log(response);
-                    Swal.fire({
-                        type: 'warning',
-                        title: 'Algo errado aconteceu',
-                        text: 'Erro ao buscar os dados do aluno eita' + response,
-                        animation: false,
-                        customClass: {
-                            popup: 'animated tada'
-                        }
-                    })
-                } */
-            });
+            if (resultado == 0) {
+                $.ajax({
+                    url: 'envia-email-confirmacao.php',
+                    dataType: 'json',
+                    method: 'post',
+                    data: { email: email, senha: senha },
+
+                    success: function (response) {
+                        console.log(response);
+
+                    },
+
+                    // error: function (request, status, error) {
+                    //     console.log(request.responseText);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(thrownError);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'E-mail enviado!',
+                            text: 'Por favor, verifique sua caixa de entrada e siga as instruções. Caso não encontre verifique no lixo eletrônico',
+                            showClass: {
+                                popup: 'animated tada'
+                                // backdrop: 'animated tada'
+                            }
+                        })
+                        location.reload();
+                    }
+
+                    /* error: function (response) {
+                        console.log(response);
+                        Swal.fire({
+                            type: 'warning',
+                            title: 'Algo errado aconteceu',
+                            text: 'Erro ao buscar os dados do aluno eita' + response,
+                            animation: false,
+                            customClass: {
+                                popup: 'animated tada'
+                            }
+                        })
+                    } */
+                });
+            }
+            else {
+                console.log("Não enviar email");
+            }
+            
         },
 
         // error: function (xhr, ajaxOptions, thrownError) {
@@ -138,4 +161,9 @@ function salvaDadosFuncionario()
             })
         } */
     });
+}
+
+function verificaSeIgual(cargo)
+{
+    
 }

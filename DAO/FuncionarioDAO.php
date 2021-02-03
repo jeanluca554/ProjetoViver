@@ -96,6 +96,15 @@
 	        $resultado = $conexao->query($query);
 	        $lista = $resultado->fetchAll();
 	        return $lista;
+		}
+		
+		public static function listarProfessores()
+	    {
+	        $query = "SELECT nome_funcionario, cpf_funcionario FROM funcionario WHERE cargo_funcionario LIKE '%Ensino%' ORDER BY nome_funcionario";
+	        $conexao = Conexao::pegarConexao();
+	        $resultado = $conexao->query($query);
+	        $lista = $resultado->fetchAll();
+	        return $lista;
 	    }
 
 	    public function limpaSalario($valor)

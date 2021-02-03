@@ -52,30 +52,19 @@
 			return $nome;
 		} */
 
-		public function update()
+		public function update($movimentacao, $dataAlteracao)
 		{
-			$query ="	UPDATE turma
-						SET	nome_turma = :nome_turma,
-							sigla = :sigla,
-							ano = :ano,
-							turno = :turno,
-							capacidade = :capacidade,
-							tipo_ensino_turma = :tipo_ensino,
-							num_ensino_turma = :num_ensino
-						WHERE id_turma = :id ";
+			$query ="	UPDATE matricula
+						SET	situacao = '$movimentacao',
+							data_fim_matricula = :dataAlteracao
+						WHERE id_matricula = :id ";
 					  	
 			$conexao = Conexao::pegarConexao();
 
 			$stmt = $conexao->prepare($query);
 
 			$stmt->bindValue(':id', $this->id);
-			$stmt->bindValue(':nome_turma', $this->nome);
-			$stmt->bindValue(':sigla', $this->sigla);
-			$stmt->bindValue(':ano', $this->ano);
-			$stmt->bindValue(':turno', $this->turno);
-			$stmt->bindValue(':capacidade', $this->capacidade);
-			$stmt->bindValue(':tipo_ensino', $this->tipoEnsino);
-			$stmt->bindValue(':num_ensino', $this->numTipoEnsino);
+			$stmt->bindValue(':dataAlteracao', $this->dataMatricula);
 
 			$stmt->execute();
 		}
@@ -87,6 +76,8 @@
 								t.tipo_ensino_turma,
 								t.nome_turma,
 								t.sigla,
+								t.turno,
+								t.id_turma,
 								m.id_matricula,
 								m.data_matricula,
 								m.data_fim_matricula,
@@ -111,6 +102,8 @@
 					'tipo_ensino_turma' => $linha['tipo_ensino_turma'],
 					'nome_turma' => $linha['nome_turma'],
 					'sigla' => $linha['sigla'],
+					'turno' => $linha['turno'],
+					'id_turma' => $linha['id_turma'],
 					'data_matricula' => $linha['data_matricula'],
 					'data_fim_matricula' => $linha['data_fim_matricula'],
 					'situacao' => $linha['situacao']
@@ -118,23 +111,46 @@
 				
 				$i++;
 			}
-				return $matriculas;
+			return $matriculas;
 		}
 
-		public static function listarTurmasMatricula($ano, $tipo)
+		public static function verificarMatriculasDoAluno($idAluno, $ano)
 	    {
-	        $query = "	SELECT 
-								nome_turma,
-								id_turma,
-								sigla,
-								turno
-				 		FROM turma
-						WHERE ano = $ano AND situacao = 1 AND tipo_ensino_turma = '$tipo'
-						ORDER BY nome_turma";
+	        $query = "	SELECT 	t.nome_turma,
+								t.sigla
+						FROM matricula m
+						INNER JOIN turma t
+						ON m.id_turma = t.id_turma
+						WHERE m.id_aluno = $idAluno AND t.ano = $ano AND m.situacao = 'Ativo'";
 	        $conexao = Conexao::pegarConexao();
-	        $resultado = $conexao->query($query);
-	        $lista = $resultado->fetchAll();
-			return $lista;
+	        $stmt = $conexao->query($query);
+	        $stmt->execute();
+			$fetchAll = $stmt->fetchAll();
+			
+			$i = 0;
+
+			foreach ($fetchAll as $linha)
+			{
+				$matriculas[$i] = array(
+					'nome_turma' => $linha['nome_turma'],
+					'sigla' => $linha['sigla'],
+				);
+				
+				$i++;
+			}
+
+			return $fetchAll;
+
+			// if ($matriculas)
+			// {
+			// 	return $matriculas = 'não ha turmas';
+			// }
+			// else
+			// {
+			// 	return $matriculas;
+			// }
+
+			
 		}
 
 		public static function listarMatrizesOption()
@@ -213,66 +229,14 @@
 			}
 		}
 
-		public function deletaDisciplinasDaMatriz()
-		{
-			$query ="	SELECT 	d.id
-						FROM disciplina d
-						JOIN disciplinas_da_matriz m
-						ON d.id = m.id_disciplina
-						WHERE m.id_matriz = :idDisciplina";
-					  	
-			$conexao = Conexao::pegarConexao();
-
-			$stmt = $conexao->prepare($query);
-
-			$stmt->bindValue(':idDisciplina', $this->id);
-
-			$stmt->execute();
-			$fetchAll = $stmt->fetchAll();
-
-			$tamanho = count($fetchAll);
-			$tem = $tamanho;
-			$naoTem = "Não tem matérias";
-
-			if ($tamanho > 0)
-			{
-				foreach ($fetchAll as $linha)
-				{
-					$idDisciplina = $linha['id'];
-					try 
-					{	
-						$query = 	"	DELETE FROM disciplinas_da_matriz
-										WHERE id_disciplina = :idDisciplina AND id_matriz = :idMatriz";
-
-						$conexao = Conexao::pegarConexao();
-						$stmt = $conexao->prepare($query);
-						$stmt->bindValue(':idDisciplina', $idDisciplina);
-						$stmt->bindValue(':idMatriz', $this->id);
-
-						$stmt->execute();
-					} 
-					catch (Exception $e)
-					{
-						$response['text'] = (string) $e;
-						$response['message'] = "erro no catch";
-						// echo json_encode($e);
-					}
-				}
-				return $tem;
-			}
-			else {
-				return $naoTem;
-			}
-		}
-
 		public function delete()
 		{
-			$query = 	"	DELETE FROM turma
-							WHERE id_turma = :idTurma";
+			$query = 	"	DELETE FROM matricula
+							WHERE id_matricula = :idMatricula";
 
 			$conexao = Conexao::pegarConexao();
 			$stmt = $conexao->prepare($query);
-			$stmt->bindValue(':idTurma', $this->id);
+			$stmt->bindValue(':idMatricula', $this->id);
 
 			$stmt->execute();
 		}

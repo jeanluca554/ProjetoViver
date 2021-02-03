@@ -494,7 +494,7 @@ VALUES
     31
 );
 
-update turma set alunos_ativos = 15 where id_turma = 2;
+update turma set alunos_ativos = 0 where id_turma = 1;
 
 DELETE FROM turma
 WHERE id_turma = 4;
@@ -528,18 +528,83 @@ CREATE TABLE matricula
 
 drop table matricula;
 
-select * from matricula;
-select * from turma;
+select * from matriz_curricular;
+select * from turma ;
+
+describe funcionario;
 
 SELECT 	t.ano,
 		t.tipo_ensino_turma,
         t.nome_turma,
         t.sigla,
+        t.turno,
         m.id_matricula,
         m.data_matricula,
         m.data_fim_matricula,
         m.situacao
 FROM matricula m
 INNER JOIN turma t
-ON r.cpf_responsavel = b.responsavel_cpf
-WHERE b.aluno_id = ".$idDoAluno;
+ON m.id_turma = t.id_turma
+WHERE m.id_aluno = 134;
+
+
+SELECT 	t.nome_turma,
+		t.sigla,
+        m.situacao
+FROM matricula m
+INNER JOIN turma t
+ON m.id_turma = t.id_turma
+WHERE m.id_aluno = 134 AND t.ano = 2021 AND m.situacao = 'Ativo';
+
+UPDATE turma
+SET	alunos_ativos = alunos_ativos - 1
+WHERE id_turma = 1;
+
+update turma set alunos_ativos = 0 where id_turma = 3;
+
+DESCRIBE professor_vinculado;
+select * from turma;
+
+CREATE TABLE professor_vinculado
+(
+	id_vinculo INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_turma INT NOT NULL,
+    id_disciplina INT NOT NULL,
+    id_professor VARCHAR(14) NOT NULL,
+    FOREIGN KEY (id_turma) REFERENCES turma (id_turma),
+    FOREIGN KEY (id_disciplina) REFERENCES disciplina (id),
+    FOREIGN KEY (id_professor) REFERENCES funcionario (cpf_funcionario)
+)DEFAULT CHARSET = utf8;
+
+SELECT * FROM professor_vinculado WHERE id_turma = 3;
+
+SELECT nome_funcionario, cpf_funcionario FROM funcionario WHERE cargo_funcionario LIKE '%Ensino%';
+
+
+SELECT 
+    v.id_vinculo
+FROM professor_vinculado v
+	INNER JOIN funcionario f ON v.id_professor = f.cpf_funcionario
+    INNER JOIN turma t ON t.id_turma = v.id_turma
+WHERE v.id_disciplina = 5 AND v.id_turma = 3;
+
+
+
+
+
+
+INSERT INTO professor_vinculado
+(
+	id_turma,
+	id_disciplina,
+	id_professor
+) 
+VALUES 
+(
+	3,
+	5,
+	'081.065.028-21'
+);
+
+drop table professor_vinculado;
+SET foreign_key_checks = 1;

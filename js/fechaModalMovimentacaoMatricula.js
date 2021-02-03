@@ -1,9 +1,9 @@
 $(function(){
-    $('.fecharModalNovaMatricula').on("click", abrirModalAluno);
+    $('.fecharModalAlterarMatricula').on("click", abrirAlunoModal);
 	
 });
 
-function abrirModalAluno() {
+function abrirAlunoModal() {
 
     $('#NovaMatriculaModal').on('hidden.bs.modal', function () 
     {

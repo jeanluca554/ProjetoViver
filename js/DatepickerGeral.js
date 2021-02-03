@@ -18,6 +18,12 @@ function datasGerais() {
         todayHighlight: true
     });
 
+    $('#dataAlteracaoMatricula').datepicker({
+        format: "dd/mm/yyyy",
+        language: "pt-BR",
+        todayHighlight: true
+    });
+
     $('#dataNascimento').datepicker({
         format: "dd/mm/yyyy",
         language: "pt-BR",

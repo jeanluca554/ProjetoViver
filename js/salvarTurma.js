@@ -51,6 +51,10 @@ function salvaTurma()
                                     $("#siglaTurma").val("");
                                     $("#turno").val(0);
                                     $("#capacidadeFisica").val("");
+
+                                    var descricaoTurma = nomeTurma + " " + sigla + " - " + turno;
+                                    sessionStorage.setItem('descrTurmaAlterarMatricula', descricaoTurma);
+                                    sessionStorage.setItem('tipoEnsinoAlterarMatricula', tipoEnsinoTurma);
                                 }
                                 else {
                                     Swal.fire({
@@ -156,6 +160,9 @@ function alterarTurma() {
                                 if (ultimoId['mensagem'] == 'ok') {
                                     apresentaMensagemSucesso("alterada");
 
+                                    var descricaoTurma = nomeTurma + " " + sigla + " - " + turno;
+                                    sessionStorage.setItem('descrTurmaAlterarMatricula', descricaoTurma);
+                                    sessionStorage.setItem('tipoEnsinoAlterarMatricula', tipoEnsinoTurma);
                                     
                                 }
                                 else {
@@ -230,7 +237,7 @@ function apresentaMensagemSucesso(texto)
         Swal.fire({
             type: 'success',
             title: 'Concluído',
-            text: 'Matriz Curricular ' + texto + ' com sucesso!',
+            text: 'Turma ' + texto + ' com sucesso!',
             animation: true,
             customClass: {
                 popup: 'animated bounce'

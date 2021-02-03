@@ -1,5 +1,5 @@
 $(function(){
-    $('.fecharModalNovaMatricula').on("click", abrirModalAluno);
+    $('.fecharModalVincularProfessor').on("click", abrirModalAluno);
 	
 });
 

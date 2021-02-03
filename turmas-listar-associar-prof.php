@@ -7,11 +7,11 @@
 	try
 	{
 		$ano = $_POST['ano'];
-		$tipo = $_POST['tipo'];
+		$tipo = $_POST['tipoEnsino'];
 
 		$turmaDAO = new TurmaDAO();
 
-		$turmas = $turmaDAO->listarTurmasMatricula($ano, $tipo);
+		$turmas = $turmaDAO->listarTurmasAssociarProf($ano, $tipo);
 
 		$response['mensagem'] = 'ok';
 		$response['turmas'] = $turmas;

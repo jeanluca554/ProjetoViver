@@ -74,39 +74,52 @@ function insereMatriculasNaTabela(response)
         var sigla = value['sigla'];
         var dataMatricula = value['data_matricula'];
         var dataFim = value['data_fim_matricula'];
-        var situacao = value['situacao']
+        var situacao = value['situacao'];
+        var turno = value['turno'];
+        var idTurma = value['id_turma'];
 
-        console.log(response);
-        console.log(idMatricula, ano, tipoEnsino, nomeTurma, sigla, dataMatricula, dataFim, situacao);
+        var dataMatriculaFormatada = trataDataMatricula(dataMatricula);
+
+        if (dataFim != null)
+        {
+            var dataFimFormatada = trataDataMatricula(dataFim);
+        }
 
         var nomeTurmaCompleto = nomeTurma + " " + sigla;
 
-        var linha = novaLinhaMatriculas(idMatricula, ano, tipoEnsino, nomeTurmaCompleto, dataMatricula, dataFim, situacao);
+        var linha = novaLinhaMatriculas(idMatricula, ano, tipoEnsino, nomeTurmaCompleto, dataMatriculaFormatada, dataFimFormatada, situacao, turno, idTurma);
 
         corpoTabela.append(linha);
     })
 }
 
-function novaLinhaMatriculas(id, ano, tipoEnsino, nomeTurma, dataMatricula, dataFim, situacao) 
+function novaLinhaMatriculas(id, ano, tipoEnsino, nomeTurma, dataMatricula, dataFim, situacao, turno, idTurma) 
 {
     var linha = $("<tr>");
-    var colunaAno = $("<td>").text(ano).attr("class", "align-middle");
-    var colunaTipoEnsino = $("<td>").text(tipoEnsino).attr("class", "align-middle");
-    var colunaTurma = $("<td>").text(nomeTurma).attr("class", "align-middle");
-    var colunaDataMatricula = $("<td>").text(dataMatricula).attr("class", "align-middle");
-    var colunaDataFim = $("<td>").text(dataFim).attr("class", "align-middle");
-    var colunaSituacao = $("<td>").text(situacao).attr("class", "align-middle");
+    var colunaAno = $("<td>").text(ano).attr({"class": "align-middle", "align": "center"});
+    var colunaTipoEnsino = $("<td>").text(tipoEnsino).attr({"class": "align-middle", "align": "center"});
+    var colunaTurma = $("<td>").text(nomeTurma).attr({"class": "align-middle", "align": "center"});
+    var colunaDataMatricula = $("<td>").text(dataMatricula).attr({"class": "align-middle", "align": "center"});
+    var colunaDataFim = $("<td>").text(dataFim).attr({"class": "align-middle", "align": "center"});
+    var colunaSituacao = $("<td>").text(situacao).attr({"class": "align-middle", "align": "center"});
 
     //Criação da coluna Alterar:
+    var descricaoTurma = nomeTurma + " - " + turno;
+    sessionStorage.setItem('descrTurmaAlterarMatricula', descricaoTurma);
+    sessionStorage.setItem('tipoEnsinoAlterarMatricula', tipoEnsino);
+
+    var dadosAlterar = "setDadosAlterarMatricula('" + tipoEnsino + "', '" + descricaoTurma + "', " + id + ", '" + situacao + "', " + idTurma + ", '" + dataMatricula + "')";  
     var colunaAlterar = $("<td>").attr({
+        'id': "btnAlterarMatricula",
         'align': "center",
         'data-id': id,
         'data-ano': ano,
         'data-toggle': "modal",
-        'data-target': "#NovaMatriculaModal",
-        'onclick': "($('#ModalAlunoFormulario').modal('hide'))"
+        'data-target': "#MatriculaAlterarModal",
+        'onclick': dadosAlterar
+        // 'onclick': "($('#MatriculaAlterarModal').modal('show'))"
     });
-    var botaoEditar = $("<a>").addClass("btn btn-outline-info").attr("href", "#");
+    var botaoEditar = $("<a>").addClass("btn btn-outline-info").attr({ "href": "#"});
     var imagemEditar = $("<img>").attr("src", "img/editar.png");
     botaoEditar.append(imagemEditar);
     colunaAlterar.append(botaoEditar);
@@ -116,8 +129,8 @@ function novaLinhaMatriculas(id, ano, tipoEnsino, nomeTurma, dataMatricula, data
     var botaoRemover = $("<button>")
         .addClass("btn btn-outline-danger")
         .attr({
-            'id': "btnExcluir" + id,
-            'onclick': "excluirMatricula(" + id + ")"
+            'id': "btnExcluirMatricula" + id,
+            'onclick': "excluirMatricula(" + id + ", '" + situacao + "', " + idTurma + ")"
         });
     var imagemRemover = $("<img>").attr("src", "img/menos-25.png");
     botaoRemover.append(imagemRemover);
@@ -140,3 +153,10 @@ $('#matricularAluno-tab').on('hidden.bs.modal', function () {
 
     buscaResponsaveisVinculadosAoAluno();
 });
+
+function trataDataMatricula(date) {
+    dataArray = date.split("-");
+    dataInvertida = dataArray.reverse();
+    dataCorrigida = dataInvertida.join('/');
+    return dataCorrigida;
+}

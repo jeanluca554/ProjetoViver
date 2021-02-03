@@ -42,7 +42,7 @@ function setAlterarTurma(id, sigla, tipoEnsino, turno, ano, capacidade, alunos) 
     $('#botao-salvar-turma').hide();
     $('#botao-alterar-turma').show();
 
-    $('#ModalTurma').find('.modal-title').text('Alterar Matriz Curricular - ' + alunos + ' aluno(s) ativos');
+    $('#ModalTurma').find('.modal-title').text('Alterar Turma - ' + alunos + ' aluno(s) ativos');
 
     $('#idTurma').val(id);
     $('#tipoEnsinoTurma').val(tipoEnsino);

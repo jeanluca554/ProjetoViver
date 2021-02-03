@@ -1,20 +1,19 @@
 <?php
 	require_once 'global.php';
-	require_once 'DAO/TurmaDAO.php';
+	require_once 'DAO/FuncionarioDAO.php';
 
 	$response = array();	
 
 	try
 	{
 		$ano = $_POST['ano'];
-		$tipo = $_POST['tipo'];
 
-		$turmaDAO = new TurmaDAO();
+		$funcionarioDAO = new FuncionarioDAO();
 
-		$turmas = $turmaDAO->listarTurmasMatricula($ano, $tipo);
+		$professores = $funcionarioDAO->listarProfessores();
 
 		$response['mensagem'] = 'ok';
-		$response['turmas'] = $turmas;
+		$response['professores'] = $professores;
 		echo json_encode($response);
 	}
 

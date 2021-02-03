@@ -6,15 +6,15 @@
 
 	try
 	{
-		$ano = $_POST['ano'];
-		$tipo = $_POST['tipo'];
+		$idTurma = $_POST['turmaVal'];
+		$acao = $_POST['acao'];
+		
+		
+		$turmaDAO = new TurmaDAO($idTurma);
 
-		$turmaDAO = new TurmaDAO();
-
-		$turmas = $turmaDAO->listarTurmasMatricula($ano, $tipo);
+		$turmaDAO->alteraQtdAlunoAtivo($acao);
 
 		$response['mensagem'] = 'ok';
-		$response['turmas'] = $turmas;
 		echo json_encode($response);
 	}
 

@@ -31,34 +31,114 @@ function salvaMatricula()
         {
             if (capacidadeTurma <= -1)// verifica se existe turma válida
             {
+                
                 $.ajax({
-                    url: 'matricula-criar-post.php',
+                    url: 'matriculas-verificar-post.php',
                     method: 'post',
                     dataType: 'json',
-                    data:{
-                        tipoEnsinoVal: tipoEnsinoMatriculaVal,
-                        turmaVal: turmaVal,
-                        dataMatricula: dataMatricula,
+                    data: {
+                        ano: ano,
                         idAluno: idAluno
                     },
 
-                    success: function(ultimoId)
-                    {
-                        if (ultimoId['mensagem'] == 'ok')
+                    success: function (response) {
+                        if (response['mensagem'] == 'ok') 
                         {
-                            console.log("matricula criada com sucesso. Último ID: " + ultimoId['ultimoID']);
-                            apresentaMensagemSucesso("realizada"); 
+                            $.ajax({
+                                url: 'matricula-criar-post.php',
+                                method: 'post',
+                                dataType: 'json',
+                                data: {
+                                    tipoEnsinoVal: tipoEnsinoMatriculaVal,
+                                    turmaVal: turmaVal,
+                                    dataMatricula: dataMatricula,
+                                    idAluno: idAluno
+                                },
 
-                            $("#tipoEnsinoTurma").val(0);
-                            $("#siglaTurma").val("");
-                            $("#turno").val(0);
-                            $("#capacidadeFisica").val("");
+                                success: function (ultimoId) {
+                                    if (ultimoId['mensagem'] == 'ok') {
+                                        
+                                        $.ajax({
+                                            url: 'turma-adiciona-aluno-ativo.php',
+                                            method: 'post',
+                                            dataType: 'json',
+                                            data: {turmaVal: turmaVal, acao: "+"},
+
+                                            success: function (ultimoId) {
+                                                if (ultimoId['mensagem'] == 'ok') 
+                                                {
+                                                    console.log("Mais um aluno ativo adicionado");
+                                                }
+                                                else {
+                                                    Swal.fire({
+                                                        type: 'warning',
+                                                        title: ultimoId['title'],
+                                                        text: ultimoId['text'],
+                                                        animation: false,
+                                                        customClass: {
+                                                            popup: 'animated tada'
+                                                        }
+                                                    })
+                                                }
+                                            },
+
+                                            error: function (response) {
+                                                console.log(response);
+                                                Swal.fire({
+                                                    type: 'warning',
+                                                    title: response['title'],
+                                                    text: response['text'],
+                                                    animation: false,
+                                                    customClass: {
+                                                        popup: 'animated tada'
+                                                    }
+                                                })
+                                            }
+                                        })
+                                        
+                                        console.log("matricula criada com sucesso. Último ID: " + ultimoId['ultimoID']);
+                                        apresentaMensagemSucesso("realizada");
+
+                                        $("#tipoEnsinoTurma").val(0);
+                                        $("#siglaTurma").val("");
+                                        $("#turno").val(0);
+                                        $("#capacidadeFisica").val("");
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            type: 'warning',
+                                            title: ultimoId['title'],
+                                            text: ultimoId['text'],
+                                            animation: false,
+                                            customClass: {
+                                                popup: 'animated tada'
+                                            }
+                                        })
+                                    }
+                                },
+
+                                error: function (response) {
+                                    console.log(response);
+                                    Swal.fire({
+                                        type: 'warning',
+                                        title: response['title'],
+                                        text: response['text'],
+                                        animation: false,
+                                        customClass: {
+                                            popup: 'animated tada'
+                                        }
+                                    })
+                                }
+                            })
+
                         }
-                        else {
+                        else 
+                        {
+                            console.log('Aluno com matrícula ativa');
                             Swal.fire({
                                 type: 'warning',
-                                title: ultimoId['title'],
-                                text: ultimoId['text'],
+                                title: 'Atenção!',
+                                text: 'O aluno já possui uma matrícula ativa no ano selecionado',
                                 animation: false,
                                 customClass: {
                                     popup: 'animated tada'
@@ -67,8 +147,7 @@ function salvaMatricula()
                         }
                     },
 
-                    error: function(response)
-                    {
+                    error: function (response) {
                         console.log(response);
                         Swal.fire({
                             type: 'warning',
@@ -81,6 +160,22 @@ function salvaMatricula()
                         })
                     }
                 });
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                /*
+                ;*/
             } 
             else 
             {
@@ -96,6 +191,50 @@ function salvaMatricula()
     {
         mensagemErro('Para salvar você deve selecionar o <b>tipo de ensino</b>')
     }   
+}
+
+function verificaMatriculaAntesDeSalvar(ano, idAluno)
+{
+    $.ajax({
+        url: 'matricula-verificar-post.php',
+        method: 'post',
+        dataType: 'json',
+        data: {
+            ano: ano,
+            idAluno: idAluno
+        },
+
+        success: function (response) {
+            if (response['mensagem'] == 'ok') {
+                console.log(response['matriculas']);
+
+            }
+            else {
+                Swal.fire({
+                    type: 'warning',
+                    title: response['title'],
+                    text: response['text'],
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
+            }
+        },
+
+        error: function (response) {
+            console.log(response);
+            Swal.fire({
+                type: 'warning',
+                title: response['title'],
+                text: response['text'],
+                animation: false,
+                customClass: {
+                    popup: 'animated tada'
+                }
+            })
+        }
+    });
 }
 
 function mensagemErro(mensagem)
@@ -126,7 +265,7 @@ function apresentaMensagemSucesso(texto)
                 popup: 'animated bounce'
             }
         }).then(function () {
-            location.reload();
+            abrirModalAluno();
         });
     }
     else
@@ -140,7 +279,24 @@ function apresentaMensagemSucesso(texto)
                 popup: 'animated bounce'
             }
         }).then(function () {
-            $('#NovaMatriculaModal').modal('hide');
+            // $('#NovaMatriculaModal').modal('hide');
+            // $('#ModalAlunoFormulario').modal('show');
+
+            // $('#dadosPessoaisAluno-tab').attr('href', '#abaDadosPessoaisAluno');
+            // $('#abaDadosPessoaisAluno').removeClass('tab-pane fade active show');
+            // $('#abaDadosPessoaisAluno').addClass('tab-pane fade');
+            // $('#dadosPessoaisAluno-tab').removeClass('active');
+            // $('#dadosPessoaisAluno-tab').addClass('nav-link');
+            // $('#dadosPessoaisAluno-tab').attr({
+            //     'aria-selected': "false"
+            // });
+
+            // $('#matricularAluno-tab').attr('href', '#abaMatricularAluno');
+            // $('#abaMatricularAluno').removeClass('tab-pane fade active show');
+            // $('#matricularAluno-tab').addClass('nav-link active');
+            // $('#matricularAluno-tab').attr({
+            //     'aria-selected': "true"
+            // });
         });
     }
 }

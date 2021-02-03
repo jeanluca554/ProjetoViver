@@ -14,7 +14,12 @@
         break;
 
         case 2:
-            $idEndereco = $_POST['idEndereco'];
+            $idEndereco = 1;
+            
+            if (isset($_POST['idEndereco']))
+            {
+                $idEndereco = $_POST['idEndereco'];
+            }
 
             if ($idEndereco == null)
             {

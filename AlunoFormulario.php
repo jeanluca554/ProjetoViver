@@ -41,7 +41,7 @@
 </div>
 <div class="row mt-4">
     <div class="col-md-12">
-        <table class="table table-hover table-bordered tabelaPTBR" id="tabelaDeFuncionarios">
+        <table class="table table-hover table-bordered tabelaPTBR table-striped" id="tabelaDeFuncionarios">
             <thead class="thead-dark" align="center">
                 <tr>
                     <th>Nome</th>
@@ -180,7 +180,7 @@
                                     <span class="input-group-btn">
                                         <button class="btn btn-info" type="button" disabled><img src="img/laranja-hoje-25.png"></button>
                                     </span>
-                                    <input type="text" class="form-control" id="dataNascimento" name="dataNascimento">
+                                    <input type="text" class="form-control" id="dataNascimento" name="dataNascimento" data-date-end-date="0d">
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -725,6 +725,7 @@
 <div class="modal fade" id="NovaMatriculaModal" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+            
             <div class="modal-header">              
                 <h5 class="modal-title">Matricular </h5>
                 <button 
@@ -782,7 +783,7 @@
                             <span class="input-group-btn">
                                 <button class="btn btn-info" type="button" disabled><img src="img/laranja-hoje-25.png"></button>
                             </span>
-                            <input type="text" class="form-control" id="dataMatricula" name="dataMatricula">
+                            <input type="text" class="form-control" id="dataMatricula" name="dataMatricula" data-date-end-date="0d">
                         </div>
                     </div>                   
                 </div>
@@ -795,17 +796,152 @@
                         Matricular
                     </button>
 
-                    <button 
+                    <!-- <button 
                         type="submit" 
                         class="btn btn-success ml-auto mt-3" 
                         id="botao-alterar-matricula"
                     >
                         Matricular
-                    </button>
+                    </button> -->
 
                     <button 
                         type="reset" 
                         class="btn btn-danger mt-3 ml-2 fecharModalNovaMatricula"
+                        data-dismiss="modal"
+                    >
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fim do modal Nova Matrícula -->
+
+
+<!-- Modal Alterar Matrícula -->
+<div class="modal fade" id="MatriculaAlterarModal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">              
+                <h5 class="modal-title">Alterar Matrícula</h5>
+                <button 
+                    type="button" 
+                    class="close fecharModalAlterarMatricula" 
+                    data-dismiss="modal"
+                >
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-row mt-3 d-flex justify-content-center">
+                    <div class="form-group col-md-10">
+                        <label for="nome">Nome do aluno</label>
+                        <input 
+                            class="form-control" 
+                            id="nomeAlterarMatricula" 
+                            disabled
+                        >
+                        <input 
+                            type="hidden"
+                            class="form-control" 
+                            id="idAlterarMatricula" 
+                            disabled
+                        >
+                        <input 
+                            type="hidden"
+                            class="form-control" 
+                            id="situacaoAtualMatricula" 
+                            disabled
+                        >
+                        <input 
+                            type="hidden"
+                            class="form-control" 
+                            id="idTurmaMatricula" 
+                            disabled
+                        >
+                        <input 
+                            type="hidden"
+                            class="form-control" 
+                            id="dataInicioMatricula" 
+                            disabled
+                        >
+                    </div>
+                </div>
+                <div class="form-row d-flex justify-content-center">
+                    <div class="form-group col-md-10">
+                        <label for="nome">Data de Nascimento</label>
+                        <input 
+                            class="form-control" 
+                            id="dataAlterarMatricula" 
+                            disabled
+                        >
+                    </div>
+                </div>
+                <div class="form-row d-flex justify-content-center">
+                    <div class="form-group col-md-10">
+                        <label for="nome">Descrição da turma</label>
+                        <input 
+                            class="form-control" 
+                            id="turmaAlterarMatricula" 
+                            disabled
+                        >
+                    </div>
+                </div>
+                <div class="form-row d-flex justify-content-center">
+                    <div class="form-group col-md-10">
+                        <label for="nome">Tipo de Ensino</label>
+                        <input 
+                            class="form-control" 
+                            id="tipoEnsinoAlterarMatricula" 
+                            disabled
+                        >
+                    </div>
+                </div>
+                <div class="form-row d-flex justify-content-center">
+                    <div class="form-group col-md-10">
+                        <label for="tipoMovimentação">Tipo de movimentação</label>
+                        <select name="tipoMovimentação" class="form-control" id="tipoMovimentacao">    
+                        <option value="0">Selecione...</option>
+                            <option value="1">Abandono</option>
+                            <option value="2">Transferência</option>            
+                            <option value="3">Não comparecimento</option>            
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row d-flex justify-content-center">
+                    <div class="form-group col-md-10 ">
+                        <label for="DataAlteracao">Data da Movimentação</label>
+                        <div class="input-group date">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="button" disabled><img src="img/laranja-hoje-25.png"></button>
+                            </span>
+                            <input type="text" class="form-control" id="dataAlteracaoMatricula" name="dataAlteracaoMatricula" data-date-end-date="0d">
+                        </div>
+                    </div>                   
+                </div>
+
+                <div class="form-row">
+                    <button 
+                        type="submit" 
+                        class="btn btn-success ml-auto mt-3" 
+                        id="botao-alterar-matricula"
+                    >
+                        Salvar
+                    </button>
+
+                    <!-- <button 
+                        type="submit" 
+                        class="btn btn-success ml-auto mt-3" 
+                        id="botao-alterar-matricula"
+                    >
+                        Matricular
+                    </button> -->
+
+                    <button 
+                        type="reset" 
+                        class="btn btn-danger mt-3 ml-2 fecharModalAlterarMatricula"
                         data-dismiss="modal"
                     >
                         Fechar
@@ -815,7 +951,7 @@
         </div>
     </div>
 </div>
-<!-- Fim do modal Nova Matrícula -->
+<!-- Fim do modal Alterar Matrícula -->
 
 
 <script src="js/salvarAluno.js"></script>
@@ -844,6 +980,9 @@
 <script src="js/fechaModalCadastroMatricula.js"></script>
 <script src="js/formataCamposMatricula.js"></script>
 <script src="js/pegaMatriculas.js"></script>
+<script src="js/alterarMatricula.js"></script>
+<script src="js/excluirMatricula.js"></script>
+<script src="js/fechaModalMovimentacaoMatricula.js"></script>
 
 <?php 
     //include("Modal/ModalAlunoFormulario.php");

@@ -43,16 +43,16 @@
         <table class="table table-hover table-bordered table-striped tabelaPTBR" id="tabelaTurmas">
             <thead class="thead-dark" align="center">
                 <tr>
-                    <th>Nome</th>
-                    <th>Tipo de Ensino</th>
-                    <th>Turno</th>
-                    <th>AnoLetivo</th>
-                    <th width="50">Capacidade Física</th>
-                    <th width="50">Alunos Ativos</th>
-                    <th width="50">Vagas Disponíveis</th>
-                    <th>Situação</th>
-                    <th width="50">Editar</th>
-                    <th width="50">Excluir</th>
+                    <th class="align-middle" >Nome</th>
+                    <th class="align-middle" >Tipo de Ensino</th>
+                    <th class="align-middle" >Turno</th>
+                    <th class="align-middle" >AnoLetivo</th>
+                    <th class="align-middle" width="50">Capacidade Física</th>
+                    <th class="align-middle" width="50">Alunos Ativos</th>
+                    <th class="align-middle" width="50">Vagas Disponíveis</th>
+                    <th class="align-middle" >Situação</th>
+                    <th class="align-middle" width="50">Editar</th>
+                    <th class="align-middle" width="50">Excluir</th>
                 </tr>
             </thead>
             <tbody>

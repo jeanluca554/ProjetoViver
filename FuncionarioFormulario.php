@@ -117,7 +117,7 @@
             </div>
         </div>
 
-        <div class="form-row align-items-start">
+      <!-- <div class="form-row align-items-start">
             <div class="form-row align-items-center col-md-6">
                 <div class="form-check ml-4">
                     <input class="form-check-input" type="checkbox" id="ChecaFilhos" onclick="desabilitar(this.checked);">
@@ -130,7 +130,7 @@
                 </div>
             </div>
             
-        </div>
+        </div>-->
 
         <div class="form-row mt-5">       
             <button id="botao-salvar-funcionario" class="btn btn-success btn-lg">Salvar</button>  

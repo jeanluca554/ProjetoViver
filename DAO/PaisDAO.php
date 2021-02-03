@@ -19,7 +19,7 @@
 		
 			foreach ($fetchAll as $paises) 
 			{
-				echo '<option value="'.$paises['id'].'">'.$paises['nome'].'</option>';
+				echo '<option value="'.$paises['id'].'">'.$paises['nome_pt'].'</option>';
 			}
 		}
 		

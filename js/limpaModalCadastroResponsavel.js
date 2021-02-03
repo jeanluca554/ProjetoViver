@@ -1,7 +1,6 @@
 $(function(){
 	$('.fecharModalCadastroResponsavel').on("click", limparCampos);
     $('#botao-salvar-endereco-responsavel').on("click", limparCampos);
-    // $('.fecharModalNovaMatricula').on("click", limparCamposMatricula);
 });
 
 function limparCampos()

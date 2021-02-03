@@ -1,20 +1,19 @@
 <?php
 	require_once 'global.php';
-	require_once 'DAO/TurmaDAO.php';
+	require_once 'DAO/MatriculaDAO.php';
 
 	$response = array();	
 
 	try
 	{
-		$ano = $_POST['ano'];
-		$tipo = $_POST['tipo'];
+		$id = $_POST['id'];
+		
+		$matriculaDAO = new MatriculaDAO($id);
 
-		$turmaDAO = new TurmaDAO();
-
-		$turmas = $turmaDAO->listarTurmasMatricula($ano, $tipo);
+		$matriculaDAO->delete();
 
 		$response['mensagem'] = 'ok';
-		$response['turmas'] = $turmas;
+		$response['text'] = "Matrícula excluída com sucesso!";
 		echo json_encode($response);
 	}
 

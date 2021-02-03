@@ -43,6 +43,9 @@ function salvaDadosAluno()
                 if(ultimoId['mensagem'] == 'ok')
                 {
                     sessionStorage.setItem('alunoID', ultimoId['ultimoID']);
+
+                    sessionStorage.setItem('alunoNomeAlterarMatricula', nome);
+                    sessionStorage.setItem('alunoNascimentoAlterarMatricula', dataNascimento);
                     
                     Swal.fire({
                         type: 'success',
@@ -115,6 +118,8 @@ function alterarDadosAluno() {
             success: function (response) {
                 if (response['mensagem'] == 'ok') {
 
+                    sessionStorage.setItem('alunoNomeAlterarMatricula', nome);
+                    sessionStorage.setItem('alunoNascimentoAlterarMatricula', dataNascimento);
                     Swal.fire({
                         type: 'success',
                         title: 'Concluído',

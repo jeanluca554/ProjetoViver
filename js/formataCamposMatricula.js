@@ -2,6 +2,7 @@ $(function() {
     $('#anoLetivoMatricula').on("change", setSelectTipoEnsino);
     $('#tipoEnsinoMatricula').on("change", setSelectTurmas);
     $('#btnNovaMatricula').on("click", formatarCamposAluno);
+    $('#btnNovaMatricula').on("click", formatarCamposAluno);
 });
 
 
@@ -54,10 +55,10 @@ function setSelectTurmas()
                 $("#selectTurmasMatricula").attr('disabled', false);
             }
             else {
-                console.log(response['text']);
+                console.log(response);
                 Swal.fire({
                     type: 'warning',
-                    title: response['title'],
+                    title: 'erro',
                     text: response['text'],
                     animation: false,
                     customClass: {
@@ -123,3 +124,4 @@ function insereSelectTurmas(response) {
     
     
 }
+
