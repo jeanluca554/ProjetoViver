@@ -15,6 +15,7 @@ function formataCamposAluno()
 function setDataAtualMatricula() {
     $(document).on('shown.bs.modal', '#NovaMatriculaModal', function (event) 
     {
+        $('#NovaMatriculaModal').css('overflow-y', 'auto');
         console.log('clicou no botão Nova Matrícula')
         $('#dataMatricula').mask('00/00/0000');
         $('#tipoEnsinoMatricula').attr('option value', 0);

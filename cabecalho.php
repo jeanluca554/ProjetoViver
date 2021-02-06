@@ -71,7 +71,7 @@
                 <div class="collapse navbar-collapse" id="navbarSite">
                     <ul class="navbar-nav mr-auto">
                         <?php
-                        if ($nivel != 4){?>
+                        if ($nivel != 4 && $nivel != 2){?>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Cadastrar</a>
@@ -84,56 +84,87 @@
                         <?php
                         }   
                         ?>
+
+                        <?php
+                            if ($nivel != 2 && $nivel != 3 && $nivel != 1){
+                        ?>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Boletins</a>
-                        </li>
-                        
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Financeiro</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="FuncionariosCalculaSalario.php">Calcular Salário</a>
-                                <a class="dropdown-item" href="teste.php">Contas a Receber</a>
-                            </div>
-                        </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Boletim</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="BoletimFormulario.php">Notas e Faltas</a>
+                                </div>
+                            </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Pedagógico</a>
-                            <div class="dropdown-menu">
-                                <a 
-                                    class="dropdown-item" 
-                                    href="DisciplinasFormulario.php"
-                                >
-                                    Disciplinas
-                                </a>
+                        <?php
+                        }   
+                        ?>
 
-                                <a 
-                                    class="dropdown-item" 
-                                    href="MatrizCurricularFormulario.php"
-                                >
-                                    Matrizes Curriculares
-                                </a>
+                        <?php
+                            if ($nivel != 4 && $nivel != 2){
+                        ?>
 
-                                <a 
-                                    class="dropdown-item" 
-                                    href="TurmasFormulario.php"
-                                >
-                                    Turmas
-                                </a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Financeiro</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="FuncionariosCalculaSalario.php">Calcular Salário</a>
+                                    <a class="dropdown-item" href="#">Contas a Receber</a>
+                                </div>
+                            </li>
 
-                                <a 
-                                    class="dropdown-item" 
-                                    href="ProfessorAssociar.php"
-                                >
-                                    Associar Professor
-                                </a>
-                            </div>
-                        </li>  
+                        <?php
+                        }   
+                        ?>
+
+                        <?php
+                        if ($nivel != 4 && $nivel != 3){?>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Pedagógico</a>
+                                <div class="dropdown-menu">
+                                    <a 
+                                        class="dropdown-item" 
+                                        href="DisciplinasFormulario.php"
+                                    >
+                                        Disciplinas
+                                    </a>
+
+                                    <a 
+                                        class="dropdown-item" 
+                                        href="MatrizCurricularFormulario.php"
+                                    >
+                                        Matrizes Curriculares
+                                    </a>
+
+                                    <a 
+                                        class="dropdown-item" 
+                                        href="TurmasFormulario.php"
+                                    >
+                                        Turmas
+                                    </a>
+
+                                    <a 
+                                        class="dropdown-item" 
+                                        href="ProfessorAssociar.php"
+                                    >
+                                        Associar Professor
+                                    </a>
+                                </div>
+                            </li>
+
+                        <?php
+                        }   
+                        ?>
+
+                        <?php
+                        if ($nivel != 4){?>
                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Relatórios</a>
-                        </li>
-                        
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Relatórios</a>
+                            </li>
+                        <?php
+                        }   
+                        ?>
                         
                     </ul>
                     
@@ -143,8 +174,7 @@
                             <a class="nav-link dropdown-toggle mr-4" href="#" data-toggle="dropdown" id="navDrop">Social</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="https://www.facebook.com/colegiovivereaprendercj">Facebook</a>
-                                <a class="dropdown-item" href="#">Twitter</a>
-                                <a class="dropdown-item" href="#">Instagram</a>
+                                <a class="dropdown-item" href="https://instagram.com/cpvaanglo?igshid=7d2rco4bkm0i">Instagram</a>
                             </div>
                         </li> 
                     </ul>

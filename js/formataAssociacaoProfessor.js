@@ -2,7 +2,7 @@ $(function()
 {  
     $(document).on('shown.bs.modal', '#AssociarProfessorModal', function (event) 
     {
-        // $('.modal').css('overflow-y', 'auto');
+        // $('#AssociarProfessorModal').css('overflow-y', 'auto');
 
         var button = $(event.relatedTarget) // Button that triggered the modal
         var idSala = button.data('idturma')

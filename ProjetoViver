@@ -582,7 +582,8 @@ SELECT nome_funcionario, cpf_funcionario FROM funcionario WHERE cargo_funcionari
 
 
 SELECT 
-    v.id_vinculo
+    v.id_vinculo, 
+    f.nome_funcionario
 FROM professor_vinculado v
 	INNER JOIN funcionario f ON v.id_professor = f.cpf_funcionario
     INNER JOIN turma t ON t.id_turma = v.id_turma
@@ -607,4 +608,102 @@ VALUES
 );
 
 drop table professor_vinculado;
-SET foreign_key_checks = 1;
+select * from matricula;
+describe matricula;
+
+insert into funcionario (cpf_funcionario, cargo_funcionario, nome_funcionario, email_funcionario)
+values (0, 'Ensino Fundamental 1', '', 'funcionario@viver.com');
+
+insert into login (email, senha, situacao, cargo)
+values ('jeanluca554@hotmail.com', 'e10adc3949ba59abbe56e057f20f883e', 1, 'Diretor');
+
+update funcionario set id_login = 8 where cpf_funcionario = '261.504.168-10';
+
+SELECT 	d.nome, 
+		d.id
+FROM disciplina d
+JOIN disciplinas_da_matriz m
+ON d.id = m.id_disciplina
+WHERE m.id_matriz = 3;
+
+SELECT 	f.cpf_funcionario
+FROM funcionario f
+JOIN login l
+ON l.id_login = f.id_login
+WHERE l.id_login = 5;
+
+SELECT t.nome_turma as Turma, d.nome as Disciplina, t.id_turma, t.sigla, d.id AS idDisciplina
+FROM turma t
+INNER JOIN professor_vinculado p 
+ON t.id_turma = p.id_turma
+INNER JOIN disciplina d
+ON d.id = p.id_disciplina
+WHERE p.id_professor = '081.065.028-21';
+
+SELECT a.id_aluno, a.nome_aluno, m.situacao
+FROM aluno a
+INNER JOIN matricula m
+ON a.id_aluno = m.id_aluno
+INNER JOIN turma t
+ON t.id_turma = m.id_turma
+WHERE t.id_turma = 3;
+
+CREATE TABLE boletim
+(
+	id_boletim INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_turma INT NOT NULL,
+    id_disciplina INT NOT NULL,
+    id_aluno INT NOT NULL,
+    prova1 INT DEFAULT 0,
+    prova2 INT DEFAULT 0,
+    trabalho INT DEFAULT 0,
+    recuperacao INT DEFAULT 0,
+    media INT DEFAULT 0,
+    faltas INT DEFAULT 0,
+    bimestre INT,
+    FOREIGN KEY (id_turma) REFERENCES turma (id_turma),
+    FOREIGN KEY (id_disciplina) REFERENCES disciplina (id),
+    FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno)
+)DEFAULT CHARSET = utf8;
+
+drop table boletim;
+
+INSERT INTO boletim 
+(
+	id_turma, 
+    id_disciplina, 
+    id_aluno, 
+    prova1, 
+    prova2, 
+    trabalho, 
+    media, 
+    faltas, 
+    bimestre
+)
+VALUES 
+(
+	3,
+    4,
+    136,
+    9,
+    8,
+    10,
+    9,
+    2, 
+    1
+);
+
+select * from boletim;
+    
+SELECT b.prova1, b.prova2, b.trabalho, b.recuperacao, b.media, b.faltas
+FROM boletim b
+INNER JOIN turma t
+ON b.id_turma = t.id_turma
+INNER JOIN disciplina d
+ON b.id_disciplina = d.id
+INNER JOIN aluno a
+ON b.id_aluno = a.id_aluno
+WHERE b.id_turma = 3 
+AND b.id_disciplina = 4 
+AND b.id_aluno = 136
+AND b.bimestre = 1;

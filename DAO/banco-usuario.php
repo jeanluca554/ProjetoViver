@@ -48,6 +48,25 @@
 		return $usuario;
 	}
 
+	function pegaIdFuncionario($id) {
+		
+		$query = "	SELECT 	f.cpf_funcionario
+					FROM funcionario f
+					JOIN login l
+					ON l.id_login = f.id_login
+					WHERE l.id_login = :id";
+		$conexao = Conexao::pegarConexao();
+		$stmt = $conexao->prepare($query);
+
+		$stmt->bindValue(':id', $id);
+
+		$stmt->execute();
+
+		$idUsuario = $stmt->fetch();
+
+		return $idUsuario;
+	}
+
 	function buscaCpf($cpf) {
 		// $query = "select * from funcionario where cpf_funcionario = :cpf";
 		$query = "SELECT id_funcionario FROM funcionario WHERE cpf_funcionario = :cpf AND id_login IS NULL";

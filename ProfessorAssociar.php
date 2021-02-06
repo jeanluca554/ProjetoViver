@@ -1,20 +1,9 @@
 <?php 
     require_once("cabecalho.php");
     require_once("logica-usuario.php");
-    require_once("DAO/MatrizCurricularDAO.php");
-    require_once("DAO/TurmaDAO.php");
+    
 
     verificaUsuario();
-
-    // try 
-    // {
-    //     $listaTurmas = TurmaDAO::listarTurmas();
-    // } 
-    // catch(Exception $e) 
-    // {
-    //     Erro::trataErro($e);
-    // }
-   
 
 ?>
 

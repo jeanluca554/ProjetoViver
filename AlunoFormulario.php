@@ -907,6 +907,7 @@
                             <option value="1">Abandono</option>
                             <option value="2">Transferência</option>            
                             <option value="3">Não comparecimento</option>            
+                            <option value="4">Remanejado</option>            
                         </select>
                     </div>
                 </div>

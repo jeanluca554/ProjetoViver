@@ -68,6 +68,73 @@ function secretarioEstaLogado()
 {
 	$cargo = cargoUsuarioLogado();
 	if($cargo != "Secretário") {
+		if($cargo != "Diretor")
+		{
+			$_SESSION["danger"] = "Você não tem acesso a esta funcionalidade. <a href='logout.php'>Clique aqui para fazer o login novamente</a>";
+			//header("Location: index.html");
+			
+			die();
+		}
+		else {
+			return isset($_SESSION["usuario_cargo"]);
+		}
+	}
+	else
+	{
+		return isset($_SESSION["usuario_cargo"]);
+	}
+}
+
+function coordenadorEstaLogado() 
+{
+	$cargo = cargoUsuarioLogado();
+	if($cargo != "Coordenador") {
+		if($cargo != "Diretor") {
+			$_SESSION["danger"] = "Você não tem acesso a esta funcionalidade. <a href='logout.php'>Clique aqui para fazer o login novamente</a>";
+			//header("Location: index.html");
+			
+			die();
+		}
+		else {
+			return isset($_SESSION["usuario_cargo"]);
+		}
+	}
+	else
+	{
+		return isset($_SESSION["usuario_cargo"]);
+	}
+}
+
+function professorEstaLogado() 
+{
+	$cargo = cargoUsuarioLogado();
+	$ensino = 'Ensino';
+
+	$cargoVerificado = strpos($cargo, $ensino);
+
+	if($cargoVerificado === false) {
+		if($cargo != "Diretor")
+		{
+			$_SESSION["danger"] = "Você não tem acesso a esta funcionalidade. <a href='logout.php'>Clique aqui para fazer o login novamente</a>";
+		//header("Location: index.html");
+		
+		die();
+		}
+		else {
+			return isset($_SESSION["usuario_cargo"]);
+		}
+		
+	}
+	else
+	{
+		return isset($_SESSION["usuario_cargo"]);
+	}
+}
+
+function diretorEstaLogado() 
+{
+	$cargo = cargoUsuarioLogado();
+	if($cargo != "Diretor") {
 		$_SESSION["danger"] = "Você não tem acesso a esta funcionalidade. <a href='logout.php'>Clique aqui para fazer o login novamente</a>";
 		//header("Location: index.html");
 		

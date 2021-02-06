@@ -136,21 +136,6 @@
 			return $lista;
 		}
 
-		public static function listarTurmasProfessor($idProfessor)
-	    {
-	        $query = "	SELECT t.nome_turma as Turma, d.nome as Disciplina, t.id_turma, t.sigla, d.id AS idDisciplina
-						FROM turma t
-						INNER JOIN professor_vinculado p
-						ON t.id_turma = p.id_turma
-						INNER JOIN disciplina d
-						ON d.id = p.id_disciplina
-						WHERE p.id_professor = '$idProfessor' ";
-	        $conexao = Conexao::pegarConexao();
-	        $resultado = $conexao->query($query);
-	        $lista = $resultado->fetchAll();
-			return $lista;
-		}
-
 		public static function listarTurmasMatricula($ano, $tipo)
 	    {
 	        $query = "	SELECT 
