@@ -725,5 +725,4 @@ ON b.id_disciplina = d.id
 INNER JOIN aluno a
 ON b.id_aluno = a.id_aluno
 WHERE b.id_turma = 3 
-AND b.id_aluno = 136
 AND b.bimestre = 1;

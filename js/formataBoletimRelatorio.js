@@ -9,21 +9,27 @@ $(function()
         var button = $(event.relatedTarget) // Button that triggered the modal
         var idTurmaBoletim = button.data('idturma');
         console.log("o teste da turma é: " + idTurmaBoletim)
-        // var idDisciplinaBoletim = button.data('iddisciplinaboletim');
-
-        // $('#idTurmaBoletim').val(idTurmaBoletim);
-        // $('#idDisciplinaBoletim').val(idDisciplinaBoletim);
-
-        // $("#bimestreBoletimRelatorio").on("change", function () {
-        //     setBoletimRelatorio(idTurmaBoletim);
-        //     console.log("alterei o bimestre");
-        // })
+        var bimestre = $("#bimestreBoletimRelatorio").val();
+        var link = "BoletimSalaPDF.php?turma=" + turma + "&bimestre=" + bimestre;
+        $('#botao-gerar-pdf-sala').attr({
+            "href": link,
+            "target": "_blank"
+        })
+        
     });
     var turma = sessionStorage.getItem("pdfIdTurma");
     $("#bimestreBoletimRelatorio").on("change", function () {
         setBoletimRelatorio(turma);
         console.log("alterei o bimestre");
+        var bimestre = $("#bimestreBoletimRelatorio").val();
+        var link = "BoletimSalaPDF.php?turma=" + turma + "&bimestre=" + bimestre;
+        $('#botao-gerar-pdf-sala').attr({ 
+            "href": link, 
+            "target": "_blank"
+        })
     })
+
+    
 
 });
 

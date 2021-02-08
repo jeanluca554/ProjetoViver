@@ -105,13 +105,12 @@
 								</div>
 								<div class="col- 6 ml-auto">
 									<label for="tipoEnsino">Visualizar PDF da sala: </label>
-									<button 
-									type="submit" 
+									<a 
 									class="btn btn-outline-info ml-2" 
 									id="botao-gerar-pdf-sala"
 								>
 									Arquivo PDF<!-- <img src="img/pdf-25.png" alt=""> -->
-								</button>
+								</a>
 									<input 
 										type="hidden"
 										class="form-control" 
