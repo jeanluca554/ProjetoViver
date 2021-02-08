@@ -71,7 +71,7 @@ function salvarBoletim()
                 var prova2Aluno = value['Prova 2'];
                 var trabalhoAluno = value['Trabalho'];
                 var recuperacaoAluno = value['Recuperação'];
-                var mediaAluno = value['Média Final'];
+                var mediaAluno = value['Média'];
                 var faltasAluno = value['Faltas'];
                 var mediaParcial = value['Média Parcial'];
 

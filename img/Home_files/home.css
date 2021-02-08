@@ -1,0 +1,24 @@
+.principal {
+  padding: 40px 15px;
+}
+
+#centralizado {
+  margin: 0 auto;
+  float: none;
+}
+
+.tabelaDeFuncionarios_length .custom-select-sm {
+  background: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/*# sourceMappingURL=home.css.map */

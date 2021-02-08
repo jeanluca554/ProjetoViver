@@ -159,8 +159,11 @@
                         <?php
                         if ($nivel != 4){?>
                        
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Relatórios</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Relatórios</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="BoletimRelatorio.php">Gerar Boletim</a>
+                                </div>
                             </li>
                         <?php
                         }   

@@ -281,7 +281,7 @@ function novaLinhaTabelaAlunosDaTurma(nomeAluno, idAluno, situacao, prova1, prov
         "min": "0",
         "max": "10",
         "id": "notaMediaP"
-    }).val(mediaParcial);
+    }).val(recuperacao);
     var colunaMediaP = $("<td>").attr({ "class": "text-center"});
     colunaMediaP.append(inputMediaP);
     

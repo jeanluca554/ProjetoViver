@@ -646,7 +646,8 @@ INNER JOIN matricula m
 ON a.id_aluno = m.id_aluno
 INNER JOIN turma t
 ON t.id_turma = m.id_turma
-WHERE t.id_turma = 3;
+WHERE t.id_turma = 3 AND m.situacao = 'Ativo'
+ORDER BY a.nome_aluno;
 
 CREATE TABLE boletim
 (
@@ -665,6 +666,8 @@ CREATE TABLE boletim
     FOREIGN KEY (id_disciplina) REFERENCES disciplina (id),
     FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno)
 )DEFAULT CHARSET = utf8;
+
+alter table boletim add column media_parcial INT default 0;
 
 drop table boletim;
 
@@ -695,7 +698,7 @@ VALUES
 
 select * from boletim;
     
-SELECT b.prova1, b.prova2, b.trabalho, b.recuperacao, b.media, b.faltas
+SELECT b.prova1, b.prova2, b.trabalho, b.recuperacao, b.media, b.faltas, b.media_parcial
 FROM boletim b
 INNER JOIN turma t
 ON b.id_turma = t.id_turma
@@ -705,5 +708,22 @@ INNER JOIN aluno a
 ON b.id_aluno = a.id_aluno
 WHERE b.id_turma = 3 
 AND b.id_disciplina = 4 
+AND b.id_aluno = 136
+AND b.bimestre = 1;
+
+UPDATE boletim 
+SET prova1 = 10, prova2 = 10, trabalho = 10, recuperacao = 10, media = 10, faltas = 10
+WHERE id_turma = 3 AND id_disciplina = 4 AND bimestre = 1 AND id_aluno = 136;
+
+
+SELECT d.nome as disciplina, b.prova1, b.prova2, b.trabalho, b.recuperacao, b.media, b.faltas, b.media_parcial
+FROM boletim b
+INNER JOIN turma t
+ON b.id_turma = t.id_turma
+INNER JOIN disciplina d
+ON b.id_disciplina = d.id
+INNER JOIN aluno a
+ON b.id_aluno = a.id_aluno
+WHERE b.id_turma = 3 
 AND b.id_aluno = 136
 AND b.bimestre = 1;

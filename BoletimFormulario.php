@@ -139,8 +139,9 @@
 											<th class="align-middle" >Prova 1</th>
 											<th class="align-middle" >Prova 2</th>
 											<th class="align-middle" >Trabalho</th>
-											<th class="align-middle" >Recuperação</th>
-											<th class="align-middle" >Média</th>
+											<th class="align-middle" width="90">Média Parcial</th>
+											<th class="align-middle" width="90">Recuperação</th>
+											<th class="align-middle" width="100">Média Final</th>
 											<th class="align-middle" >Faltas</th>
 										</tr>
 									</thead>
@@ -193,6 +194,7 @@
 
 <script src="js/pegaTurmas.js"></script>
 <script src="js/formataBoletim.js"></script>
+<script src="js/formataBoletimPDF.js"></script>
 <script src="js/alterarVinculoProfessor.js"></script>
 <script src="js/salvarBoletim.js"></script>
 <!-- <script src="js/excluirTurma.js"></script> -->
