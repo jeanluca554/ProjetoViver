@@ -63,7 +63,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000F26">
             <div class="container">
-                <a class="navbar-brand h1 mb-0" href="#">Viver e Aprender</a>
+                <a class="navbar-brand h1 mb-0" href="index.php">Viver e Aprender</a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
                     <span class="navbar-toggler-icon"></span>        
@@ -76,7 +76,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">Cadastrar</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="FuncionarioFormulario.php">Funcionário</a>
+                                <a class="dropdown-item" href="Funcionario.php">Funcionário</a>
                                 <a class="dropdown-item" href="AlunoFormulario.php">Aluno</a>
                             </div>
                         </li>

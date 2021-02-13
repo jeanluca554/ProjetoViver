@@ -68,7 +68,16 @@ function verificarCpf()
             //Retorna Verdadeiro se os dígitos de verificação são os esperados
             if ( (v[0] != cpf[9]) || (v[1] != cpf[10]) )
             {
-                alert('CPF inválido: ' + cpf);
+                // alert('CPF inválido: ' + cpf);
+                Swal.fire({
+                    type: 'error',
+                    title: 'Ops..',
+                    text: 'CPF inválido: ' + cpf,
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
 
                 $('#cpfFuncionario').val('');
                 $('#cpfFuncionario').focus();
@@ -78,7 +87,16 @@ function verificarCpf()
         {
             if( cpf.length != 0 )
             {
-                alert('CPF inválido:' + cpf);
+                // alert('CPF inválido:' + cpf);
+                Swal.fire({
+                    type: 'error',
+                    title: 'Ops..',
+                    text: 'CPF inválido: ' + cpf,
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                })
 
                 $('#cpfFuncionario').val('');
                 $('#cpfFuncionario').focus();

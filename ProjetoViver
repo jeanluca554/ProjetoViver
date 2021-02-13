@@ -724,5 +724,35 @@ INNER JOIN disciplina d
 ON b.id_disciplina = d.id
 INNER JOIN aluno a
 ON b.id_aluno = a.id_aluno
-WHERE b.id_turma = 3 
+WHERE b.id_turma = 6
+AND b.id_aluno = 136
 AND b.bimestre = 1;
+
+#listar boletim da sala toda
+SELECT d.nome as disciplina, b.prova1, b.prova2, b.trabalho, b.recuperacao, b.media, b.faltas, b.media_parcial, a.nome_aluno
+FROM boletim b
+INNER JOIN turma t
+ON b.id_turma = t.id_turma
+INNER JOIN disciplina d
+ON b.id_disciplina = d.id
+INNER JOIN aluno a
+ON b.id_aluno = a.id_aluno
+WHERE b.id_turma = 6
+AND b.bimestre = 1
+ORDER BY a.nome_aluno;
+
+#listar alunos da sala toda
+SELECT a.nome_aluno, a.id_aluno
+FROM matricula m
+INNER JOIN turma t
+ON m.id_turma = t.id_turma
+INNER JOIN aluno a
+ON m.id_aluno = a.id_aluno
+WHERE m.id_turma = 6
+AND m.situacao = 'Ativo'
+ORDER BY a.nome_aluno;
+
+SELECT nome_funcionario, cpf_funcionario, cargo_funcionario
+FROM funcionario 
+WHERE cpf_funcionario <> 0
+ORDER BY nome_funcionario;

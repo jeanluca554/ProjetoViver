@@ -15,13 +15,6 @@ function salvaDadosFuncionario()
     var salario = $("#salario").val();
     var cargo = $("#cargo").val();
 
-    
-
-    
-    
-
-    
-
     $.ajax({
         url: 'funcionario-criar-post.php',
         dataType: 'json',
@@ -40,17 +33,31 @@ function salvaDadosFuncionario()
                 },
 
         success: function (response) {
-            var jovem = response;
-            console.log(jovem);
-            Swal.fire({
-                type: 'success',
-                title: 'Concluído',
-                text: 'Funcionário criado com sucesso!',
-                animation: true,
-                customClass: {
-                    popup: 'animated bounce'
-                }
-            })
+            // if (response['mensagem'] =! 'criou'){            
+
+                var jovem = response;
+                console.log(jovem);
+                Swal.fire({
+                    type: 'success',
+                    title: 'Concluído',
+                    text: 'Funcionário criado com sucesso!',
+                    animation: true,
+                    customClass: {
+                        popup: 'animated bounce'
+                    }
+                })
+            // }
+            // else{
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Ops..',
+            //         text: 'Já existe um funcionário com esse CPF',
+            //         showClass: {
+            //             popup: 'animated tada'
+            //             // backdrop: 'animated tada'
+            //         }
+            //     })
+            // }
             
             cargos = ["Cozinheiro", "Faxineiro", "Serviços Gerais", "Orientador Pedagógico", "Inspetor de alunos", "Nutricionista"];
 
@@ -88,7 +95,7 @@ function salvaDadosFuncionario()
                                 // backdrop: 'animated tada'
                             }
                         })
-                        location.reload();
+                        // location.reload();
                     }
 
                     /* error: function (response) {
@@ -126,7 +133,7 @@ function salvaDadosFuncionario()
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    location.reload();
+                    // location.reload();
                 }
             })
         }

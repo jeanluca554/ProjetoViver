@@ -97,6 +97,18 @@
 	        $lista = $resultado->fetchAll();
 	        return $lista;
 		}
+
+		public static function listarFuncionarios()
+	    {
+	        $query = "	SELECT nome_funcionario, cpf_funcionario, cargo_funcionario
+						FROM funcionario 
+						WHERE cpf_funcionario <> 0
+						ORDER BY nome_funcionario";
+	        $conexao = Conexao::pegarConexao();
+	        $resultado = $conexao->query($query);
+	        $lista = $resultado->fetchAll();
+	        return $lista;
+	    }
 		
 		public static function listarProfessores()
 	    {

@@ -12,7 +12,7 @@ if($usuario == null)
 	logaUsuario($usuario["email"], $usuario["cargo"]);
 	$idFuncionario = pegaIdFuncionario($usuario["id_login"]);
 	$_SESSION["idFuncionario"] = $idFuncionario;
-	$_SESSION["success"] = "Usuário logado com sucesso.".$usuario["id_login"];
+	// $_SESSION["success"] = "Usuário logado com sucesso.".$usuario["id_login"];
 
 	header("Location: index.php");
 }
