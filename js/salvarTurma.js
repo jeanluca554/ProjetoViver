@@ -124,6 +124,7 @@ function mensagemErro(mensagem)
 }
 
 function alterarTurma() {
+    console.log("cliquei em alterar turma");
     var idTurma = $("#idTurma").val();
     var tipoEnsino = $("#tipoEnsinoTurma option:selected").text();
     var numTipoEnsino = $("#tipoEnsinoTurma").val();
