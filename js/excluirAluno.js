@@ -1,33 +1,31 @@
-$(function() {
-    
-    
+$(function () {
+
+
 });
 
-function excluirDadosAluno(id) 
-{
+function excluirDadosAluno(id) {
     var idExcluir = id;
 
     const swalWithBootstrapButtons = Swal.mixin(
-    {
-        customClass: 
         {
-            confirmButton: 'btn btn-success btn-lg',
-            cancelButton: 'btn btn-danger btn-lg mr-3'
-        },
-        buttonsStyling: false
-    })
+            customClass:
+            {
+                confirmButton: 'btn btn-success btn-lg',
+                cancelButton: 'btn btn-danger btn-lg mr-3'
+            },
+            buttonsStyling: false
+        })
 
     swalWithBootstrapButtons.fire({
         title: 'Atenção!',
-        text: "Tem certeza que deseja excluir o aluno?",
+        text: "Tem certeza que deseja inativar o aluno?",
         type: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Sim, excluir!',
+        confirmButtonText: 'Sim, inativar!',
         cancelButtonText: 'Não, cancelar!',
         reverseButtons: true
     }).then((result) => {
-        if (result.value) 
-        {
+        if (result.value) {
 
             $.ajax({
                 url: 'DAO/banco-responsaveis-post.php',
@@ -39,7 +37,7 @@ function excluirDadosAluno(id)
                 },
 
                 success: function (response) {
-
+                    console.log("responsáveis desvinculados. Aluno: " + id);
                     swalWithBootstrapButtons.fire(
                         'Excluído!',
                         'Os responsáveis foram desvinculados com sucesso',
@@ -57,9 +55,11 @@ function excluirDadosAluno(id)
                         },
 
                         success: function (response) {
+                            console.log("aluno excluído: " + id);
+                            console.log(response['message']);
                             swalWithBootstrapButtons.fire(
                                 'Excluído!',
-                                'O aluno foi excluído com sucesso',
+                                'O aluno foi inativado com sucesso',
                                 'success'
                             ).then((result) => {
                                 removerLinhaAluno(idExcluir);
@@ -67,6 +67,7 @@ function excluirDadosAluno(id)
                         },
 
                         error: function (response) {
+                            alert(response['message'])
                             console.log(response['message']);
                             Swal.fire({
                                 type: 'warning',
@@ -82,7 +83,7 @@ function excluirDadosAluno(id)
                     });
 
 
-                    
+
 
                 },
 
@@ -110,11 +111,10 @@ function excluirDadosAluno(id)
                 'error'
             )
         }
-    })    
+    })
 }
 
-function buscarEExcluirResponsaveisVinculados(id)
-{
+function buscarEExcluirResponsaveisVinculados(id) {
     $.ajax({
         url: 'DAO/banco-responsaveis-post.php',
         method: 'post',
@@ -125,14 +125,14 @@ function buscarEExcluirResponsaveisVinculados(id)
         },
 
         success: function (response) {
-            
+
             swalWithBootstrapButtons.fire(
                 'Excluído!',
                 'Os responsáveis foram desvinculados com sucesso',
                 'success'
             )
             // excluirAluno(id);
-            
+
         },
 
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -155,8 +155,7 @@ function buscarEExcluirResponsaveisVinculados(id)
     });
 }
 
-function excluirAluno(id)
-{
+function excluirAluno(id) {
     var idExcluir = id;
     $.ajax({
         url: 'DAO/banco-alunos-post.php',
@@ -169,7 +168,7 @@ function excluirAluno(id)
 
         success: function (response) {
 
-            
+
             swalWithBootstrapButtons.fire(
                 'Excluído!',
                 'O aluno foi excluído com sucesso',
@@ -184,7 +183,7 @@ function excluirAluno(id)
                     document.write(i + " : " + XMLHttpRequest[i] + "<br>")
             }
         }
-        
+
     });
     removerLinha(idExcluir);
 
@@ -192,9 +191,8 @@ function excluirAluno(id)
 
 function removerLinhaAluno(id) {
     event.preventDefault();// evitar o evento padrão de jogar pro topo da tela ao excluir
-    var linha = $("#"+id).parent().parent();
+    var linha = $("#" + id).parent().parent();
     console.log(linha);
-    console.log("Loucura jovaem");
 
     linha.fadeOut(1000);
     setTimeout(function () {

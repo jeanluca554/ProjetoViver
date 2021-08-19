@@ -102,7 +102,7 @@
 		public static function listarAlunos()
 	    {
 	        $query = "	SELECT nome_aluno, id_aluno, id_endereco_residencia
-				 		FROM aluno ORDER BY nome_aluno";
+				 		FROM aluno WHERE situacao = 'ativo' ORDER BY nome_aluno";
 	        $conexao = Conexao::pegarConexao();
 	        $resultado = $conexao->query($query);
 	        $lista = $resultado->fetchAll();

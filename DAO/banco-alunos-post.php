@@ -125,7 +125,8 @@
     {
         try
         {
-            $query = "  DELETE FROM aluno
+            $query = "  UPDATE aluno
+                        SET situacao = 'inativo' 
                         WHERE id_aluno = :id";
             $conexao = Conexao::pegarConexao();
 			$stmt = $conexao->prepare($query);
@@ -139,8 +140,8 @@
         catch (Exception $e)
         {
             //$response['text'] = $id;
-            // $response['message'] = (string) $e;
-            $response['message'] = "Catch excluir aluno";
+            $response['message'] = (string) $e;
+            //$response['message'] = "Catch excluir aluno";
             echo json_encode($response);
             // $response['message'] = "Catch excluir aluno";
             // echo Erro::trataErro($e);

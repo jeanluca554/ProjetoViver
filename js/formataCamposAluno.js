@@ -1,28 +1,25 @@
-$(function() {    
+$(function () {
     formatarCamposAluno();
-    
+
     $('#botao-salvar-aluno').on("click", habilitaAbaEnderecoAluno);
     $('#botao-salvar-endereco-aluno').on("click", habilitaAbaResponsaveisAluno);
     $('#botao-salvar-responsavel-do-aluno').on("click", liberaAbaMatricula);
     $('#btn-cadastrar-aluno').on("click", setModalCadastrarAluno);
 });
 
-function formatarCamposAluno()
-{
+function formatarCamposAluno() {
     $('#dataNascimento').mask('00/00/0000');
-    
+
 }
 
 
-function verificaAlterar(nome, id, idEndereco)
-{
-    $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) 
-    {
+function verificaAlterar(nome, id, idEndereco) {
+    $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
         var idEnderecoResidencial = idEndereco;
-        
+
         console.log("cliquei em alterar aluno")
         idEnderecoResidencial == '' ? sessionStorage.setItem('idEnderecoAluno', 1) : sessionStorage.setItem('idEnderecoAluno', idEndereco);
-        
+
         var modal = $(this)
         modal.find('.modal-title').text('Alterar dados do(a) aluno(a) ' + nome + ' - ' + id);
         sessionStorage.setItem('alunoID', id);
@@ -159,11 +156,10 @@ function verificaAlterar(nome, id, idEndereco)
         });
     })
 
-    
+
 }
 
-function habilitaAbaEnderecoAluno()
-{
+function habilitaAbaEnderecoAluno() {
     $('#enderecoAluno-tab').attr('class', 'nav-link');
     $('#enderecoAluno-tab').attr('href', '#abaEnderecoAluno');
 }
@@ -179,8 +175,7 @@ function liberaAbaMatricula() {
 }
 
 function setModalCadastrarAluno() {
-    $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) 
-    { 
+    $(document).on('shown.bs.modal', '#ModalAlunoFormulario', function (event) {
         var modal = $(this)
         modal.find('.modal-title').text('Cadastrar Aluno ');
 

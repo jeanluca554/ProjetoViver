@@ -46,7 +46,7 @@
                 <tr>
                     <th>Nome</th>
                     <th>Editar</th>
-                    <th>Excluir</th>
+                    <th>Inativar</th>
                 </tr>
             </thead>
             <tbody>
@@ -271,7 +271,8 @@
                                     type="number" 
                                     name="numeroCasaAluno" 
                                     class="form-control" 
-                                    id="numeroCasaAluno" 
+                                    id="numeroCasaAluno"
+                                    min="0"
                                     placeholder="Nº"
                                 >
                             </div>
