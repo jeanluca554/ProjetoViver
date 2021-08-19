@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     $("#botao-salvar-dados-pessoais-responsavel").on("click", salvaDadosPessoais);
     $("#botao-salvar-endereco-responsavel").on("click", salvaEnderecoResponsavel);
 
@@ -8,27 +8,23 @@ $(function() {
     $("#checkboxcopiaendereco").on("click", copiaEnderecoAluno);
 });
 
-function salvaDadosPessoais() 
-{
+function salvaDadosPessoais() {
     var nome = $("#nomeResponsavel").val();
     var cpf = $("#cpf").val();
     var telefone = $("#telefone1").val();
     var telefoneAdicional = $("#telefone2").val();
     var rgResponsavel = $("#rgResponsavel").val();
     ultimoIdLimpo = 0;
-        
-    if (nome != '')
-    {
+
+    if (nome != '') {
         $.ajax({
             url: 'responsavel-criar-post.php',
             method: 'post',
             dataType: 'json',
-            data: {nome:nome, cpf:cpf, telefone:telefone, telefoneAdicional:telefoneAdicional, rgResponsavel:rgResponsavel},
+            data: { nome: nome, cpf: cpf, telefone: telefone, telefoneAdicional: telefoneAdicional, rgResponsavel: rgResponsavel },
 
-            success: function(ultimoId)
-            {
-                if(ultimoId['code'] == 'ok')
-                {
+            success: function (ultimoId) {
+                if (ultimoId['code'] == 'ok') {
                     // ultimoIdLimpo = cpf;
                     sessionStorage.setItem('responsavelID', cpf);
                     //alert("Dados pessoais cadastrados com sucesso!");
@@ -39,14 +35,13 @@ function salvaDadosPessoais()
                         animation: true,
                         customClass: {
                             popup: 'animated bounce'
-                        }                      
+                        }
                     })
                     $('#enderecoResponsavel-tab').attr('class', 'nav-link');
                     $('#enderecoResponsavel-tab').attr('aria-selected', 'true');
                     $('#enderecoResponsavel-tab').attr('href', '#abaEnderecoResponsavel');
                 }
-                else
-                {
+                else {
                     //alert(ultimoId['message']);
                     Swal.fire({
                         type: 'warning',
@@ -60,8 +55,7 @@ function salvaDadosPessoais()
                 }
             },
 
-            error: function()
-            {
+            error: function () {
                 //alert("Erro ao criar Responsável");
                 Swal.fire({
                     type: 'error',
@@ -70,15 +64,14 @@ function salvaDadosPessoais()
                     animation: false,
                     customClass: {
                         popup: 'animated tada'
-                    }                      
+                    }
                 })
             }
         });
-    }    
+    }
 }
 
-function salvaEnderecoResponsavel() 
-{
+function salvaEnderecoResponsavel() {
     var cep = $('#cepResponsavel').val();
     var logradouro = $('#logradouroResponsavel').val();
     var numeroCasa = $('#numeroCasaResponsavel').val();
@@ -89,24 +82,20 @@ function salvaEnderecoResponsavel()
 
     console.log(logradouro);
 
-    if (logradouro != '')
-    {
+    if (logradouro != '') {
         $.ajax({
             url: 'endereco-criar-post.php',
             method: 'post',
             dataType: 'json',
-            data: {cep:cep, logradouro:logradouro, numeroCasa:numeroCasa, complemento:complemento, bairro:bairro, estado:estado, cidade:cidade},
+            data: { cep: cep, logradouro: logradouro, numeroCasa: numeroCasa, complemento: complemento, bairro: bairro, estado: estado, cidade: cidade },
 
-            success: function(ultimoId)
-            {
-                if(ultimoId['code'] == 'ok')
-                {
+            success: function (ultimoId) {
+                if (ultimoId['code'] == 'ok') {
                     ultimoIdEndereco = ultimoId['message'];
 
                     salvaResponsavelCompleto(ultimoIdEndereco);
                 }
-                else
-                {
+                else {
                     //alert(ultimoId['message']);
                     Swal.fire({
                         type: 'warning',
@@ -119,7 +108,7 @@ function salvaEnderecoResponsavel()
                     })
                 }
 
-                
+
             },
 
             /* error: function()
@@ -142,63 +131,60 @@ function salvaEnderecoResponsavel()
                 }
             }
 
-            
+
         });
 
     }
-    else{
+    else {
         Swal.fire({
-                    type: 'warning',
-                    title: 'Atenção!',
-                    text: 'Preencha os campos obrigatórios',
-                    animation: false,
-                    customClass: {
-                        popup: 'animated tada'
-                    }                      
-                })
-    }    
+            type: 'warning',
+            title: 'Atenção!',
+            text: 'Preencha os campos obrigatórios',
+            animation: false,
+            customClass: {
+                popup: 'animated tada'
+            }
+        })
+    }
 }
 
-function salvaResponsavelCompleto(idEndereco)
-{
+function salvaResponsavelCompleto(idEndereco) {
     var cpfResp = sessionStorage.getItem('responsavelID');
     console.log(cpfResp);
     var enderecoId = parseInt(idEndereco);
 
     $.ajax({
-            url: 'responsavel-endereco-criar.php',
-            method: 'post',
-            dataType: 'json',
-            data: {ultimoId:cpfResp, enderecoId:enderecoId},
+        url: 'responsavel-endereco-criar.php',
+        method: 'post',
+        dataType: 'json',
+        data: { ultimoId: cpfResp, enderecoId: enderecoId },
 
-            success: function(data)
-            {                
-                //alert(data['message']);
-                Swal.fire({
-                    type: 'success',
-                    title: 'Concluído',
-                    text: data['message'],
-                    animation: true,
-                    customClass: {
-                        popup: 'animated bounce'
-                    }                      
-                })
-            },
+        success: function (data) {
+            //alert(data['message']);
+            Swal.fire({
+                type: 'success',
+                title: 'Concluído',
+                text: data['message'],
+                animation: true,
+                customClass: {
+                    popup: 'animated bounce'
+                }
+            })
+        },
 
-            error: function()
-            {
-                //alert("Erro ao associar endereço ao responsável");
-                Swal.fire({
-                    type: 'error',
-                    title: 'Ops...',
-                    text: 'Houve um erro ao associar endereço ao responsável',
-                    animation: false,
-                    customClass: {
-                        popup: 'animated tada'
-                    }                      
-                })
-            }
-        });
+        error: function () {
+            //alert("Erro ao associar endereço ao responsável");
+            Swal.fire({
+                type: 'error',
+                title: 'Ops...',
+                text: 'Houve um erro ao associar endereço ao responsável',
+                animation: false,
+                customClass: {
+                    popup: 'animated tada'
+                }
+            })
+        }
+    });
 }
 
 function alterarDadosResponsavel() {
@@ -356,9 +342,9 @@ function verificaIdEnderecoResponsavel() {
 
 function copiaEnderecoAluno() {
     console.log("entrei no copia");
-    if ($("#checkboxcopiaendereco").is(':checked')) 
-    {
-        var enderecoBtnAlterarSession = sessionStorage.getItem('idBtnEndereco');
+    if ($("#checkboxcopiaendereco").is(':checked')) {
+        var enderecoBtnAlterarSession = sessionStorage.getItem('idEnderecoAluno');
+        console.log(enderecoBtnAlterarSession);
         $.ajax({
             url: 'DAO/banco-alunos-post.php',
             dataType: 'json',

@@ -1,69 +1,68 @@
-$(function() {
+$(function () {
     $("#matricularAluno-tab").on("click", buscaMatriculasDoAluno);
     //$("#btnAdicionaResponsavel").click(buscaResponsaveisVinculadosAoAluno); 
 });
 
-function buscaMatriculasDoAluno()
-{
+function buscaMatriculasDoAluno() {
     var idDoAluno = sessionStorage.getItem('alunoID');
     console.log(idDoAluno);
+    if (idDoAluno != null) {
+        $.ajax({
+            url: 'matriculas-listar-post.php',
+            dataType: 'json',
+            method: 'post',
+            data: {
+                idAluno: idDoAluno
+            },
 
-    $.ajax({
-        url: 'matriculas-listar-post.php',
-        dataType: 'json',
-        method: 'post',
-        data: {
-            idAluno: idDoAluno
-        },
+            success: function (response) {
 
-        success: function (response) {
+                if (response['mensagem'] == 'ok') {
+                    $(".tabelaMatriculas > tbody").empty();
+                    insereMatriculasNaTabela(response);
+                }
+                else {
+                    Swal.fire({
+                        type: 'warning',
+                        title: response['title'],
+                        text: response['text'],
+                        animation: false,
+                        customClass: {
+                            popup: 'animated tada'
+                        }
+                    })
+                }
 
-            if (response['mensagem'] == 'ok') 
-            {
-                $(".tabelaMatriculas > tbody").empty();
-                insereMatriculasNaTabela(response);
+
+
+
+
+
+            },
+            error: function (jqXHR, status, error) {
+                //alert('Ocorreu durante a execução do filtro. Tente novamente mais tarde!');
+                console.log(jqXHR.responseText, status, error);
             }
-            else 
-            {
+            /* error: function (response) {
+                console.log(response);
                 Swal.fire({
                     type: 'warning',
-                    title: response['title'],
-                    text: response['text'],
+                    title: 'Algo errado aconteceu',
+                    text: 'Erro ao buscar as matrículas do aluno',
+                    //  text: response['message'],
                     animation: false,
                     customClass: {
                         popup: 'animated tada'
                     }
                 })
-            }
-            
-            
+            } */
+        });
+    }
 
 
-        
-            
-        },
-        error: function (jqXHR, status, error) {
-            //alert('Ocorreu durante a execução do filtro. Tente novamente mais tarde!');
-            console.log(jqXHR.responseText, status, error);
-        }
-        /* error: function (response) {
-            console.log(response);
-            Swal.fire({
-                type: 'warning',
-                title: 'Algo errado aconteceu',
-                text: 'Erro ao buscar as matrículas do aluno',
-                //  text: response['message'],
-                animation: false,
-                customClass: {
-                    popup: 'animated tada'
-                }
-            })
-        } */
-    });
 }
 
-function insereMatriculasNaTabela(response) 
-{
+function insereMatriculasNaTabela(response) {
     $.each(response['matriculas'], function (key, value) {
         var corpoTabela = $(".tabelaMatriculas").find("tbody");
 
@@ -80,8 +79,7 @@ function insereMatriculasNaTabela(response)
 
         var dataMatriculaFormatada = trataDataMatricula(dataMatricula);
 
-        if (dataFim != null)
-        {
+        if (dataFim != null) {
             var dataFimFormatada = trataDataMatricula(dataFim);
         }
 
@@ -93,22 +91,21 @@ function insereMatriculasNaTabela(response)
     })
 }
 
-function novaLinhaMatriculas(id, ano, tipoEnsino, nomeTurma, dataMatricula, dataFim, situacao, turno, idTurma) 
-{
+function novaLinhaMatriculas(id, ano, tipoEnsino, nomeTurma, dataMatricula, dataFim, situacao, turno, idTurma) {
     var linha = $("<tr>");
-    var colunaAno = $("<td>").text(ano).attr({"class": "align-middle", "align": "center"});
-    var colunaTipoEnsino = $("<td>").text(tipoEnsino).attr({"class": "align-middle", "align": "center"});
-    var colunaTurma = $("<td>").text(nomeTurma).attr({"class": "align-middle", "align": "center"});
-    var colunaDataMatricula = $("<td>").text(dataMatricula).attr({"class": "align-middle", "align": "center"});
-    var colunaDataFim = $("<td>").text(dataFim).attr({"class": "align-middle", "align": "center"});
-    var colunaSituacao = $("<td>").text(situacao).attr({"class": "align-middle", "align": "center"});
+    var colunaAno = $("<td>").text(ano).attr({ "class": "align-middle", "align": "center" });
+    var colunaTipoEnsino = $("<td>").text(tipoEnsino).attr({ "class": "align-middle", "align": "center" });
+    var colunaTurma = $("<td>").text(nomeTurma).attr({ "class": "align-middle", "align": "center" });
+    var colunaDataMatricula = $("<td>").text(dataMatricula).attr({ "class": "align-middle", "align": "center" });
+    var colunaDataFim = $("<td>").text(dataFim).attr({ "class": "align-middle", "align": "center" });
+    var colunaSituacao = $("<td>").text(situacao).attr({ "class": "align-middle", "align": "center" });
 
     //Criação da coluna Alterar:
     var descricaoTurma = nomeTurma + " - " + turno;
     sessionStorage.setItem('descrTurmaAlterarMatricula', descricaoTurma);
     sessionStorage.setItem('tipoEnsinoAlterarMatricula', tipoEnsino);
 
-    var dadosAlterar = "setDadosAlterarMatricula('" + tipoEnsino + "', '" + descricaoTurma + "', " + id + ", '" + situacao + "', " + idTurma + ", '" + dataMatricula + "')";  
+    var dadosAlterar = "setDadosAlterarMatricula('" + tipoEnsino + "', '" + descricaoTurma + "', " + id + ", '" + situacao + "', " + idTurma + ", '" + dataMatricula + "')";
     var colunaAlterar = $("<td>").attr({
         'id': "btnAlterarMatricula",
         'align': "center",
@@ -119,11 +116,11 @@ function novaLinhaMatriculas(id, ano, tipoEnsino, nomeTurma, dataMatricula, data
         'onclick': dadosAlterar
         // 'onclick': "($('#MatriculaAlterarModal').modal('show'))"
     });
-    var botaoEditar = $("<a>").addClass("btn btn-outline-info").attr({ "href": "#"});
+    var botaoEditar = $("<a>").addClass("btn btn-outline-info").attr({ "href": "#" });
     var imagemEditar = $("<img>").attr("src", "img/editar.png");
     botaoEditar.append(imagemEditar);
     colunaAlterar.append(botaoEditar);
-    
+
 
     var colunaRemover = $("<td>").attr("align", "center");
     var botaoRemover = $("<button>")

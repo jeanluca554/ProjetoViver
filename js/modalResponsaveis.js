@@ -9,8 +9,7 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
     sessionStorage.setItem('responsavelID', cpf);
     enderecoResp == '' ? sessionStorage.setItem('enderecoResp', 1) : sessionStorage.setItem('enderecoResp', enderecoResp);
 
-    if (typeof nome == "undefined" || nome == "")
-    {
+    if (typeof nome == "undefined" || nome == "") {
         var modal = $(this)
         modal.find('.modal-title').text('Cadastrar Responsável');
         modal.find('#cpf').attr("disabled", false);
@@ -41,10 +40,9 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
         $('#selectCidadeResidenciaAluno').hide();
     }
 
-    else
-    {
+    else {
         var modal = $(this)
-        modal.find('.modal-title').text('Alterar dados do responsável' + nome + '-' + cpf);
+        modal.find('.modal-title').text('Alterar dados do responsável ' + nome + '-' + cpf);
         sessionStorage.setItem('responsavelID', cpf);
 
         $.ajax({
@@ -67,8 +65,8 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
                     modal.find('#rgResponsavel').val(rgResp);
                     modal.find('#telefone1').val(telefonePessoal);
                     modal.find('#telefone2').val(telefoneAdicional);
-                    
-                    
+
+
                     modal.find('#botao-salvar-dados-pessoais-responsavel').hide();
                     modal.find('#botao-alterar-dados-pessoais-responsavel').show();
 
@@ -148,5 +146,5 @@ $('#ResponsaveisModal').on('show.bs.modal', function (event) {
             } */
         });
 
-    }   
+    }
 })

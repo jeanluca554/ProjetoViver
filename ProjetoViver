@@ -135,6 +135,20 @@ CREATE TABLE aluno
     FOREIGN KEY (id_endereco_residencia) REFERENCES endereco_residencial(id_endereco_residencia)
 )	DEFAULT CHARSET = utf8;
 
+ALTER TABLE aluno ADD COLUMN resp_financeiro VARCHAR(14);
+ALTER TABLE aluno 
+ADD FOREIGN KEY (resp_financeiro) 
+REFERENCES responsavel(cpf_responsavel);
+
+ALTER TABLE aluno ADD COLUMN situacao VARCHAR(7) DEFAULT 'ativo';
+ALTER TABLE aluno drop COLUMN situacao;
+
+ALTER TABLE aluno ADD COLUMN resp_didatico VARCHAR(14);
+
+ALTER TABLE aluno 
+ADD FOREIGN KEY (resp_didatico) 
+REFERENCES responsavel(cpf_responsavel);
+
 INSERT INTO aluno (sexo) values ('Masculino');
 INSERT INTO aluno (nacionalidade) values ('Brasileiro');
 
@@ -232,17 +246,9 @@ SELECT
 FROM endereco_residencial
 WHERE id_endereco_residencia = 142;
 
-ALTER TABLE aluno ADD COLUMN resp_financeiro VARCHAR(14);
 
-ALTER TABLE aluno 
-ADD FOREIGN KEY (resp_financeiro) 
-REFERENCES responsavel(cpf_responsavel);
 
-ALTER TABLE aluno ADD COLUMN resp_didatico VARCHAR(14);
 
-ALTER TABLE aluno 
-ADD FOREIGN KEY (resp_didatico) 
-REFERENCES responsavel(cpf_responsavel);
 
 UPDATE aluno 
 SET resp_financeiro = '459.321.248-06' 
@@ -662,6 +668,7 @@ CREATE TABLE boletim
     media INT DEFAULT 0,
     faltas INT DEFAULT 0,
     bimestre INT,
+    media_parcial INT DEFAULT 0,
     FOREIGN KEY (id_turma) REFERENCES turma (id_turma),
     FOREIGN KEY (id_disciplina) REFERENCES disciplina (id),
     FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno)
@@ -756,3 +763,23 @@ SELECT nome_funcionario, cpf_funcionario, cargo_funcionario
 FROM funcionario 
 WHERE cpf_funcionario <> 0
 ORDER BY nome_funcionario;
+
+select * from aluno;
+delete from aluno where id_aluno = 196;
+update aluno set situacao = "ativo" where id_aluno = 133;
+
+delete from responsavel where cpf_responsavel = '300.315.858-92';
+select * from responsavel;
+describe responsavel;
+
+delete from matricula where id_matricula = 5;
+
+select * from login;
+
+UPDATE login SET senha = "332de775a36bbfcb140e1caa06299a8a" WHERE id_login = 4;
+
+# Remover aluno
+DELETE FROM aluno WHERE id_aluno = 133;
+
+# Remover tabela boletim
+DROP TABLE boletim;
